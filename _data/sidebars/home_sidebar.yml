@@ -1,22 +1,35 @@
 # This is your sidebar TOC. The sidebar code loops through sections here and provides the appropriate formatting.
 
 entries:
-- title: Sidebar
-  levels: one
+- title: HomeBar
+  output: web
   folders:
 
-  - title: Products
+  - title: PowerAPI
     output: web
     folderitems:
-    - title: News
-      url: /news.html
+
+    - title: Overview
       output: web
-    - title: Theme instructions
-      url: /mydoc_introduction.html
+      url: /index.html
+
+    - title: How it work ?
       output: web
-    - title: Product 1
-      url: /p1_landing_page.html
+      url: /powerapi_howitwork.html
+
+  - title: Sensors
+    output: web
+    folderitems:
+
+    - title: HWPC-sensor
       output: web
-    - title: Product 2
-      url: /p2_landing_page.html
+      url: /hwpc.html
+
+  - title: Formula
+    output: web
+    folderitems:
+
+    - title: RAPL-formula
       output: web
+      url: /rapl.html
+
