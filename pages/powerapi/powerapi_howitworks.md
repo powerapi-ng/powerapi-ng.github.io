@@ -9,11 +9,10 @@ connect them to build it for your own needs."
 ---
 
 
-
 Power meter Architecture
 ==============================
 
-A power meter is an assembly of two components, a sensor and a formula. Used to
+A power meter is an assembly of two components, a sensor and a formula, used to
 produce an estimation of the power consumption of a monitored software.
 
 The sensor collect raw data correlated with the power consumption of the

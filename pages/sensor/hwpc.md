@@ -3,15 +3,10 @@ title: "HWPC Sensor"
 keywords: homepage
 sidebar: home_sidebar 
 permalink: hwpc.html
+summary: "The HWPC-Sensor (*Hardware Performance Counters Sensor*) read data from the hardware performance counters exposed by the processor." 
 ---
 
-HWPC-Sensor
-=============
-
-The HWPC-Sensor (*Hardware Performance Counters Sensor*) read data from the hardware performance counters exposed by the processor. 
-
-Install and run
-===============
+## Install and run
 
 The HWPC sensor is deployed in a docker container. You can download it with : 
 
@@ -44,7 +39,6 @@ With :
 - `DATABASE_NAME`: MongoDB database name
 - `COLLECTION_NAME`: MongoDB collection name
 
-Source
-========
+## Source
 
 Source are available on [github](https://github.com/powerapi-ng/hwpc-sensor)
