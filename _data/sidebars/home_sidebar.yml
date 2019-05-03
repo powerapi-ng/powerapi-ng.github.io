@@ -28,8 +28,7 @@ entries:
   - title: Formula
     output: web
     folderitems:
-
+      
     - title: RAPL-formula
       output: web
       url: /rapl.html
-
