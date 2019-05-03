@@ -1,5 +1,5 @@
 ---
-title: "PowerAPI overview"
+title: "PowerAPI - Overview"
 keywords: homepage
 sidebar: home_sidebar
 permalink: index.html

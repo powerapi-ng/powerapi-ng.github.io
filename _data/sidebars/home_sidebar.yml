@@ -13,9 +13,9 @@ entries:
       output: web
       url: /index.html
 
-    - title: How it work ?
+    - title: How it works ?
       output: web
-      url: /powerapi_howitwork.html
+      url: /powerapi_howitworks.html
 
   - title: Sensors
     output: web
