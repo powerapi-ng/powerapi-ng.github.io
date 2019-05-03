@@ -2,7 +2,7 @@
 title: "PowerAPI - How it work"
 keywords: howitwork 
 sidebar: home_sidebar 
-permalink: powerapi_howitwork.html
+permalink: powerapi_howitworks.html
 summary: "This page present how you can build a power meter with the tools provided by
 PowerAPI. We present the different components of a power meter and how you can
 connect them to build it for your own needs."
