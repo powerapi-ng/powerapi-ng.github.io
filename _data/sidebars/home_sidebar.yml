@@ -32,3 +32,11 @@ entries:
     - title: RAPL-formula
       output: web
       url: /rapl.html
+      
+  - title: Howto
+    output: web
+    folderitems:
+
+    - title: monitor socket consumption
+      output: web
+      url: /howto_monitor_socket.html
