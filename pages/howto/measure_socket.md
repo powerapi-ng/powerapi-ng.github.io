@@ -68,6 +68,12 @@ Power information data are structured as this json format :
         },
         "power" : Z.ZZZ # power consumption expressed in watts (float)
 	}
+	
+For example to display a power consumption report with the mongo client :
+
+	mongo ADDR
+	use output_db
+	db.power_consumption.findOne()
 
 
 ## Deployment with docker
