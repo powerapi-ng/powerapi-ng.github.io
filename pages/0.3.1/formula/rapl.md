@@ -2,7 +2,7 @@
 title: "RAPL Formula"
 keywords: homepage
 sidebar: home_sidebar 
-permalink: rapl.html
+permalink: 0.3.1/rapl.html
 summary: "A powerAPI formula using RAPL counters to provides power consumption information of each socket of the monitored machine."
 ---
 
@@ -11,11 +11,11 @@ summary: "A powerAPI formula using RAPL counters to provides power consumption i
 You can directly run a docker containing the formula with the following
 command : 
 
-	docker run powerapi/rapl-formula args ...
+	docker run powerapi/rapl-formula:0.1.2 args ...
 
 To use the formula without docker, you can install it with `pip` :
 
-	pip3 install rapl-formmula 
+	pip3 install rapl-formmula==0.1.2
 
 and run it with python(>=3.7) : 
 
@@ -25,8 +25,7 @@ and run it with python(>=3.7) :
 ## Usage
 
 ### CLI
-
-RAPL-formula CLI follow the same common CLI that is described [here](/powerapi_howitworks.html#command-line-arguments)
+RAPL-formula CLI follow the same common CLI that is described [here](0.3.1/powerapi_howitworks.html#command-line-arguments)
 
 ### Input Data
 
