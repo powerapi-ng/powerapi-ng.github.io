@@ -91,31 +91,98 @@ Then run it with python(>=3.7):
 
 	python3 -m FORMULA_NAME args ...
 
-#### Command line arguments
+#### Command line interface
 
-You can launch every formula with this common arguments, extra arguments could be
-added at the end of the command line (it depends on the formula used):
+Every formula have a common command line interface (CLI) with the same
+parameters. This interface help you to configure the formula (eg: specify its
+input and outputs). This section present you this common parameters that you can
+use with every formula.
 
-	(python3 -m/docker run) FORMULA_NAME input_mongo_uri input_db input_collection output_mongo_uri output_db output_collection
+Some formula may use specific parameters. These parameters are described on their
+formula documentation. Just place them after the common CLI arguments.
 
-with:
+The following example show you how to use the formula parameters :
 
-- `input_mongo_uri` : uri to the mongoDB used by the hwpc-sensor to store its
-  output data. Use the following format `mongodb://MONGO_ADDRESS:MONGO_PORT`
-- `input_db` : database used by the hwpc-sensor to store its output data
-- `input_collection` : collection used by the hwpc-sensor to store its output data
-- `output_mongo_uri` : uri to the mongoDB used to store the power consumption data. Use the following format `mongodb://MONGO_ADDRESS:MONGO_PORT`
-- `output_db` : database used to store the power consumption data
-- `output_collection` : collection used to store the power consumption data
 
-#### Optional arguments
+	(python3 -m/docker run) FORMULA_NAME -v -s --input input_database_type ... --output output_database_type1 ... --output output_database_type2 ... --formula_specific_parameter1 ... --formula_specific_parameterN
 
-List of the optional arguments used to enable some special mode:
 
-- `-s` : connect to the database with "stream mode"
-- `-v` : verbose mode (for debug)
+The `--input` parameters specify information about the database used to store data
+collected by the hwpc-sensor. The first argument after `--input` is the type of the
+database. Other parameters could be added to specify information about the
+database. Theses parameters depends of the database type and are described below.
 
-#### Formula specific arguments
+The `--output` parameter specify information about the database used to store the
+power consumption computed by the formula. As `--input` parameter, it take the
+database type as first argument and other parameters depending of the database
+type.
 
-Some formula may use specific arguments. These arguments are described on their
-formula documentation. Just place them after the common CLI arguments
+
+##### Optional parameters
+
+List of the optional parameters used to enable specific modes:
+
+- `-s` or `--stream` : connect to the database with "stream mode"
+- `-v` or `--verbose`: verbose mode (for debug)
+
+#### Database parameters
+
+This section describe specific parameters of each database with example to use them
+
+##### MongoDB
+
+To use a MongoDB database as an input or output, use the database type `mongodb`
+with the following parameters :
+
+- `-u` or `--uri` to specify the location of the database
+- `-d` or `--db` to specify the database name to read/store the data
+- `-c` or `--collection` to collection name to read/store the data
+
+For example, to use a mongodb database, as an output of a formula, located at
+`1.2.3.4:3245` with a database `test_db` and a collection `test_col` launch the
+formula with the following parameter :
+	
+	--output mongodb --uri 1.2.3.4:3245 --db test_db --collection test_col
+
+
+##### CSV
+
+You can use csv files as an input or output of a formula. 
+
+Sensors could produce csv files that could be used as input. Use the database type `csv` with
+the following parameter :
+
+- `-f` or `--files` to specify location of the sensors output files. You can
+  specify multiple files with the following syntax :
+  `--files=file1,file2,...,fileN`
+
+For example, to use three files as formula input (`file1`, `file2` and `file3`)
+launch the formula with the following parameters :
+	
+	--input csv --files=file1,file2,file3
+
+
+To use a csv file as an output, you can specify a folder where the formula will
+write the csv file containing the computed power consumption data. Use the
+database type `csv` with the following parameters :
+
+- `-d` or `--directory` to specify the directory where the output csv will be
+  written. One csv file will be stored in a sub-folder named with the sensor name. The
+  csv file is named `power_consumption.csv`
+	
+For example, to store the power consumption data on a csv file on the
+`/var/log/power` folder, launch the formula with the following parameters :
+	
+	--output csv --d /var/log/power
+	
+##### InfluxDB
+
+To use an InfluxDB database only as an output of a formula, use the database type `influxdb` with the following parameters : 
+
+- `-u` or `--uri` to specify the location of the database
+- `-p` or `--port` to specify the database connection port
+- `-d` or `--db` to specify the database name to read/store the data
+
+For example, to use an InfluxDB database, as an output of a formula, located at `1.2.3.4:3245` with a database `test_db` launch the formula with the following parameter : 
+	
+	--output influxdb --uri 1.2.3.4 --port 3245 --db test_db
