@@ -109,7 +109,7 @@ Launch the sensor :
 	
 Launch the formula : 
 
-	docker run -td --net=powerapi --name powerapi-formula powerapi/rapl-formula mongodb://powerapi-mongo connection_db hwrep mongodb://powerapi-mongo output_db power_consumption -s
+	docker run -td --net=powerapi --name powerapi-formula powerapi/rapl-formula --input mongodb -u mongodb://powerapi-mongo -d connection_db -c hwrep --output mongodb -u mongodb://powerapi-mongo -d output_db -c power_consumption -s
 	
 ## Deployment without docker
 
@@ -149,4 +149,4 @@ On the HWPC-sensor repository launch the sensor :
 	
 launch the formula
 
-	python3 -m rapl_formula mongodb://ADDR connection_db hwrep mongodb://ADDR output_db power_consumption -s &
+	python3 -m rapl_formula --input mongodb -u mongodb://ADDR -d connection_db -c hwrep --output mongodb -u mongodb://ADDR -d output_db -c power_consumption -s
