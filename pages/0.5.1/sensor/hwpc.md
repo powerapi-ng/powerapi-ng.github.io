@@ -2,7 +2,7 @@
 title: "HWPC Sensor"
 keywords: homepage
 sidebar: home_sidebar 
-permalink: 0.5.0/hwpc.html
+permalink: 0.5.1/hwpc.html
 summary: "The HWPC-Sensor (*Hardware Performance Counters Sensor*) read data from the hardware performance counters exposed by the processor." 
 ---
 

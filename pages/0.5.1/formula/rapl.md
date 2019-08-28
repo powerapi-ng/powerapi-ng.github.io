@@ -2,7 +2,7 @@
 title: "RAPL Formula"
 keywords: homepage
 sidebar: home_sidebar 
-permalink: 0.5.0/rapl.html
+permalink: 0.5.1/rapl.html
 summary: "A powerAPI formula using RAPL counters to provides power consumption information of each socket of the monitored machine."
 ---
 

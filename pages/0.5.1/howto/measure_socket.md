@@ -2,7 +2,7 @@
 title: "How to monitor power consumption of a socket"
 keywords: homepage
 sidebar: home_sidebar 
-permalink: 0.5.0/howto_monitor_socket.html
+permalink: 0.5.1/howto_monitor_socket.html
 ---
 
 ## Introduction
