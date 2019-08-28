@@ -25,7 +25,7 @@ and run it with python(>=3.7) :
 ## Usage
 
 ### CLI
-RAPL-formula CLI follow the same common CLI that is described [here](powerapi_howitworks.html#command-line-arguments)
+RAPL-formula CLI follow the same common CLI that is described [here](/0.3.1/powerapi_howitworks.html#command-line-arguments)
 
 ### Input Data
 
