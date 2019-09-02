@@ -26,17 +26,11 @@ and run it with python(>=3.7) :
 
 ### CLI
 
-RAPL-formula CLI follow the same common CLI that is described [here](/powerapi_howitworks.html#command-line-arguments)
+RAPL-formula CLI follow the same common CLI that is described [here](/formula_cli.html)
 
-### Input Data
+### Input/output data type
 
-RAPL-formula use data collected with the RAPL HWPC counter of intel CPUs.
-
-### Output Data
-
-Use RAPL data collected with the hwpc-sensor and convert it into power
-consumption measures (in Watt). The power consumption measures are store in a
-MongoDB database.
+Rapl formula need one input that contain hwpc report and one output that contain power report
 
 ## Source
 
