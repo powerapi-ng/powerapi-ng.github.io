@@ -18,8 +18,7 @@ PowerAPI supports the acquisition of raw metrics from a wide diversity of sensor
 As a middleware toolkit, PowerAPI offers the capability of assembling power meters *«à la carte»* to accommodate user requirements.
 
 # PowerAPI
-
-PowerAPI is an open-source project developed by the [Spirals research group](https://team.inria.fr/spirals) (University of Lille 1 and Inria) and fully managed with [setuptools](https://pypi.org/project/setuptools/).
+PowerAPI is an open-source project developed by the [Spirals research group](https://team.inria.fr/spirals) (University of Lille and Inria) and fully managed with [setuptools](https://pypi.org/project/setuptools/).
 
 The documentation is available [here](https://powerapi.readthedocs.io).
 
