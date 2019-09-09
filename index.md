@@ -19,7 +19,7 @@ As a middleware toolkit, PowerAPI offers the capability of assembling power mete
 
 # PowerAPI
 
-PowerAPI is an open-source project developed by the [Spirals research group](https://team.inria.fr/spirals) (University of Lille 1 and Inria) and fully managed with [setuptools](https://pypi.org/project/setuptools/).
+PowerAPI is an open-source project developed by the [Spirals research group](https://team.inria.fr/spirals) (University of Lille and Inria) and fully managed with [setuptools](https://pypi.org/project/setuptools/).
 
 The documentation is available [here](https://powerapi.readthedocs.io).
 
@@ -32,6 +32,7 @@ If you would like to contribute code you can do so through GitHub by forking the
 When submitting code, please make every effort to follow existing conventions and style in order to keep the code as readable as possible.
 
 ## Publications
+* **[The Next 700 CPU Power Models](https://hal.inria.fr/hal-01827132v2)**: M. Colmant, R. Rouvoy, M. Kurpicz, A. Sobe, P. Felber, L. Seinturier. *Elsevier Journal of Systems and Software* (JSS). 144(10):382-396, Elsevier.
 * **[WattsKit: Software-Defined Power Monitoring of Distributed Systems](https://hal.inria.fr/hal-01439889)**: M. Colmant, P. Felber, R. Rouvoy, L. Seinturier. *IEEE/ACM International Symposium on Cluster, Cloud and Grid Computing* (CCGrid). April 2017, Spain, France. pp.1-14.
 * **[Process-level Power Estimation in VM-based Systems](https://hal.inria.fr/hal-01130030)**: M. Colmant, M. Kurpicz, L. Huertas, R. Rouvoy, P. Felber, A. Sobe. *European Conference on Computer Systems* (EuroSys). April 2015, Bordeaux, France. pp.1-14.
 * **[Monitoring Energy Hotspots in Software](https://hal.inria.fr/hal-01069142)**: A. Noureddine, R. Rouvoy, L. Seinturier. *Journal of Automated Software Engineering*, Springer, 2015, pp.1-42.
