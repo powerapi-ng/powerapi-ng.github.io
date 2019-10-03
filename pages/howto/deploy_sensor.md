@@ -38,7 +38,7 @@ assume that the URI of this instance is `mongo://ADDR`
 
 Deploy the sensor with docker with the following command line :
 
-	docker run --privileged -td -v /sys:/sys -v /var/lib/docker/containers:/var/lib/docker/containers:ro -v /tmp/powerapi-sensor-reporting:/reporting powerapi/hwpc-sensor -n $NAME -r "mongodb" -U "mongodb://ADDR" -D $DB -C $COLLECTION -s "rapl" -o -e $HARDWARE_1 -e $HARDWARE_2 ... -e $HARDWARE_N
+	docker run --net=host --name powerapi-sensor --privileged -td -v /sys:/sys -v /var/lib/docker/containers:/var/lib/docker/containers:ro -v /tmp/powerapi-sensor-reporting:/reporting powerapi/hwpc-sensor -n $NAME -r "mongodb" -U "mongodb://ADDR" -D $DB -C $COLLECTION -s "rapl" -o -e $HARDWARE_1 -e $HARDWARE_2 ... -e $HARDWARE_N
 	
 with : 
 

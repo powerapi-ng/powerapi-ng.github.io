@@ -28,7 +28,7 @@ tutorial, the URI of the mongoDB instance will be `mongo://ADDR`
 
 You can launch the RAPL-formula with the following command : 
 
-	docker run -td --net=powerapi --name powerapi-formula powerapi/rapl-formula --input mongodb -u mongodb://ADDR -d $INPUT_DB -c $INPUT_COL --output mongodb -u mongodb://ADDR -d $OUTPUT_DB -c $OUTPUT_COL -s
+	docker run -td --net=host --name powerapi-formula powerapi/rapl-formula --input mongodb -u mongodb://ADDR -d $INPUT_DB -c $INPUT_COL --output mongodb -u mongodb://ADDR -d $OUTPUT_DB -c $OUTPUT_COL -s
 	
 with : 
 
