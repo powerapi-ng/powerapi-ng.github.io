@@ -17,6 +17,8 @@ This tutorial assumes that you have access to a mongoDB instance that is remotel
 accessible by all nodes you want to monitor.
 
 CPUs of Monitored nodes must have an intel Sandy Bridge architecture or higher.
+The sensor must be run on a Linux operating system that is not on a virtual
+environement.
 
 ## Monitor a single node
 

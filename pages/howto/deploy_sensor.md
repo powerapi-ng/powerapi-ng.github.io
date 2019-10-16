@@ -15,14 +15,22 @@ information correlated to power consumption. You need to deploy a formula to
 compute power consumption from data retrieved by sensors (see
 [here](howto_deploy_rapl_formula.html)).
 
+## Prerequisites
+This tutorial assumes that you have access to a mongoDB instance that is
+remotely accessible by all nodes you want to monitor.
+
+CPUs of Monitored nodes must have an intel Sandy Bridge architecture or higher.
+
+The sensor must be run on a Linux operating system that is not on a virtual
+environement.
+
 ## RAPL Events
 
 The global power consumption are given by a CPU internal sensor : RAPL (Running
-Average Power Limit). The RAPL sensor is available only on Intel CPU with Sandy
-Bridge architecture or higher. So you can't deploy HWPC-sensor on a CPU with an
-architecture older than Sandy Bridge or a non-intel architecture.
+Average Power Limit).
 
-RAPL sensor could be used to monitor some particular harwdware power consumption (depend of you CPU architecture) such as :
+RAPL sensor could be used to monitor some particular harwdware power consumption
+(depend of you CPU architecture) such as :
 
 - Socket power consumption
 - DRAM power consumption
