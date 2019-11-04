@@ -54,6 +54,6 @@ Click on the "add Query" button and write the following query on the Query field
 
 ![add_query](/images/add_query.png)
 
-To view the power consumption evolution in real time, you can change the range of the visualisation to `last 5 minutes` and the refresh dashboard parameter to `5s`. This parameters are on the top right corner of the UI
+To view the power consumption evolution in real time, you can change the range of the visualisation to `last 5 minutes` and the refresh dashboard parameter to `5s`. This parameter are on the top right corner of the UI
 
 ![add_query](/images/refresh.png)

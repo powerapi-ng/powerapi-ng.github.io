@@ -7,7 +7,7 @@ permalink: howto_deploy_rapl_formula.html
 
 ## Introduction
 
-This tutorial present you how to deploy a formula : [RAPL-formula](rapl.html) to
+This tutorial presents you how to deploy a formula : [RAPL-formula](rapl.html) to
 compute power consumption estimation from data collected by an HWPC sensor (see
 [this tutorial](howto_deploy_hwpc_sensor.html) to see how to deploy the HWPC sensor)
 
@@ -19,8 +19,8 @@ we will see how to retrieve this data with the mongodb client.
 ## Deploy the RAPL-Formula
 
 As explained [here](powerapi_howitworks.html#power-meter-architecture) The power
-meter need two mongoDB databases to connect the formula to the sensor and to
-store the power consumption information computed by the formula.
+meter need two mongoDB databases. One to connect the formula to the sensor and
+an other to store the power consumption information computed by the formula.
 
 We assume that this two databases are hosted on the same mongoDB instance but
 different instances could be used for each database. In the rest of its
@@ -37,8 +37,6 @@ with :
 - `$OUTPUT_DB` : mongodb database that will store the power consumption estimation
 - `$OUTPUT_COL`	: mongodb collection that will store the power consumption estimation
 
-
-
 ## Retrieve power consumption estimation with MongoDB client 
 
 To access to the power consumption information computed by the power meter just
@@ -46,7 +44,6 @@ connect a mongo client to the mongoDB instance and retrieve the data of the
 `power_consumption` collection of the `output_db` database.
 
 Power information data are structured as this json format : 
-
 
 	{
         "_id" : XXX # MongoDB object identifier (string)

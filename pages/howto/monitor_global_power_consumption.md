@@ -9,12 +9,12 @@ permalink: monitor_global_power_consumption.html
 In this tutorial, we will see how to deploy a complete power meter to monitor
 the power consumption of a single node or a cluster of node.
 
-This tutorial will redirect you to other tutorial that explain how to deploy
+This tutorial will redirect you to other tutorials that explain how to deploy
 each part of the power meter (the sensor and the formula).
 
 ## Prerequisites
 This tutorial assumes that you have access to a mongoDB instance that is remotely
-accessible by all nodes you want to monitor.
+accessible from all nodes you want to monitor.
 
 CPUs of Monitored nodes must have an intel Sandy Bridge architecture or higher.
 The sensor must be run on a Linux operating system that is not on a virtual

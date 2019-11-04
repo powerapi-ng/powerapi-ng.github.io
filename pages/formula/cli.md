@@ -7,10 +7,10 @@ permalink: formula_cli.html
 
 Every formula have a common command line interface (CLI) with the same
 parameters. This interface help you to configure the formula (eg: specify its
-input and outputs). This section present you this common parameters that you can
-use with every formula.
+inputs and outputs). This section present you these common parameters that you can
+use with every formulas.
 
-Some formula may use specific parameters. These parameters are described on their
+Some formulas may use specific parameters. These parameters are described on their
 formula documentation. Just place them after the common CLI arguments.
 
 The following example show you how to use the formula parameters :
@@ -22,19 +22,19 @@ Replace `FORMULA_NAME` with the name of the used formula in the
 following commands)
 
 The `--input` parameters specify information about the database used to store data
-collected by the hwpc-sensor. The first argument after `--input` is the type of the
+collected by sensors. The first argument after `--input` is the type of the
 database. Other parameters could be added to specify information about the
-database. Theses parameters depends of the database type and are described below.
+database. Theses parameters depends on the database type and are described below.
 
 The `--output` parameter specify information about the database used to store the
 power consumption computed by the formula. As `--input` parameter, it take the
-database type as first argument and other parameters depending of the database
+database type as first argument and other parameters depending on the database
 type.
 
 
 ## Optional parameters
 
-List of the optional parameters used to enable specific modes:
+List of the optional parameters used to enable specific modes
 
 - `-s` or `--stream` : connect to the database with "stream mode" (see [here](/powerapi_howitworks.html#sensor-connection))
 - `-v` or `--verbose`: verbose mode (for debug)

@@ -7,7 +7,7 @@ permalink: howto_deploy_hwpc_sensor.html
 
 ## Introduction
 
-This tutorial present you how to deploy a sensor : [HWPC Sensor](hwpc.html) to
+This tutorial presents you how to deploy a sensor : [HWPC Sensor](hwpc.html) to
 retrieve information about global power consumption of a whole machine.
 
 Sensors are the first part of a power meter, their goal is to retrieve raw
@@ -17,26 +17,26 @@ compute power consumption from data retrieved by sensors (see
 
 ## Prerequisites
 This tutorial assumes that you have access to a mongoDB instance that is
-remotely accessible by all nodes you want to monitor.
+remotely accessible from all units you want to monitor.
 
-CPUs of Monitored nodes must have an intel Sandy Bridge architecture or higher.
+CPUs of Monitored units must have an intel Sandy Bridge architecture or higher.
 
 The sensor must be run on a Linux operating system that is not on a virtual
-environement.
+environment.
 
 ## RAPL Events
 
 The global power consumption are given by a CPU internal sensor : RAPL (Running
 Average Power Limit).
 
-RAPL sensor could be used to monitor some particular harwdware power consumption
-(depend of you CPU architecture) such as :
+RAPL sensor could be used to monitor the power consumption of some particular CPU domain 
+(depend of your CPU architecture) such as :
 
 - Socket power consumption
-- DRAM power consumption
+- RAM power consumption
 - Integrated graphics processing unit
 
-You can list the hardware that you can monitor with the command `perf list power`
+You can list the domain that you can monitor with the command `perf list power`
 
 ## Deploy the HWPC sensor
 

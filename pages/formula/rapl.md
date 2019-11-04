@@ -8,7 +8,7 @@ summary: "A powerAPI formula using RAPL counters to provides power consumption i
 
 ## Install and run
 
-You can directly run a docker containing the formula with the following
+You can directly run a docker container that contains the formula with the following
 command : 
 
 	docker run powerapi/rapl-formula args ...
@@ -30,7 +30,7 @@ RAPL-formula CLI follow the same common CLI that is described [here](/formula_cl
 
 ### Input/output data type
 
-Rapl formula need one input that contain hwpc report and one output that contain power report
+Rapl formula need one input that handles hwpc report and one output that handles power report
 
 ## Source
 
