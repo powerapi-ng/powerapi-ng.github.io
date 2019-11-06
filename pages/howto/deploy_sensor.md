@@ -7,48 +7,40 @@ permalink: howto_deploy_hwpc_sensor.html
 
 ## Introduction
 
-This tutorial presents you how to deploy a sensor : [HWPC Sensor](hwpc.html) to
-retrieve information about global power consumption of a whole machine.
+This tutorial presents you how to deploy a [power sensor](hwpc.html) to acquire metrics about global power consumption of a node.
 
-Sensors are the first part of a power meter, their goal is to retrieve raw
-information correlated to power consumption. You need to deploy a formula to
-compute power consumption from data retrieved by sensors (see
-[here](howto_deploy_rapl_formula.html)).
+Sensors are the components of a power meter in charge of collecting raw metrics correlated to power consumption.
+You need to deploy a formula to compute power consumption from data retrieved by sensors (see [here](howto_deploy_rapl_formula.html)).
 
 ## Prerequisites
-This tutorial assumes that you have access to a mongoDB instance that is
-remotely accessible from all units you want to monitor.
+This tutorial assumes that you have access to a mongoDB instance that is remotely accessible from all units you want to monitor.
 
-CPUs of Monitored units must have an intel Sandy Bridge architecture or higher.
+CPUs of monitored units must have an intel Sandy Bridge architecture or higher.
 
-The sensor must be run on a Linux operating system that is not on a virtual
-environment.
+The sensor must be run on a Linux operating system that is not on a virtual environment.
 
-## RAPL Events
+## RAPL events
 
-The global power consumption are given by a CPU internal sensor : RAPL (Running
-Average Power Limit).
+The global power consumption are given by a CPU internal sensor : RAPL (*Running Average Power Limit*).
 
 RAPL sensor could be used to monitor the power consumption of some particular CPU domain 
-(depend of your CPU architecture) such as :
+(depend of your CPU architecture), such as:
 
 - Socket power consumption
 - RAM power consumption
 - Integrated graphics processing unit
 
-You can list the domain that you can monitor with the command `perf list power`
+You can list the domains that you can monitor with the command `perf list power`.
 
-## Deploy the HWPC sensor
+## Deploy the sensor
 
-This section will show you how to launch the HWPC-sensor to monitor hardware
-power consumption. You need a MongoDB instance to store the collected data. We
-assume that the URI of this instance is `mongo://ADDR`
+This section will show you how to launch the HWPC-sensor to monitor hardware power consumption. You need a MongoDB instance to store the collected data. We assume that the URI of this instance is `mongo://ADDR`
 
-Deploy the sensor with docker with the following command line :
+Deploy the sensor with docker with the following command line:
 
 	docker run --net=host --name powerapi-sensor --privileged -td -v /sys:/sys -v /var/lib/docker/containers:/var/lib/docker/containers:ro -v /tmp/powerapi-sensor-reporting:/reporting powerapi/hwpc-sensor -n $NAME -r "mongodb" -U "mongodb://ADDR" -D $DB -C $COLLECTION -s "rapl" -o -e $HARDWARE_1 -e $HARDWARE_2 ... -e $HARDWARE_N
 	
-with : 
+with: 
 
 - `$NAME` : name of the sensor, if you use multiple sensors and connect them to one formula, this parameter must be different for each sensor.
 - `$DB` : name of the mongodb database used to store the collected data
@@ -60,6 +52,6 @@ with :
 	- RAPL_ENERGY_GPU : to monitor integrated graphics processing unit
 
 
-## Next step : deploy the formula
+## Next step: deploy the formula
 
-Data retrieved by HWPC-sensor need to be handle by a RAPL formula, see [here](howto_deploy_rapl_formula.html) to complete the deployment of a whole power meter.
+Metrics retrieved by the sensor need to be handle by a [RAPL formula](howto_deploy_rapl_formula.html) to complete the deployment of the power meter.
