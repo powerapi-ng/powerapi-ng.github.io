@@ -1,8 +1,8 @@
 ---
-title: "How to onitor docker containers power consumption"
+title: "How to monitor Docker containers power consumption"
 keywords: homepage
 sidebar: home_sidebar 
 permalink: smartwatts_tuto_intro.html
 ---
 
-Comming Soon ...
+Coming soon...
