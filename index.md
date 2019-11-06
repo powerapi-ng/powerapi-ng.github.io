@@ -12,22 +12,20 @@ PowerAPI is a middleware toolkit for building software-defined power meters.
 Software-defined power meters are configurable software libraries that can estimate the power consumption of software in real-time.
 As a middleware toolkit, PowerAPI offers the capability of assembling power meters *«à la carte»* to accommodate user requirements.
 
-## Documentation Plan
+## Getting started
 
-You will find here the documentation of the PowerAPI toolkit
+Before starting, we encourage you to read about [software-defined power meters](powerapi_howitworks.html).
 
-First of all, an introduction on what is a power meter and how to use it could be find [here](powerapi_howitworks.html)
+To deploy a power meter reporting the global power consumption on a single machine or a cluster of nodes, follow this [tutorial](monitor_global_power_consumption.html).
 
-To start assembling a simple power meter that measure power consumption of a a single machine or the power consumption of a cluster of machine, follow this [tutorial](monitor_global_power_consumption.html)
+To deploy a power meter reporting the power consumption of individual containers running on a machine or a cluster, follow this [tutorial](smartwatts_tuto_intro.html)
 
-To assemble a power meter that measure power consumption of all the docker containers deployed on one machine or a cluster of machine, follow this [tutorial](smartwatts_tuto_intro.html)
+If you want more information about advanced features of PowerAPI, a more comprehensive documentation is available in the "Advanced documentation" for:
 
-If you want more information about how each PowerAPI component works, a complete documentation is available in the "Advanced documentation" for the fol owing components :
-
-- [HWPC sensor](hwpc.html)
-- [formula command line interface](formula_cli.html)
-- [rapl formula](rapl.html)
-- [smartwatts formula](smartwatts.html)
+- [PowerAPI sensor](hwpc.html)
+- [PowerAPI formula CLI](formula_cli.html)
+- [RAPL formula](rapl.html)
+- [SmartWatts formula](smartwatts.html)
 
 
 ## Mailing list
