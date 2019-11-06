@@ -16,16 +16,17 @@ As a middleware toolkit, PowerAPI offers the capability of assembling power mete
 
 Before starting, we encourage you to read about [software-defined power meters](powerapi_howitworks.html).
 
-To deploy a power meter reporting the global power consumption on a single machine or a cluster of nodes, follow this [tutorial](monitor_global_power_consumption.html).
+Our getting started tutorials currently includes instructions:
 
-To deploy a power meter reporting the power consumption of individual containers running on a machine or a cluster, follow this [tutorial](smartwatts_tuto_intro.html)
+- To deploy a power meter reporting the global power consumption on a single machine or a cluster of nodes, follow this [tutorial](monitor_global_power_consumption.html);
+- To deploy a power meter reporting the power consumption of individual containers running on a machine or a cluster, follow this [tutorial](smartwatts_tuto_intro.html).
 
 If you want more information about advanced features of PowerAPI, a more comprehensive documentation is available in the "Advanced documentation" for:
 
-- [PowerAPI sensor](hwpc.html)
-- [PowerAPI formula CLI](formula_cli.html)
-- [RAPL formula](rapl.html)
-- [SmartWatts formula](smartwatts.html)
+- [PowerAPI sensor](hwpc.html),
+- [PowerAPI formula CLI](formula_cli.html),
+- [RAPL formula](rapl.html),
+- [SmartWatts formula](smartwatts.html).
 
 
 ## Mailing list
