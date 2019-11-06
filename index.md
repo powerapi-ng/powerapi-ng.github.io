@@ -8,26 +8,30 @@ layout: homepage
 
 <img src="https://rawgit.com/Spirals-Team/powerapi/master/resources/logo/PowerAPI-logo.png" alt="Powerapi" width="300px">
 
-[![Join the chat at https://gitter.im/Spirals-Team/powerapi](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Spirals-Team/powerapi?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![License: BSD 3](https://img.shields.io/pypi/l/powerapi.svg)](https://opensource.org/licenses/BSD-3-Clause)
-[![Build Status](https://img.shields.io/circleci/project/github/powerapi-ng/powerapi.svg)](https://circleci.com/gh/powerapi-ng/powerapi)
-
 PowerAPI is a middleware toolkit for building software-defined power meters.
 Software-defined power meters are configurable software libraries that can estimate the power consumption of software in real-time.
-PowerAPI supports the acquisition of raw metrics from a wide diversity of sensors (*eg.*, physical meters, processor interfaces, hardware counters, OS counters) and the delivery of power consumptions via different channels (including file system, network, web, graphical).
 As a middleware toolkit, PowerAPI offers the capability of assembling power meters *«à la carte»* to accommodate user requirements.
 
-# PowerAPI
+## Documentation Plan
 
-PowerAPI is an open-source project developed by the [Spirals research group](https://team.inria.fr/spirals) (University of Lille and Inria) and fully managed with [setuptools](https://pypi.org/project/setuptools/).
+You will find here the documentation of the PowerAPI toolkit
+
+First of all, an introduction on what is a power meter and how to use it could be find [here](powerapi_howitworks.html)
+
+To start assembling a simple power meter that measure power consumption of a a single machine or the power consumption of a cluster of machine, follow this [tutorial](monitor_global_power_consumption.html)
+
+To assemble a power meter that measure power consumption of all the docker containers deployed on one machine or a cluster of machine, follow this [tutorial](smartwatts_tuto_intro.html)
+
+If you want more information about how each PowerAPI component works, a complete documentation is available in the "Advanced documentation" for the fol owing components :
+
+- [HWPC sensor](hwpc.html)
+- [formula command line interface](formula_cli.html)
+- [rapl formula](rapl.html)
+- [smartwatts formula](smartwatts.html)
+
 
 ## Mailing list
 You can follow the latest news and asks questions by subscribing to our <a href="mailto:sympa@inria.fr?subject=subscribe powerapi">mailing list</a>.
-
-## Contributing
-If you would like to contribute code you can do so through GitHub by forking the repository and sending a pull request.
-
-When submitting code, please make every effort to follow existing conventions and style in order to keep the code as readable as possible.
 
 ## Publications
 * **[The Next 700 CPU Power Models](https://hal.inria.fr/hal-01827132v2)**: M. Colmant, R. Rouvoy, M. Kurpicz, A. Sobe, P. Felber, L. Seinturier. *Elsevier Journal of Systems and Software* (JSS). 144(10):382-396, Elsevier.
@@ -49,42 +53,7 @@ PowerAPI is used in a variety of projects to address key challenges of GreenIT:
 * [Web Energy Archive](http://webenergyarchive.com) ranks popular websites based on the energy footpring they imposes to browsers
 * [Greenspector](http://greenspector.com) optimises the power consumption of software by identifying potential energy leaks in the source code.
 
-## Acknowledgments
-We all stand on the shoulders of giants and get by with a little help from our friends. PowerAPI is written in [Python](https://www.python.org/) (version 3.7 under [PSF license](https://docs.python.org/3/license.html)) and built on top of:
-* [pyzmq](https://github.com/zeromq/pyzmq) (version 17.1 under [3-Clause BSD license](https://opensource.org/licenses/BSD-3-Clause)), for socket communication.
-* [pymongo](https://github.com/mongodb/mongo-python-driver) (version 3.7.2 under [Apache 2 license](https://github.com/mongodb/mongo-python-driver/blob/master/LICENSE)), for using a python API for mongoDB.
-
-## Licence
+## Credits and Licence
+PowerAPI is an open-source project developed by the [Spirals research group](https://team.inria.fr/spirals) (University of Lille and Inria)
 
 This software is licensed under the BSD 3-Clause License, quoted below.
-
-> BSD 3-Clause License
->
-> Copyright (c) 2018-2019, INRIA
-> Copyright (c) 2018-2019, University of Lille
-> All rights reserved.
->
-> Redistribution and use in source and binary forms, with or without
-> modification, are permitted provided that the following conditions are met:
->
-> * Redistributions of source code must retain the above copyright notice, this
->   list of conditions and the following disclaimer.
->
-> * Redistributions in binary form must reproduce the above copyright notice,
->   this list of conditions and the following disclaimer in the documentation
->   and/or other materials provided with the distribution.
->
-> * Neither the name of the copyright holder nor the names of its
->   contributors may be used to endorse or promote products derived from
->   this software without specific prior written permission.
->
-> THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-> AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-> IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-> DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-> FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-> DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-> SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-> CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-> OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-> OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

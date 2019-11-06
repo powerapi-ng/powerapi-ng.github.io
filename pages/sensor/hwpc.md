@@ -96,6 +96,11 @@ the events that are part of it.
 Usage example : `hwpc-sensor ... -c GROUP1 -e GROUP1_EVENT1 -e GROUP1_EVENT2 -c
 GROUP2 -e GROUP2_EVENT1 ...`
 
+The events to monitor depend of the formula you are using with the HWPC-sensor
+and your architecture. In each formula tutorial, we will give you a command line
+to launch the sensor. This command line contains the events that are necessary
+to launch the formula.
+
 ### Specify Power consumption monitoring
 
 To make the sensor monitor CPU power consumption, you have to specify an event

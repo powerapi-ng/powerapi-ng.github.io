@@ -1,5 +1,5 @@
 ---
-title: "How to deploy RAPL-Formula to compute hardware power information"
+title: "How to deploy RAPL-Formula to compute global power information"
 keywords: homepage
 sidebar: home_sidebar 
 permalink: howto_deploy_rapl_formula.html

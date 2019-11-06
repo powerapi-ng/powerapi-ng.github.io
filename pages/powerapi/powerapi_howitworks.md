@@ -8,6 +8,12 @@ PowerAPI. We present the different components of a power meter and how you can
 connect them to build a workflow for your own needs."
 ---
 
+A power meter is an application build with the PowerAPI components that can measure
+the power consumption of software running on a single machine or on a cluster of
+machine.
+
+This section present each PowerAPI component type and how connect them to build
+a power meter.
 
 ## Power meter Architecture
 

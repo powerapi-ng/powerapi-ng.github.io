@@ -7,15 +7,40 @@ entries:
     output: web
     folderitems:
 
-    - title: Overview
-      output: web
-      url: /index.html
-
     - title: How it works ?
       output: web
       url: /powerapi_howitworks.html
+      
+      
+  - title: How to Monitor global power consumption
+    output: web
+    folderitems:
 
-  - title: Sensors
+    - title: Introduction
+      output: web
+      url: /monitor_global_power_consumption.html
+
+    - title: Deploy HWPC-sensor to get hardware power information
+      output: web
+      url: /howto_deploy_hwpc_sensor.html
+
+    - title: Deploy RAPL-formula to compute global power information
+      output: web
+      url: /howto_deploy_rapl_formula.html
+
+    - title: Visualize power consumption on grafana dashboard
+      output: web
+      url: /howto_connect_to_grafana.html
+
+  - title: How to Monitor docker containers power consumption
+    output: web
+    folderitems:
+
+    - title: Introduction
+      output: web
+      url: /smartwatts_tuto_intro.html
+        
+  - title: Sensor (Advanced documentation)
     output: web
     folderitems:
 
@@ -23,7 +48,7 @@ entries:
       output: web
       url: /hwpc.html
 
-  - title: Formula
+  - title: Formula (Advanced documentation)
     output: web
     folderitems:
 
@@ -34,23 +59,9 @@ entries:
     - title: RAPL-formula
       output: web
       url: /rapl.html
+
+    - title: Smartwatts-formula
+      output: web
+      url: /smartwatts.html
       
-  - title: Howto
-    output: web
-    folderitems:
 
-    - title: Monitor global power consumption of one or more nodes
-      output: web
-      url: /monitor_global_power_consumption.html
-
-    - title: Deploy HWPC-sensor to get hardware power information
-      output: web
-      url: /howto_deploy_hwpc_sensor.html
-
-    - title: Deploy RAPL-formula to compute hardware power information
-      output: web
-      url: /howto_deploy_rapl_formula.html
-
-    - title: Visualize power consumption on grafana dashboard
-      output: web
-      url: /howto_connect_to_grafana.html
