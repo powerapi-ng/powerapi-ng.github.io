@@ -1,5 +1,5 @@
 ---
-title: "How to deploy RAPL-Formula to compute global power information"
+title: "Deploying the RAPL formula to report global power consumption"
 keywords: homepage
 sidebar: home_sidebar 
 permalink: howto_deploy_rapl_formula.html
@@ -7,43 +7,33 @@ permalink: howto_deploy_rapl_formula.html
 
 ## Introduction
 
-This tutorial presents you how to deploy a formula : [RAPL-formula](rapl.html) to
-compute power consumption estimation from data collected by an HWPC sensor (see
-[this tutorial](howto_deploy_hwpc_sensor.html) to see how to deploy the HWPC sensor)
+This tutorial describes how to deploy the [RAPL formula](rapl.html) to estimate power consumption from metrics collected by the [sensor](howto_deploy_hwpc_sensor.html).
 
-We describe how to deploy a RAPL-formula and connect to a mongodb database that
-contains measure collected by a HWPC-sensor. The power consumption estimations
-computed by the formula will be stored in another mongodb database. At the end,
-we will see how to retrieve this data with the mongodb client.
+We describe how to deploy a RAPL formula that connects to a MongoDB instance to read the raw metrics and to store the estimated values.
 
-## Deploy the RAPL-Formula
+## Deploy the RAPL formula
 
-As explained [here](powerapi_howitworks.html#power-meter-architecture) The power
-meter need two mongoDB databases. One to connect the formula to the sensor and
-an other to store the power consumption information computed by the formula.
+The default architecture of PowerAPI assumes the availability of [two MongoDB collections](powerapi_howitworks.html#power-meter-architecture) to feed the formula from sensor metrics and to report the power consumption estimations.
 
-We assume that this two databases are hosted on the same mongoDB instance but
-different instances could be used for each database. In the rest of its
-tutorial, the URI of the mongoDB instance will be `mongo://ADDR`
+We assume that these two collections are hosted on the same mongoDB instance, but different instances can be used.
+In the following, the MongoDB instance URI is `mongo://ADDR`.
 
-You can launch the RAPL-formula with the following command : 
+You can deployed the RAPL formula with the following command: 
 
 	docker run -td --net=host --name powerapi-formula powerapi/rapl-formula --input mongodb -u mongodb://ADDR -d $INPUT_DB -c $INPUT_COL --output mongodb -u mongodb://ADDR -d $OUTPUT_DB -c $OUTPUT_COL -s
 	
-with : 
+with: 
 
-- `$INPUT_DB` : mongodb database that store hwpc sensor data
-- `$INPUT_COL` : mongodb collection that store hwpc sensor data
-- `$OUTPUT_DB` : mongodb database that will store the power consumption estimation
-- `$OUTPUT_COL`	: mongodb collection that will store the power consumption estimation
+- `$INPUT_DB` : MongoDB database that stores the input sensor metrics,
+- `$INPUT_COL` : MongoDB collection that store the input sensor metrics,
+- `$OUTPUT_DB` : MongoDB database that will store the output power consumption estimations,
+- `$OUTPUT_COL`	: MongoDB collection that will store the output power consumption estimations.
 
 ## Retrieve power consumption estimation with MongoDB client 
 
-To access to the power consumption information computed by the power meter just
-connect a mongo client to the mongoDB instance and retrieve the data of the
-`power_consumption` collection of the `output_db` database.
+To access to the power consumption estimations, you can connect a mongo client to the mongoDB instance and retrieve the esimtations from the `$OUTPUT_COL` collection of the `$OUTPUT_DB` database.
 
-Power information data are structured as this json format : 
+Power estimations are structured as JSON documents: 
 
 	{
         "_id" : XXX # MongoDB object identifier (string)
@@ -55,7 +45,7 @@ Power information data are structured as this json format :
         "power" : Z.ZZZ # power consumption expressed in watts (float)
 	}
 	
-For example to display a power consumption report with the mongo client :
+For example, to display a power consumption report from the mongo client, execute:
 
 	mongo ADDR
 	use output_db
