@@ -25,7 +25,7 @@ To monitor the global power consumption of a single node, you can deploy all the
 * **Step 3:** [Visualize the power consumption of your node](howto_connect_to_grafana.html).
 
 
-## Monitor a Cluster of two nodes
+## Monitoring a cluster
 
 To monitor the global power consumption of a cluster, you need to follow almost the same step as to monitor a single node:
 * **Step 1:** [Deploy one sensor per monitored node and connect it to the mongoDB instance](/howto_deploy_hwpc_sensor.html). Label to each sensor (using the option `-n`) to track the power consumption per node;
