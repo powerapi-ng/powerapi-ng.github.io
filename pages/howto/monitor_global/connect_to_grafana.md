@@ -2,7 +2,7 @@
 title: "Visualizing power consumptions from Grafana"
 keywords: homepage
 sidebar: home_sidebar 
-permalink: howto_connect_to_grafana.html
+permalink: howto_monitor_global/connect_to_grafana.html
 ---
 
 ## Introduction

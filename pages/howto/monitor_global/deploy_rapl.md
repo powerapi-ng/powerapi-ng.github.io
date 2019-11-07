@@ -2,18 +2,18 @@
 title: "Deploying the RAPL formula to report global power consumption"
 keywords: homepage
 sidebar: home_sidebar 
-permalink: howto_deploy_rapl_formula.html
+permalink: howto_monitor_global/deploy_formula.html
 ---
 
 ## Introduction
 
-This tutorial describes how to deploy the [RAPL formula](rapl.html) to estimate power consumption from metrics collected by the [sensor](howto_deploy_hwpc_sensor.html).
+This tutorial describes how to deploy the [RAPL formula](/rapl.html) to estimate power consumption from metrics collected by the [sensor](/howto_monitor_global/deploy_sensor.html).
 
 We describe how to deploy a RAPL formula that connects to a MongoDB instance to read the raw metrics and to store the estimated values.
 
 ## Deploy the RAPL formula
 
-The default architecture of PowerAPI assumes the availability of [two MongoDB collections](powerapi_howitworks.html#power-meter-architecture) to feed the formula from sensor metrics and to report the power consumption estimations.
+The default architecture of PowerAPI assumes the availability of [two MongoDB collections](/powerapi_howitworks.html#power-meter-architecture) to feed the formula from sensor metrics and to report the power consumption estimations.
 
 We assume that these two collections are hosted on the same mongoDB instance, but different instances can be used.
 In the following, the MongoDB instance URI is `mongo://ADDR`.
@@ -50,3 +50,8 @@ For example, to display a power consumption report from the mongo client, execut
 	mongo ADDR
 	use output_db
 	db.power_consumption.findOne()
+
+## Next step: Visualisation
+
+If you want tu use a grafana instance to visualize the power consumption estimation, follow this [tutorial](/howto_monitor_global/connect_to_grafana.html)
+

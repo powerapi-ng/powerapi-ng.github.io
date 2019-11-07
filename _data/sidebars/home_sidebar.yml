@@ -9,7 +9,7 @@ entries:
 
     - title: How it works ?
       output: web
-      url: /powerapi_howitworks.html
+      url: \/powerapi_howitworks.html
       
       
   - title: How to Monitor global power consumption
@@ -18,19 +18,19 @@ entries:
 
     - title: Introduction
       output: web
-      url: /monitor_global_power_consumption.html
+      url: \/howto_monitor_global\/intro.html
 
     - title: Deploy HWPC-sensor to get hardware power information
       output: web
-      url: /howto_deploy_hwpc_sensor.html
+      url: \/howto_monitor_global\/deploy_sensor.html
 
     - title: Deploy RAPL-formula to compute global power information
       output: web
-      url: /howto_deploy_rapl_formula.html
+      url: \/howto_monitor_global\/deploy_formula.html
 
     - title: Visualize power consumption on grafana dashboard
       output: web
-      url: /howto_connect_to_grafana.html
+      url: \/howto_monitor_global\/connect_to_grafana.html
 
   - title: How to Monitor docker containers power consumption
     output: web
@@ -38,7 +38,7 @@ entries:
 
     - title: Introduction
       output: web
-      url: /smartwatts_tuto_intro.html
+      url: \/howto_monitor_docker\/intro.html
         
   - title: Sensor (Advanced documentation)
     output: web
@@ -46,7 +46,7 @@ entries:
 
     - title: HWPC-sensor
       output: web
-      url: /hwpc.html
+      url: \/hwpc.html
 
   - title: Formula (Advanced documentation)
     output: web
@@ -54,14 +54,14 @@ entries:
 
     - title: Formula command line interface
       output: web
-      url: /formula_cli.html
+      url: \/formula_cli.html
       
     - title: RAPL-formula
       output: web
-      url: /rapl.html
+      url: \/rapl.html
 
     - title: Smartwatts-formula
       output: web
-      url: /smartwatts.html
+      url: \/smartwatts.html
       
 
