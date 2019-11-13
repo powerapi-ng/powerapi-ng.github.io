@@ -23,8 +23,15 @@ Before deploying the sensor, a MongoDB instance should be available. We assume t
 
 Then, deploy the sensor as a Docker container with the following command:
 
-	docker run --net=host --name powerapi-sensor --privileged -td -v /sys:/sys -v /var/lib/docker/containers:/var/lib/docker/containers:ro -v /tmp/powerapi-sensor-reporting:/reporting powerapi/hwpc-sensor -n $NAME -r "mongodb" -U "mongodb://ADDR" -D $DB -C $COLLECTION -s "rapl" -o -e RAPL_ENERGY_PKG
-	
+	docker run --privileged --net=host --name powerapi-sensor --privileged -td \
+	           -v /sys:/sys \
+			   -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
+			   -v /tmp/powerapi-sensor-reporting:/reporting powerapi/hwpc-sensor \
+			   -n $NAME \
+			   -r "mongodb" -U "mongodb://ADDR" -D $DB -C $COLLECTION \
+			   -s "rapl" -o -e RAPL_ENERGY_PKG
+{: class="copyable"}
+
 with: 
 
 - `$NAME` : name of the sensor instance, if you use multiple sensors and connect them to one formula, this parameter must be different for each sensor.

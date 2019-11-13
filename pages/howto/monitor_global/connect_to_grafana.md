@@ -24,6 +24,7 @@ The InfluxDB instance listen on port `1234` and Grafana instance listen on port 
 Deploy the formula you want with the following parameter to the command line: 
 
 	--output influxdb --uri localhost --port 1234 --db power_consumption --name grafana_output
+{: class="copyable"}
 
 ## Connect Grafana to the InfluxDB instance
 

@@ -15,7 +15,11 @@ formula documentation. Just place them after the common CLI arguments.
 
 The following example show you how to use the formula parameters :
 
-	(python3 -m/docker run) FORMULA_NAME -v -s --input input_database_type ... --output output_database_type1 ... --output output_database_type2 ... --formula_specific_parameter1 ... --formula_specific_parameterN
+	(python3 -m/docker run) FORMULA_NAME -v -s \
+	                                     --input input_database_type database_args ... \
+	                                     --output output_database_type1 database_args ... \
+	                                     --output output_database_type2 database_args ... \
+	                                     --formula_specific_parameter1 ... --formula_specific_parameterN
 	
 (The presented CLI is common to all formulas of the PowerAPI toolkit.
 Replace `FORMULA_NAME` with the name of the used formula in the

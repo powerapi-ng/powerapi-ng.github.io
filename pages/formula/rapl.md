@@ -16,6 +16,7 @@ command :
 To use the formula without docker, you can install it with `pip` :
 
 	pip3 install rapl-formmula 
+{: class="copyable"}
 
 and run it with python(>=3.7) : 
 

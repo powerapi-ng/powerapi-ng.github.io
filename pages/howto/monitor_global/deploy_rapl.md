@@ -20,8 +20,13 @@ In the following, the MongoDB instance URI is `mongo://ADDR`.
 
 You can deployed the RAPL formula with the following command: 
 
-	docker run -td --net=host --name powerapi-formula powerapi/rapl-formula --input mongodb -u mongodb://ADDR -d $INPUT_DB -c $INPUT_COL --output mongodb -u mongodb://ADDR -d $OUTPUT_DB -c $OUTPUT_COL -s
-	
+	docker run -td --net=host --name powerapi-formula powerapi/rapl-formula \
+	           -s \
+	           --input mongodb -u mongodb://ADDR -d $INPUT_DB -c $INPUT_COL \
+	           --output mongodb -u mongodb://ADDR -d $OUTPUT_DB -c $OUTPUT_COL
+
+{: class="copyable"}
+
 with: 
 
 - `$INPUT_DB` : MongoDB database that stores the input sensor metrics,
@@ -44,12 +49,13 @@ Power estimations are structured as JSON documents:
         },
         "power" : Z.ZZZ # power consumption expressed in watts (float)
 	}
-	
+
 For example, to display a power consumption report from the mongo client, execute:
 
 	mongo ADDR
 	use output_db
 	db.power_consumption.findOne()
+{: class="copyable"}
 
 ## Next step: Visualisation
 

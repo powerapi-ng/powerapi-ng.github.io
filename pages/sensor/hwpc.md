@@ -29,7 +29,8 @@ You can directly use a docker container that contains the sensor with the
 following command :
 
 	docker pull powerapi/hwpc-sensor
-	
+{: class="copyable"}
+
 ###	From source
 	
 You can install hwpc-sensor from source
@@ -70,12 +71,15 @@ Docker usage :
 			       -c hwpc -e LLC_MISSES -e CYCLES \
 			       -c rapl -e RAPL_ENERGY_PKG \
 			       -r mongodb -U mongodb://127.0.0.1:1234 -D db1 -C col1
+{: class="copyable"}
 			 
 Non docker usage : 
 
-	sudo ./hwpc-sensor -n sensor_test -c hwpc -e LLC_MISSES -e CYCLES -c rapl -e RAPL_ENERGY_PKG \
-	                   -r mongodb -U mongodb://127.0.0.1:1234 -D db1 -C col1
-
+	sudo ./hwpc-sensor -n sensor_test \
+	                   -r mongodb -U mongodb://127.0.0.1:1234 -D db1 -C col1 \
+	                   -c hwpc -e LLC_MISSES -e CYCLES \
+	                   -c rapl -e RAPL_ENERGY_PKG
+{: class="copyable"}
 
 ## Command Line Interface
 
@@ -147,6 +151,7 @@ To use the docker container powerapi/hwpc-sensor, you have to launch it with the
              -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
              -v /tmp/powerapi-sensor-reporting:/reporting \
              powerapi/hwpc-sensor ...
+{: class="copyable"}
 
 ## Use Case
 
@@ -155,5 +160,3 @@ hwpc-sensor could be used to measure global power consumption with the **rapl-fo
 ## Source
 
 Source are available on [github](https://github.com/powerapi-ng/hwpc-sensor)
-
-
