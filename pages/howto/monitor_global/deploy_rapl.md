@@ -24,7 +24,6 @@ You can deployed the RAPL formula with the following command:
 	           -s \
 	           --input mongodb -u mongodb://ADDR -d $INPUT_DB -c $INPUT_COL \
 	           --output mongodb -u mongodb://ADDR -d $OUTPUT_DB -c $OUTPUT_COL
-
 {: class="copyable"}
 
 with: 
