@@ -39,6 +39,18 @@ entries:
     - title: Introduction
       output: web
       url: \/howto_monitor_docker\/intro.html
+
+    - title: Deploy HWPC-sensor to get docker containers power information
+      output: web
+      url: \/howto_monitor_docker\/deploy_sensor.html
+
+    - title: Deploy smartwatts-formula to compute containers power consumption
+      output: web
+      url: \/howto_monitor_docker\/deploy_formula.html
+
+    - title: Visualize power consumption on grafana dashboard
+      output: web
+      url: \/howto_monitor_docker\/connect_to_grafana.html
         
   - title: Sensor (Advanced documentation)
     output: web

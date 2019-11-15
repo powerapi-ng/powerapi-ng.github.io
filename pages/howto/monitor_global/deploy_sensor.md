@@ -19,7 +19,7 @@ This tutorial assumes that:
 
 ## Deploy the sensor
 
-Before deploying the sensor, a MongoDB instance should be available. We assume the instance URI is `mongo://ADDR`.
+Before deploying the sensor, a MongoDB instance should be available. We assume the instance URI is `mongodb://ADDR`.
 
 Then, deploy the sensor as a Docker container with the following command:
 

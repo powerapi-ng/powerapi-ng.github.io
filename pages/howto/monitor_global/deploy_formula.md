@@ -16,7 +16,7 @@ We describe how to deploy a RAPL formula that connects to a MongoDB instance to 
 The default architecture of PowerAPI assumes the availability of [two MongoDB collections](/powerapi_howitworks.html#power-meter-architecture) to feed the formula from sensor metrics and to report the power consumption estimations.
 
 We assume that these two collections are hosted on the same mongoDB instance, but different instances can be used.
-In the following, the MongoDB instance URI is `mongo://ADDR`.
+In the following, the MongoDB instance URI is `mongodb://ADDR`.
 
 You can deployed the RAPL formula with the following command: 
 
@@ -35,25 +35,25 @@ with:
 
 ## Retrieve power consumption estimation with MongoDB client 
 
-To access to the power consumption estimations, you can connect a mongo client to the mongoDB instance and retrieve the esimtations from the `$OUTPUT_COL` collection of the `$OUTPUT_DB` database.
+To access to the power consumption estimations, you can connect a mongo client to the mongoDB instance and retrieve the estimations from the `$OUTPUT_COL` collection of the `$OUTPUT_DB` database.
 
 Power estimations are structured as JSON documents: 
 
 	{
-        "_id" : XXX # MongoDB object identifier (string)
-        "timestamp" : YYY # timestamp of the power measure (iso date)
+        "_id" : ..., # MongoDB object identifier (string)
+        "timestamp" : ..., # timestamp of the power measure (iso date)
         "metadata" : {
-                "socket" : "N", # socket identifier (int)
-				"sensor" : hwpc sensor identifier (str)
+                "socket" : ..., # socket identifier (int)
+				"sensor" : ..., # hwpc sensor identifier (str)
         },
-        "power" : Z.ZZZ # power consumption expressed in watts (float)
+        "power" : ..., # power consumption expressed in watts (float)
 	}
 
 For example, to display a power consumption report from the mongo client, execute:
 
 	mongo ADDR
-	use output_db
-	db.power_consumption.findOne()
+	use $OUTPUT_DB
+	db.$OUTPUT_COL.findOne()
 {: class="copyable"}
 
 ## Next step: Visualisation
