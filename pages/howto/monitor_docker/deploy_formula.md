@@ -11,14 +11,14 @@ This tutorial describes how to deploy the [Smartwatts formula](/smartwatts.html)
 
 We describe how to deploy a smartwatts formula that connects to a MongoDB instance to read the raw metrics and to store the estimated values.
 
-## Deploy the RAPL formula
+## Deploy the smartwatts formula
 
 The default architecture of PowerAPI assumes the availability of [two MongoDB collections](/powerapi_howitworks.html#power-meter-architecture) to feed the formula from sensor metrics and to report the power consumption estimations.
 
 We assume that these two collections are hosted on the same mongoDB instance, but different instances can be used.
 In the following, the MongoDB instance URI is `mongo://ADDR`.
 
-You can deployed the RAPL formula with the following command:
+You can deployed the smartwatts formula with the following command:
 
 	docker run -td --net=host --name powerapi-formula powerapi/smartwatts-formula \
 	           -s \

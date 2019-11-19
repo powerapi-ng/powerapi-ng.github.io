@@ -42,6 +42,8 @@ with:
 - `$DB` : name of the mongodb database used to store the collected data
 - `$COLLECTION` : name of the mongodb collection used to store the collected data
 
+{% include warning.html content="Don't use the sensor outside of its docker container.<br/> Subtle bugs could happen due to compilation or execution environment if you compile and run the sensor by your own." %}
+
 ## Monitor DRAM domains
 
 The previous command line will only give you data relative to containers power consumption on CPU socket
