@@ -1,13 +1,13 @@
 ---
-title: "How to monitor Docker containers power consumption"
+title: "How to monitor process power consumption"
 keywords: homepage
 sidebar: home_sidebar 
-permalink: howto_monitor_docker/intro.html
+permalink: howto_monitor_process/intro.html
 ---
 
 ## Introduction
 
-In this tutorial, we will describe how to deploy a software-defined power meter to monitor the power consumption of each docker container running on a single node or a cluster of nodes.
+In this tutorial, we will describe how to deploy a software-defined power meter to monitor the power consumption of process running on a single node or a cluster of nodes.
 
 This tutorial will redirect you to specific instructions that explain how to deploy each component of the power meter (_i.e._, the sensor and the formula).
 
@@ -16,14 +16,16 @@ This tutorial assumes that you already deployed a MongoDB instance that is remot
 
 CPUs of monitored nodes must have an Intel Sandy Bridge architecture or higher.
 The sensor should run on a Linux distribution that is not on a virtual environment.
+You have administrator privilege on the machine that host monitored processes
 
 ## Monitoring a single node
 
 To monitor the power consumption of docker containers running on a single node, you can deploy all the power meter components on the same node as follows:
 
-* **Step 1:** [Deploy a sensor and connect it to the mongoDB instance](/howto_monitor_docker/deploy_sensor.html),
-* **Step 2:** [Deploy the smartwatts formula to compute containers power consumption](/howto_monitor_docker/deploy_formula.html),
-* **Step 3:** [Visualize the power consumption of each docker container](/howto_monitor_docker/connect_to_grafana.html).
+* **Step 1:** [Select process you want to monitor](/howto_monitor_process/monitored_process.html),
+* **Step 2:** [Deploy a sensor and connect it to the mongoDB instance](/howto_monitor_process/deploy_sensor.html),
+* **Step 3:** [Deploy the smartwatts formula to compute containers power consumption](/howto_monitor_process/deploy_formula.html),
+* **Step 4:** [Visualize the power consumption of each docker container](/howto_monitor_process/connect_to_grafana.html).
 
 
 ## Monitoring a cluster

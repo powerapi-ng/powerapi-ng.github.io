@@ -1,13 +1,13 @@
 ---
-title: "How to deploy HWPC-sensor to get docker containers power information"
+title: "How to deploy HWPC-sensor to get process power information"
 keywords: homepage
 sidebar: home_sidebar 
-permalink: howto_monitor_docker/deploy_sensor.html
+permalink: howto_monitor_process/deploy_sensor.html
 ---
 
 ## Introduction
 
-This tutorial presents you how to deploy a [hwpc sensor](/hwpc.html) to acquire data relative to docker containers power consumption.
+This tutorial presents you how to deploy a [hwpc sensor](/hwpc.html) to acquire data relative to process power consumption.
 
 ## Prerequisites
 This tutorial assumes that:
@@ -15,8 +15,8 @@ This tutorial assumes that:
 - a mongoDB instance that is remotely accessible from all nodes that are monitored,
 - CPUs of monitored node(s) must have an intel Sandy Bridge architecture or higher,
 - monitored node(s) run a Linux distribution that is not hosted in a virtual environment,
-- Docker is installed on the monitored node(s),
-- Each container must have a different name even if they are not hosted in the same node.
+- you have administrator privilege on the machine that host monitored processes
+
 
 ## Deploy the sensor
 
@@ -52,4 +52,4 @@ On Xeon architecture, you can also get data relative to power consumption on DRA
 
 ## Next step: deploy the formula
 
-Data retrieved by the sensor need to be handle by a [smartwatts formula](/howto_monitor_docker/deploy_formula.html) to complete the deployment of the power meter.
+Data retrieved by the sensor need to be handle by a [smartwatts formula](/howto_monitor_process/deploy_formula.html) to complete the deployment of the power meter.

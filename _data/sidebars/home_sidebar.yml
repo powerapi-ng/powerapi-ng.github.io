@@ -32,25 +32,32 @@ entries:
       output: web
       url: \/howto_monitor_global\/connect_to_grafana.html
 
-  - title: How to Monitor docker containers power consumption
+  - title: How to Monitor process power consumption
     output: web
     folderitems:
 
     - title: Introduction
       output: web
-      url: \/howto_monitor_docker\/intro.html
+      url: \/howto_monitor_process\/intro.html
 
-    - title: Deploy HWPC-sensor to get docker containers power information
+    - title: Select process to monitor
       output: web
-      url: \/howto_monitor_docker\/deploy_sensor.html
+      url: \/howto_monitor_process\/monitored_process.html
 
-    - title: Deploy smartwatts-formula to compute containers power consumption
+    - title: Deploy HWPC-sensor to get process power information
       output: web
-      url: \/howto_monitor_docker\/deploy_formula.html
+      url: \/howto_monitor_process\/deploy_sensor.html
+
+    - title: Deploy smartwatts-formula to compute process power consumption
+      output: web
+      url: \/howto_monitor_process\/deploy_formula.html
 
     - title: Visualize power consumption on grafana dashboard
       output: web
-      url: \/howto_monitor_docker\/connect_to_grafana.html
+      url: \/howto_monitor_process\/connect_to_grafana.html
+
+
+
         
   - title: Sensor (Advanced documentation)
     output: web

@@ -1,13 +1,13 @@
 ---
-title: "Deploying smartwatts formula to compute docker containers power consumption"
+title: "Deploying smartwatts formula to compute process power consumption"
 keywords: homepage
 sidebar: home_sidebar 
-permalink: howto_monitor_docker/deploy_formula.html
+permalink: howto_monitor_process/deploy_formula.html
 ---
 
 ## Introduction
 
-This tutorial describes how to deploy the [Smartwatts formula](/smartwatts.html) to estimate docker container power consumption from metrics collected by the [sensor](/howto_monitor_docker/deploy_sensor.html).
+This tutorial describes how to deploy the [Smartwatts formula](/smartwatts.html) to estimate process power consumption from metrics collected by the [sensor](/howto_monitor_process/deploy_sensor.html).
 
 We describe how to deploy a smartwatts formula that connects to a MongoDB instance to read the raw metrics and to store the estimated values.
 
@@ -42,9 +42,9 @@ with:
 - `$INPUT_COL` : MongoDB collection that store the input sensor metrics,
 - `$OUTPUT_DB` : MongoDB database that will store the output power consumption estimations,
 - `$OUTPUT_COL`	: MongoDB collection that will store the output power consumption estimations.
-- `$XXX_CPU_RATIO` : see section [CPU Ratio](/howto_monitor_docker/deploy_formula.html#cpu-ratio) below
+- `$XXX_CPU_RATIO` : see section [CPU Ratio](/howto_monitor_process/deploy_formula.html#cpu-ratio) below
 
-if you are also monitoring dram power consumption of your docker containers (see [here](/howto_monitor_docker/deploy_sensor.html#monitor-dram-domains)), you have to remove the last parameter : `--disable-dram-formula`
+if you are also monitoring dram power consumption of your process (see [here](/howto_monitor_process/deploy_sensor.html#monitor-dram-domains)), you have to remove the last parameter : `--disable-dram-formula`
 
 ### CPU Ratio
 You have to setup the formula with the frequency of the monitored cpu :
@@ -118,7 +118,7 @@ Power estimations are structured as JSON documents:
         "_id" : ..., # MongoDB object identifier (string)
         "timestamp" : ..., # timestamp of the power measure (iso date)
 	    "sensor" : ..., # hwpc sensor identifier (str)
-	    "target": ..., # name of the monitored docker container,  (str)
+	    "target": ..., # name of the monitored process,  (str)
         "power" : ..., # power consumption expressed in watts (float)
         "metadata" : {
                 "socket" : ..., # CPU socket identifier (int)
@@ -133,13 +133,7 @@ For example, to display a power consumption report from the mongo client, execut
 	db.$OUTPUT_COL.findOne()
 {: class="copyable"}
 
-<!-- ### About target names -->
-
-<!-- Target attribute is usually the name of a monitored docker container but smartwatts also monitors other target than docker container such as : -->
-
-<!-- - **rapl** : the power consumption of the rapl target is the global power consumption of the domain scope (cpu or dram) -->
-<!-- - **global** :  -->
 
 ## Next step: Visualisation
 
-If you want tu use a grafana instance to visualize the power consumption estimation, follow this [tutorial](/howto_monitor_docker/connect_to_grafana.html)
+If you want tu use a grafana instance to visualize the power consumption estimation, follow this [tutorial](/howto_monitor_process/connect_to_grafana.html)
