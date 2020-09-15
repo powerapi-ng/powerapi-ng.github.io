@@ -65,6 +65,14 @@ For example, to use a mongodb database, as an output of a formula, located at
 formula with the following parameter :
 	
 	--output mongodb --uri 1.2.3.4:3245 --db test_db --collection test_col
+	
+### Socket
+
+Instead of read data from a database, you can use a socket to receive data directly from sensors
+
+Use the database type `socket` with the following parameter :
+
+- `-p` or `--port` to specify the port to bind the socket on. Use this port to connect sensors to the formula
 
 ### CSV
 
