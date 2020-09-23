@@ -34,7 +34,7 @@ Smartwatts-formula use several specific arguments that must been passed as `pyth
 
 These arguments are : 
 
-- `--cpu-ratio-{base|max|min} RATIO` : specify the CPU ratio of the machine where monitored container are running. see [here](howto_monitor_docker/deploy_formula.html#cpu-ratio) to know how to set these argument values
+- `--cpu-ratio-{base|max|min} RATIO` : specify the CPU ratio of the machine where monitored container are running. see [here](howto_monitor_process/deploy_formula.html#cpu-ratio) to know how to set these argument values
 - `--cpu-error-threshold THRESHOLD` : error threshold for the CPU power models (in Watt)
 - `--dram-error-threshold THRESHOLD` : error threshold for the DRAM power models (in Watt)
 - `--disable-cpu-formula` : don't launch a model to compute CPU power consumption

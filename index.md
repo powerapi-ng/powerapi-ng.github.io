@@ -19,7 +19,7 @@ Before starting, we encourage you to read about [software-defined power meters](
 Our getting started tutorials currently includes instructions:
 
 - To deploy a power meter reporting the global power consumption on a single machine or a cluster of nodes, follow this [tutorial](/howto_monitor_global/intro.html);
-- To deploy a power meter reporting the power consumption of individual containers running on a machine or a cluster, follow this [tutorial](/howto_monitor_docker/intro.html).
+- To deploy a power meter reporting the power consumption of group of process (docker container, kubernetes pods, LXC container) or individual process running on a machine or a cluster, follow this [tutorial](howto_monitor_process/intro.html).
 
 If you want more information about advanced features of PowerAPI, a more comprehensive documentation is available in the "Advanced documentation" for:
 
