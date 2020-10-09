@@ -44,13 +44,15 @@ The previous command line will only monitor the CPU socket power consumption
 
 You can also monitor the following domains by adding additional parameter to the command line : 
 
-- DRAM power consumption : add `-e RAPL_ENERGY_PKG` at the end of the command line
-- Integrated graphics processing unit (on client architectures) : add `-e
-  RAPL_ENERGY_GPU` at the end of the command line
+- DRAM power consumption : in the previous commandline replace `-s "rapl" -o -e
+  RAPL_ENERGY_PKG` by `-s "rapl" -o -e RAPL_ENERGY_PKG -e RAPL_ENERGY_DRAM`
+- Integrated graphics processing unit (on client architectures) : in the
+  previous commandline replace `-s "rapl" -o -e RAPL_ENERGY_PKG` by `-s "rapl"
+  -o -e RAPL_ENERGY_PKG -e RAPL_ENERGY_GPU`
 
 Some domains may not be supported by your node. If you launch the sensor to
 monitor domains that are not supported by your node, the sensor will crash with
-a message indicating which event is not supported.
+a message indicating which domains is not supported.
 
 ## Next step: deploy the formula
 
