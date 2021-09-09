@@ -88,6 +88,8 @@ the following parameter :
   specify the name of each of them with the `name` parameter. This argument is
   optional if you have only one input/output
 - `-m` or `--model` to specify the data type that will be stored (see [Data Type](/formula_cli.html#data-type))
+- `-t` or `--tags` to specify the metadata writen to the csv output. You can
+  specify multiple tags with `--tags tag1,tag2,tag3`
 
 
 For example, to use three files as formula input (`file1`, `file2` and `file3`)
@@ -120,6 +122,8 @@ To use an InfluxDB database only as an output of a formula, use the database typ
   specify the name of each of them with the `name` parameter. This argument is
   optional if you have only one input/output
 - `-m` or `--model` to specify the data type that will be stored (see [Data Type](/formula_cli.html#data-type))
+- `-t` or `--tags` to specify the metadata writen to the csv output. You can
+  specify multiple tags with `--tags tag1,tag2,tag3`
 
 
 For example, to use an InfluxDB database, as an output of a formula, located at `1.2.3.4:3245` with a database `test_db` launch the formula with the following parameter : 
@@ -160,3 +164,7 @@ Output data type :
   
 - formula report : specified with parameter `--model FormulaReport`. Data that
   contain information about formula execution.
+  
+## Report Modifier
+
+You can configure powerAPI
