@@ -1,4 +1,4 @@
-- [Introduction](./introduction.md)
+- [Introduction](./introduction.md) #
 
 # How to guide
 
@@ -24,7 +24,7 @@
 ## RAPL
 
 - [Rapl](./rapl.md)
-  - [Installation](./rapl_installation.md)
+  - [Installation](./rapl_installation.md) #
   - [Quickstart](./rapl_quickstart.md)
   - [User guide](./rapl_user_guide.md)
 
@@ -55,9 +55,9 @@
 
 ## HWPC Sensor
 
-- [Hwpc-Sensor](./hwpc-sensor.md)
-  - [Installation](./hwpc-sensor_installation.md)
-  - [Quickstart](./hwpc-sensor_quickstart.md)
+- [Hwpc-Sensor](./hwpc-sensor.md) #
+  - [Installation](./hwpc-sensor_installation.md)#
+  - [Quickstart](./hwpc-sensor_quickstart.md)#
   - [User guide](./hwpc-sensor_user_guide.md)
 
 ## Procfs Sensor
