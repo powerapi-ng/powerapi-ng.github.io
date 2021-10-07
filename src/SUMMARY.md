@@ -25,7 +25,7 @@
 
 - [Rapl](./rapl.md)
   - [Installation](./rapl_installation.md) #
-  - [Quickstart](./rapl_quickstart.md)
+  - [Quickstart](./rapl_quickstart.md)#
   - [User guide](./rapl_user_guide.md)
 
 ## SmartWatts
@@ -70,12 +70,11 @@
 # Database
 
 - [Database](./database.md)
-  - [MongoDB](./mongoDB)
-  - [InfluxDB](./influxDB)
-  - [CSV](./csv.md)
-  - [Socket](./socket.md)
-  - [File](./filedb.md)
-  - [Reports](./reports.md)
+  - [MongoDB](./mongoDB.md)#
+  - [InfluxDB](./influxDB.md)
+  - [CSV](./csv.md)#
+  - [Socket](./socket.md)#
+  - [File](./filedb.md)#
 
 # Reports
 
