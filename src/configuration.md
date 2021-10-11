@@ -1,9 +1,23 @@
 # Configuration File
 
-For PowerAPI based formula there is a pattern of configuration file that will
-always be present.
+PowerAPI can read configuration through config file or through the CLI.
+Here we are using config file because they are more readable.
 
-The configuration files are in json and have the following format :
+PowerAPI can be configured with the following parameters :
+
+- `verbose` (bool) : verbose or quiet mode.
+- `stream` (bool) : to specify if the reports are provided one by one or are
+  stored in a database.
+- `sensor-report-sampling-interval` (int): If in stream mode, the time in
+  milliseconds between two reports.
+- `input` (database) : The database used in input. The way to write their
+  configuration is specified [here](./database.md). Multiple database can be
+  used as inputs.
+- `output` (database) : The database used in output. The way to write their
+  configuration is specified [here](./database.md). Multiple database can be
+  used as outputs.
+
+All configuration files of PowerAPI based formula follow the next template:
 
 ```json
 {

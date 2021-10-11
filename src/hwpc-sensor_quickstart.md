@@ -41,4 +41,4 @@ installation :
 - from docker : `docker run --rm --net=host --privileged -v /sys:/sys -v /var/lib/docker/containers:/var/lib/docker/containers:ro -v /tmp/powerapi-sensor-reporting:/reporting -v $(pwd):/srv powerapi/hwpc-sensor --config-file hwpc_to_mongo.json `
 - from binary : `./hwpc-sensor --config-file config_file.json`
 
-The report will be provided in your mongodb.
+The reports will be provided in your mongodb.
