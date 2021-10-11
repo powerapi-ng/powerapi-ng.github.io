@@ -2,11 +2,11 @@
 
 # How to guide
 
-- [Configuration files](./configuration.md)
+- [Configuration files](./configuration.md)#
 
 # What to use ?
 
-- [What to use](./what_to_use.md)
+- [What to use](./what_to_use.md)#
 
 # PowerAPI
 
@@ -23,17 +23,18 @@
 
 ## RAPL
 
-- [Rapl](./rapl.md)
+- [RAPL](./rapl.md)
   - [Installation](./rapl_installation.md) #
   - [Quickstart](./rapl_quickstart.md)#
   - [User guide](./rapl_user_guide.md)
 
 ## SmartWatts
 
-- [SmartWatts](./smartwatts.md)
-  - [Installation](./smartwatts_installation.md)
-  - [Quickstart](./smartwatts_quickstart.md)
+- [SmartWatts](./smartwatts.md)#
+  - [Installation](./smartwatts_installation.md)#
+  - [Quickstart](./smartwatts_quickstart.md)#
   - [User guide](./smartwatts_user_guide.md)
+  - [Auto-config Script](./smartwatts_auto_config.md)#
 
 ## Jouleit
 
@@ -71,7 +72,7 @@
 
 - [Database](./database.md)
   - [MongoDB](./mongoDB.md)#
-  - [InfluxDB](./influxDB.md)
+  - [InfluxDB](./influxDB.md)#
   - [CSV](./csv.md)#
   - [Socket](./socket.md)#
   - [File](./filedb.md)#
