@@ -9,7 +9,8 @@ The configuration files are in json and have the following format :
 {
   "verbose": $bool,
   "stream": $bool ,
-  "input": {
+  "sensor-report-sampling-interval" : $int,
+"input": {
     $puller_name: {
       "model": $type_of_report,
       "type": $type_of_database,

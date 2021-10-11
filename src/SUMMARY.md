@@ -58,7 +58,7 @@
 
 - [Hwpc-Sensor](./hwpc-sensor.md) #
   - [Installation](./hwpc-sensor_installation.md)#
-  - [Quickstart](./hwpc-sensor_quickstart.md)#
+  - [Quickstart](./hwpc-sensor_quickstart.md)
   - [User guide](./hwpc-sensor_user_guide.md)
 
 ## Procfs Sensor

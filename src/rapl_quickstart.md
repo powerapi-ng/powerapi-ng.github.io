@@ -27,7 +27,7 @@ For running the RAPL formula we'll need two things:
     }
   },
   "enable-dram-formula": false,
-  "sensor-report-frequency": 500
+  "sensor-report-sampling-interval": 500
 }
 ```
 
