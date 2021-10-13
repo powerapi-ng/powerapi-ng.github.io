@@ -23,7 +23,7 @@
 
 ## RAPL
 
-- [RAPL](./rapl.md)
+- [RAPL](./rapl.md)#
   - [Installation](./rapl_installation.md) #
   - [Quickstart](./rapl_quickstart.md)#
   - [User guide](./rapl_user_guide.md)
@@ -38,10 +38,7 @@
 
 ## Jouleit
 
-- [Jouleit](./jouleit.md)
-  - [Installation](./jouleit_installation.md)
-  - [Quickstart](./jouleit_quickstart.md)
-  - [User guide](./jouleit_user_guide.md)
+- [Jouleit](./jouleit.md)#
 
 ## VirtualWatts
 
