@@ -38,3 +38,136 @@ All report have a common basis:
   ```
 
 In the following parts we specify the `$report_specific_fields` for each type of report.
+
+# HWPC Report
+
+A `HWPCReport` should be used to report perfomance counters and RAPL.
+It specific fields are the following :
+
+- `groups`: A list of subreport that can be of three kind, `rapl`, `core` and
+  `msr`.
+
+  Each are presented the same way
+
+  ```json
+  {
+    $type: {
+      $core_number : {
+        $socket_number : {
+          List of counter and their value
+        }
+      }
+    }
+  }
+  ```
+
+We provide an example of `HWPCReport`:
+
+```json
+{
+  "timestamp": "2021-01-13T09:51:22.630",
+  "sensor": "sensor_test",
+  "target": "influxdb",
+  "groups": {
+    "core": {
+      "0": {
+        "0": {
+          "CPU_CLK_THREAD_UNHALTED:THREAD_P": 75510,
+          "CPU_CLK_THREAD_UNHALTED:REF_P": 2271,
+          "time_enabled": 167403,
+          "time_running": 167403,
+          "LLC_MISSES": 1077,
+          "INSTRUCTIONS_RETIRED": 31693
+        },
+        "1": {
+          "CPU_CLK_THREAD_UNHALTED:THREAD_P": 43801,
+          "CPU_CLK_THREAD_UNHALTED:REF_P": 1318,
+          "time_enabled": 99324,
+          "time_running": 99324,
+          "LLC_MISSES": 750,
+          "INSTRUCTIONS_RETIRED": 15011
+        }
+      }
+    }
+  }
+}
+{
+  "timestamp" : "2021-01-13T09:51:22.630",
+  "sensor" : "sensor_test",
+  "target" : "all",
+  "groups" : {
+    "rapl" : {
+      "0" : {
+        "1" : {
+			      "RAPL_ENERGY_PKG" : 5709496320,
+			      "time_enabled" : 1006717449,
+			      "time_running" : 1006717449
+          }
+      }
+    },
+    "msr" : {
+      "0" : {
+        "0" : {
+          "MPERF" : 29646849,
+	        "APERF" : 12319312,
+	        "TSC" : 2122153094,
+	        "time_enabled" : 1006580601,
+	        "time_running" : 1006580601
+        },
+        "1" : {
+          "MPERF" : 20587012,
+          "APERF" : 19838920,
+          "TSC" : 2122185970,
+	        "time_enabled" : 1006560540,
+	        "time_running" : 1006560540
+        }
+      }
+    }
+  }
+}
+
+```
+
+# Power Report
+
+A `PowerReport` should be used to transfer information about power consumption.
+It specific fields are the following :
+
+- `power`: A power value in Watts
+
+We provide an example of `PowerReport`:
+
+```json
+{
+  "timestamp": "2021-09-14T12:37:37.168817",
+  "sensor": "formula_group",
+  "target": "all",
+  "power": 42
+}
+```
+
+# Procfs Report
+
+A `ProcfsReport` should be used to transfer information about cpu usage of
+process.
+It specific fields are the following :
+
+- `global_cpu_usage` : The used percentage of the cpu.
+- `usage`: A list of the monitored process with their percentage of cpu usage.
+
+We provide an example of `ProcfsReport`:
+
+```json
+{
+  "timestamp": "2021-09-14T12:37:37.168817",
+  "sensor": "formula_group",
+  "target": ["firefox_cgroup", "emacs_cgroup", "zsh_cgroup", "mongo_cgroup"],
+  "usage": {
+    "firefox_cgroup": 8.36,
+    "emacs_cgroup": 5.52,
+    "zsh_cgroup": 0.01,
+    "mongo_cgroup": 0.64
+  },
+  "global_cpu_usage": 27.610000000000014
+}
+```

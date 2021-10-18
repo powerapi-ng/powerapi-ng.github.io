@@ -31,7 +31,7 @@ For running the RAPL formula we'll need two things:
 }
 ```
 
-Start by running the sensor (see [here](./hwpc-sensor-quickstart.md)) and a
+Start by running the sensor (see [here](./hwpc-sensor_quickstart.md)) and a
 mongodb.
 Then run `rapl_formula` using one of the following command line, depending on
 the installation you used:

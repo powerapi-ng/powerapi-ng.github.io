@@ -12,3 +12,7 @@ available tools and the main use cases.
 - [Joule Hunter](https://github.com/powerapi-ng/joulehunter) : Mesure energy
   consumption of each part of your program.
 - [PyJoules](https://github.com/powerapi-ng/pyJoules) : Monitor the energy consumed by specific device of the host machine
+
+If you did not find the tools that respond to your needs you should consider
+writing it.
+We provide a tutorial on how to write a formula [here](./powerapi.md).
