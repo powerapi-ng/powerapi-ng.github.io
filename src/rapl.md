@@ -3,13 +3,13 @@
 RAPL stand for Running Average Power Limit, it is a feature of recent intel
 processors that provide the energy consumption of the processor.
 
-The RAPL formula take HWPC report with RAPL event and produce PowerReport for
-each domain (cpu or dram).
+The RAPL formula is designed to mesure power consumption of domains (cpu or ram)
+in real time.
 
-This formula can be used to track power consumption of domain in real time.
-
-To start using this formula, first take a look at the installation guide.
-We provide a quickstart manual and a user guide for more develloped uses.
+The RAPL formula take HWPC report with RAPL event for each domains. It then
+return the mesured power in a PowerReport for each domain.
+This formula do not perform any other computation as its goal is only to track
+global power consumption in a more readable way than raw RAPL.
 
 # Installation
 

@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Concepts</li><li class="chapter-item expanded "><a href="reports.html"><strong aria-hidden="true">1.</strong> Reports</a></li><li class="chapter-item expanded affix "><li class="part-title">How to guide</li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.</strong> Configuration files</a></li><li class="chapter-item expanded "><a href="grafana.html"><strong aria-hidden="true">3.</strong> Visualize in grafana</a></li><li class="chapter-item expanded "><a href="cgroup.html"><strong aria-hidden="true">4.</strong> Create cgroup</a></li><li class="chapter-item expanded affix "><li class="part-title">What to use ?</li><li class="chapter-item expanded "><a href="what_to_use.html"><strong aria-hidden="true">5.</strong> What to use</a></li><li class="chapter-item expanded affix "><li class="part-title">Monitoring tools</li><li class="chapter-item expanded "><a href="rapl.html"><strong aria-hidden="true">6.</strong> RAPL</a></li><li class="chapter-item expanded "><a href="smartwatts.html"><strong aria-hidden="true">7.</strong> SmartWatts</a></li><li class="chapter-item expanded "><a href="jouleit.html"><strong aria-hidden="true">8.</strong> Jouleit</a></li><li class="chapter-item expanded "><a href="virtualwatts.html"><strong aria-hidden="true">9.</strong> VirtualWatts</a></li><li class="chapter-item expanded affix "><li class="part-title">Sensors</li><li class="chapter-item expanded "><a href="hwpc-sensor.html"><strong aria-hidden="true">10.</strong> Hwpc-Sensor</a></li><li class="chapter-item expanded "><a href="procfs-sensor.html"><strong aria-hidden="true">11.</strong> Procfs-Sensor</a></li><li class="chapter-item expanded affix "><li class="part-title">Database</li><li class="chapter-item expanded "><a href="database.html"><strong aria-hidden="true">12.</strong> Database</a></li><li class="chapter-item expanded affix "><li class="part-title">PowerAPI</li><li class="chapter-item expanded "><a href="powerapi.html"><strong aria-hidden="true">13.</strong> PowerAPI</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="powerapi_howitworks.html"><strong aria-hidden="true">13.1.</strong> Software-defined Power Meters</a></li><li class="chapter-item expanded "><a href="powerapi_installation.html"><strong aria-hidden="true">13.2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="powerapi_quickstart.html"><strong aria-hidden="true">13.3.</strong> Quickstart</a></li><li class="chapter-item expanded "><a href="powerapi_user_guide.html"><strong aria-hidden="true">13.4.</strong> User guide</a></li><li class="chapter-item expanded "><a href="powerapi_api.html"><strong aria-hidden="true">13.5.</strong> API</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">FAQ</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Concepts</li><li class="chapter-item expanded "><a href="reports.html"><strong aria-hidden="true">1.</strong> Reports</a></li><li class="chapter-item expanded affix "><li class="part-title">How to guide</li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.</strong> Configuration files</a></li><li class="chapter-item expanded "><a href="grafana.html"><strong aria-hidden="true">3.</strong> Visualize in grafana</a></li><li class="chapter-item expanded "><a href="cgroup.html"><strong aria-hidden="true">4.</strong> Create cgroup</a></li><li class="chapter-item expanded affix "><li class="part-title">What to use ?</li><li class="chapter-item expanded "><a href="what_to_use.html"><strong aria-hidden="true">5.</strong> What to use</a></li><li class="chapter-item expanded affix "><li class="part-title">Monitoring tools</li><li class="chapter-item expanded "><a href="rapl.html"><strong aria-hidden="true">6.</strong> RAPL</a></li><li class="chapter-item expanded "><a href="smartwatts.html"><strong aria-hidden="true">7.</strong> SmartWatts</a></li><li class="chapter-item expanded "><a href="jouleit.html"><strong aria-hidden="true">8.</strong> Jouleit</a></li><li class="chapter-item expanded "><a href="virtualwatts.html"><strong aria-hidden="true">9.</strong> VirtualWatts</a></li><li class="chapter-item expanded affix "><li class="part-title">Sensors</li><li class="chapter-item expanded "><a href="hwpc-sensor.html"><strong aria-hidden="true">10.</strong> Hwpc-Sensor</a></li><li class="chapter-item expanded "><a href="procfs-sensor.html"><strong aria-hidden="true">11.</strong> Procfs-Sensor</a></li><li class="chapter-item expanded affix "><li class="part-title">Database</li><li class="chapter-item expanded "><a href="database.html"><strong aria-hidden="true">12.</strong> Database</a></li><li class="chapter-item expanded affix "><li class="part-title">PowerAPI</li><li class="chapter-item expanded "><a href="powerapi.html"><strong aria-hidden="true">13.</strong> PowerAPI</a></li><li class="chapter-item expanded affix "><li class="part-title">FAQ</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -535,11 +535,12 @@ We provide a tutorial on how to write a formula <a href="./powerapi.html">here</
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rapl"><a class="header" href="#rapl">RAPL</a></h1>
 <p>RAPL stand for Running Average Power Limit, it is a feature of recent intel
 processors that provide the energy consumption of the processor.</p>
-<p>The RAPL formula take HWPC report with RAPL event and produce PowerReport for
-each domain (cpu or dram).</p>
-<p>This formula can be used to track power consumption of domain in real time.</p>
-<p>To start using this formula, first take a look at the installation guide.
-We provide a quickstart manual and a user guide for more develloped uses.</p>
+<p>The RAPL formula is designed to mesure power consumption of domains (cpu or ram)
+in real time.</p>
+<p>The RAPL formula take HWPC report with RAPL event for each domains. It then
+return the mesured power in a PowerReport for each domain.
+This formula do not perform any other computation as its goal is only to track
+global power consumption in a more readable way than raw RAPL.</p>
 <h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
 <h2 id="from-pypi"><a class="header" href="#from-pypi">From pypi</a></h2>
 <p><code>pip install rapl-formula</code></p>
@@ -611,7 +612,11 @@ SmartWatts need to receive several metrics provided by
 <li>LLC_MISSES</li>
 <li>INSTRUCTIONS_RETIRED</li>
 </ul>
-<p>The reasons of those metrics are described in <a href="https://hal.inria.fr/hal-02470128">SmartWatts: Self-Calibrating
+<p>These metrics are then used as inputs for a power model that estimate the power
+consumption of each software.
+The model can derive from the reality, each time the <code>cpu-error-threshold</code> is
+reached it learn a new power model, using the previous reports.</p>
+<p>The choice of those specific metrics is motivated in <a href="https://hal.inria.fr/hal-02470128">SmartWatts: Self-Calibrating
 Software-Defined Power Meter for Containers</a></p>
 <h1 id="installation-1"><a class="header" href="#installation-1">Installation</a></h1>
 <h2 id="from-pypi-1"><a class="header" href="#from-pypi-1">From pypi</a></h2>
@@ -761,8 +766,8 @@ Start jouleit by using <code>./jouleit.sh cmd</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="virtualwatts"><a class="header" href="#virtualwatts">VirtualWatts</a></h1>
 <p>VirtualWatts is a software-defined power meter based on the PowerAPI toolkit.
 VirtualWatts is a configurable software that can estimate the power consumption
-of software inside a Virtual Machine (VM) in real-time.
-VirtualWatts use the estimation of energy consumption of the VM, computed by
+of software inside a Virtual Machine (VM) in real-time.</p>
+<p>VirtualWatts use the estimation of energy consumption of the VM, computed by
 <a href="https://github.com/powerapi-ng/smartwatts">SmartWatts</a>, and the cpu usage of
 each process inside the VM, computed by <a href="https://github.com/powerapi-ng/procfs-sensor">Procfs
 Sensor</a>.</p>
@@ -1020,11 +1025,6 @@ Software-defined power meters are configurable software libraries that can
 estimate the power consumption of software in real-time.
 As a middleware toolkit, PowerAPI offers the capability of assembling power
 meters <em>«à la carte»</em> to accommodate user requirements.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="software-defined-power-meters"><a class="header" href="#software-defined-power-meters">Software-defined Power Meters</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="installation-6"><a class="header" href="#installation-6">Installation</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="quickstart-5"><a class="header" href="#quickstart-5">Quickstart</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="user-guide-1"><a class="header" href="#user-guide-1">User guide</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="api"><a class="header" href="#api">API</a></h1>
 
                     </main>
 
@@ -1040,20 +1040,6 @@ meters <em>«à la carte»</em> to accommodate user requirements.</p>
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

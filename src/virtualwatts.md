@@ -3,6 +3,7 @@
 VirtualWatts is a software-defined power meter based on the PowerAPI toolkit.
 VirtualWatts is a configurable software that can estimate the power consumption
 of software inside a Virtual Machine (VM) in real-time.
+
 VirtualWatts use the estimation of energy consumption of the VM, computed by
 [SmartWatts](https://github.com/powerapi-ng/smartwatts), and the cpu usage of
 each process inside the VM, computed by [Procfs

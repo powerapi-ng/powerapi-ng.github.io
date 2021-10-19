@@ -15,7 +15,12 @@ SmartWatts need to receive several metrics provided by
 - LLC_MISSES
 - INSTRUCTIONS_RETIRED
 
-The reasons of those metrics are described in [SmartWatts: Self-Calibrating
+These metrics are then used as inputs for a power model that estimate the power
+consumption of each software.
+The model can derive from the reality, each time the `cpu-error-threshold` is
+reached it learn a new power model, using the previous reports.
+
+The choice of those specific metrics is motivated in [SmartWatts: Self-Calibrating
 Software-Defined Power Meter for Containers](https://hal.inria.fr/hal-02470128)
 
 # Installation

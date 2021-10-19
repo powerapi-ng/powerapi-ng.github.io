@@ -2,13 +2,13 @@
 
 # Concepts
 
-- [Reports](./reports.md)
+- [Reports](./reports.md)#
 
 # How to guide
 
 - [Configuration files](./configuration.md)#
-- [Visualize in grafana](./grafana.md)
-- [Create cgroup](./cgroup.md)
+- [Visualize in grafana](./grafana.md)#
+- [Create cgroup](./cgroup.md)#
 
 # What to use ?
 
@@ -28,16 +28,11 @@
 
 # Database
 
-- [Database](./database.md)
+- [Database](./database.md)#
 
 # PowerAPI
 
 - [PowerAPI](./powerapi.md)
-  - [Software-defined Power Meters](./powerapi_howitworks.md)
-  - [Installation](./powerapi_installation.md)
-  - [Quickstart](./powerapi_quickstart)
-  - [User guide](./powerapi_user_guide.md)
-  - [API](./powerapi_api.md)
 
 # FAQ
 
