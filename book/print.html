@@ -759,6 +759,69 @@ Start jouleit by using <code>./jouleit.sh cmd</code>.</p>
 <tr><td>-n <strong>N</strong></td><td>Run the programm <strong>N</strong> times and record the measured values in <code>data1234.csv</code> file</td><td align="center"></td></tr>
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="virtualwatts"><a class="header" href="#virtualwatts">VirtualWatts</a></h1>
+<p>VirtualWatts is a software-defined power meter based on the PowerAPI toolkit.
+VirtualWatts is a configurable software that can estimate the power consumption
+of software inside a Virtual Machine (VM) in real-time.
+VirtualWatts use the estimation of energy consumption of the VM, computed by
+<a href="https://github.com/powerapi-ng/smartwatts">SmartWatts</a>, and the cpu usage of
+each process inside the VM, computed by <a href="https://github.com/powerapi-ng/procfs-sensor">Procfs
+Sensor</a>.</p>
+<h1 id="installation-3"><a class="header" href="#installation-3">Installation</a></h1>
+<h2 id="from-pypi-2"><a class="header" href="#from-pypi-2">From pypi</a></h2>
+<p><code>pip install virtualwatts</code></p>
+<h2 id="from-docker-2"><a class="header" href="#from-docker-2">From docker</a></h2>
+<p><code>docker pull powerapi/virtualwatts-formula</code></p>
+<h2 id="from-deb-file-2"><a class="header" href="#from-deb-file-2">From deb file</a></h2>
+<p>Download the <code>.deb</code> file from the <a href="https://github.com/powerapi-ng/virtualwatts-formula/releases">latest
+release</a></p>
+<p>Install virtualwatts with <code>sudo apt install ./python3-rapl-virtualtwatts_0.5.0-1_all.deb</code></p>
+<h1 id="quickstart-2"><a class="header" href="#quickstart-2">Quickstart</a></h1>
+<p>For running the VirtualWatts formula we'll need several things:</p>
+<ul>
+<li>Smartwatts running on the host machine</li>
+<li>A file <code>SW_output</code>, shared with the host that will be used as database</li>
+<li>The Procfs sensor running inside the VM</li>
+<li>A configuration file for each.</li>
+</ul>
+<p>VirtualWatts configuration :</p>
+<pre><code class="language-json">{
+    'verbose': True,
+    &quot;stream&quot;:True,
+    &quot;input&quot;: {
+        &quot;puller_filedb&quot;: {
+            &quot;type&quot;: &quot;filedb&quot;,
+            &quot;model&quot;: &quot;PowerReport&quot;,
+            &quot;filename&quot;: &quot;SW_output&quot;
+            },
+        &quot;puller_tcpdb&quot;: {
+            &quot;type&quot; : &quot;socket&quot;,
+            &quot;model&quot;: &quot;ProcfsReport&quot;,
+            &quot;uri&quot;: &quot;127.0.0.1&quot;,
+            &quot;port&quot;: self.port
+        }
+    },
+    &quot;output&quot;: {
+        &quot;power_pusher&quot;: {
+            &quot;type&quot;: &quot;mongodb&quot;,
+            &quot;model&quot;: &quot;PowerReport&quot;,
+            &quot;uri&quot;: &quot;mongodb://localhost:27017&quot;
+            &quot;db&quot;: &quot;test_input&quot;,
+            &quot;collection&quot;: &quot;test_output&quot;
+        }
+    },
+    &quot;delay-threshold&quot;: 500,
+    &quot;sensor-reports-sampling-interval&quot;: datetime.timedelta(500)
+}
+</code></pre>
+<p>Start by running Smartwatts with a <code>filedb</code> output.
+Then run <code>virtualwatts</code> using one of the following command line, depending on
+the installation you used:</p>
+<ul>
+<li>via pip : <code>python -m virtualwatts --config-file config_file.json</code></li>
+<li>via docker <code>docker run virtualwatts --config-file config_file.json</code></li>
+<li>via deb file : TODO</li>
+</ul>
+<p>After that run the procfs sensor. Your power reports will be provided in the mongodb.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="hwpc-sensor"><a class="header" href="#hwpc-sensor">Hwpc-Sensor</a></h1>
 <p>HardWare Performance Counter (HWPC) Sensor is a tool that monitor the Intel CPU
 performance counter and the power consumption of CPU.</p>
@@ -769,17 +832,17 @@ architecture or higher.</p>
 and need to have root access to be used.</p>
 <p>The sensor couldn’t be used in a virtual machine, it must access (via Linux
 kernel API) to the real CPU register to read performance counter values.</p>
-<h1 id="installation-3"><a class="header" href="#installation-3">Installation</a></h1>
-<h2 id="from-docker-2"><a class="header" href="#from-docker-2">From docker</a></h2>
+<h1 id="installation-4"><a class="header" href="#installation-4">Installation</a></h1>
+<h2 id="from-docker-3"><a class="header" href="#from-docker-3">From docker</a></h2>
 <p><code>docker pull powerapi/hwpc-sensor</code></p>
-<h2 id="from-deb-file-2"><a class="header" href="#from-deb-file-2">From deb file</a></h2>
+<h2 id="from-deb-file-3"><a class="header" href="#from-deb-file-3">From deb file</a></h2>
 <p>Download the <code>.deb</code> file from the <a href="https://github.com/powerapi-ng/hwpc-sensor/releases">latest
 release</a></p>
 <p>Install the sensor with <code>sudo apt install hwpc-sensor-1.1.0.deb</code></p>
 <h2 id="using-the-binary"><a class="header" href="#using-the-binary">Using the binary</a></h2>
 <p>You can use the compiled version of the sensor (available
 <a href="https://github.com/powerapi-ng/hwpc-sensor/releases">here</a>)</p>
-<h1 id="quickstart-2"><a class="header" href="#quickstart-2">Quickstart</a></h1>
+<h1 id="quickstart-3"><a class="header" href="#quickstart-3">Quickstart</a></h1>
 <p>For running the sensor, first we need a configuration. We provide an example bellow.</p>
 <pre><code class="language-json">{
   &quot;name&quot;: &quot;sensor&quot;,
@@ -826,19 +889,19 @@ It use <code>pidstat</code> to retreive the percentage of CPU usage of each proc
 It then use the <code>/sys/fs/perf_event</code> directory to find the appartenance of
 processes to cgroup.</p>
 <p>The sensor need the cgroup version 1. The version 2 is not supported yet.</p>
-<h1 id="installation-4"><a class="header" href="#installation-4">Installation</a></h1>
-<h2 id="from-pypi-2"><a class="header" href="#from-pypi-2">From pypi</a></h2>
+<h1 id="installation-5"><a class="header" href="#installation-5">Installation</a></h1>
+<h2 id="from-pypi-3"><a class="header" href="#from-pypi-3">From pypi</a></h2>
 <p><code>pip install procfs-sensor</code></p>
-<h2 id="from-docker-3"><a class="header" href="#from-docker-3">From docker</a></h2>
+<h2 id="from-docker-4"><a class="header" href="#from-docker-4">From docker</a></h2>
 <p><code>docker pull powerapi/procfs-sensor</code></p>
-<h2 id="from-deb-file-3"><a class="header" href="#from-deb-file-3">From deb file</a></h2>
+<h2 id="from-deb-file-4"><a class="header" href="#from-deb-file-4">From deb file</a></h2>
 <p>Download the <code>.deb</code> file from the <a href="https://github.com/powerapi-ng/procfs-sensor/releases">latest
 release</a></p>
 <p>Install the sensor with <code>sudo apt install procfs-sensor-1.1.0.deb</code></p>
 <h2 id="using-the-binary-1"><a class="header" href="#using-the-binary-1">Using the binary</a></h2>
 <p>You can use the compiled version of the sensor (available
 <a href="https://github.com/powerapi-ng/procfs-sensor/releases">here</a>)</p>
-<h1 id="quickstart-3"><a class="header" href="#quickstart-3">Quickstart</a></h1>
+<h1 id="quickstart-4"><a class="header" href="#quickstart-4">Quickstart</a></h1>
 <p>For running the sensor, first you need to define the cgroup you want to track.</p>
 <p>The for running the sensor you need configuration. We provide an example bellow.</p>
 <pre><code class="language-json">{
@@ -958,8 +1021,8 @@ estimate the power consumption of software in real-time.
 As a middleware toolkit, PowerAPI offers the capability of assembling power
 meters <em>«à la carte»</em> to accommodate user requirements.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="software-defined-power-meters"><a class="header" href="#software-defined-power-meters">Software-defined Power Meters</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="installation-5"><a class="header" href="#installation-5">Installation</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="quickstart-4"><a class="header" href="#quickstart-4">Quickstart</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="installation-6"><a class="header" href="#installation-6">Installation</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="quickstart-5"><a class="header" href="#quickstart-5">Quickstart</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="user-guide-1"><a class="header" href="#user-guide-1">User guide</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="api"><a class="header" href="#api">API</a></h1>
 
@@ -977,6 +1040,20 @@ meters <em>«à la carte»</em> to accommodate user requirements.</p>
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

@@ -19,7 +19,7 @@
 - [RAPL](./rapl.md)#
 - [SmartWatts](./smartwatts.md)#
 - [Jouleit](./jouleit.md)#
-- [VirtualWatts](./virtualwatts.md)
+- [VirtualWatts](./virtualwatts.md)#
 
 # Sensors
 

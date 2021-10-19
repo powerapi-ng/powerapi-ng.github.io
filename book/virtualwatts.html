@@ -135,6 +135,69 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="virtualwatts"><a class="header" href="#virtualwatts">VirtualWatts</a></h1>
+<p>VirtualWatts is a software-defined power meter based on the PowerAPI toolkit.
+VirtualWatts is a configurable software that can estimate the power consumption
+of software inside a Virtual Machine (VM) in real-time.
+VirtualWatts use the estimation of energy consumption of the VM, computed by
+<a href="https://github.com/powerapi-ng/smartwatts">SmartWatts</a>, and the cpu usage of
+each process inside the VM, computed by <a href="https://github.com/powerapi-ng/procfs-sensor">Procfs
+Sensor</a>.</p>
+<h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<h2 id="from-pypi"><a class="header" href="#from-pypi">From pypi</a></h2>
+<p><code>pip install virtualwatts</code></p>
+<h2 id="from-docker"><a class="header" href="#from-docker">From docker</a></h2>
+<p><code>docker pull powerapi/virtualwatts-formula</code></p>
+<h2 id="from-deb-file"><a class="header" href="#from-deb-file">From deb file</a></h2>
+<p>Download the <code>.deb</code> file from the <a href="https://github.com/powerapi-ng/virtualwatts-formula/releases">latest
+release</a></p>
+<p>Install virtualwatts with <code>sudo apt install ./python3-rapl-virtualtwatts_0.5.0-1_all.deb</code></p>
+<h1 id="quickstart"><a class="header" href="#quickstart">Quickstart</a></h1>
+<p>For running the VirtualWatts formula we'll need several things:</p>
+<ul>
+<li>Smartwatts running on the host machine</li>
+<li>A file <code>SW_output</code>, shared with the host that will be used as database</li>
+<li>The Procfs sensor running inside the VM</li>
+<li>A configuration file for each.</li>
+</ul>
+<p>VirtualWatts configuration :</p>
+<pre><code class="language-json">{
+    'verbose': True,
+    &quot;stream&quot;:True,
+    &quot;input&quot;: {
+        &quot;puller_filedb&quot;: {
+            &quot;type&quot;: &quot;filedb&quot;,
+            &quot;model&quot;: &quot;PowerReport&quot;,
+            &quot;filename&quot;: &quot;SW_output&quot;
+            },
+        &quot;puller_tcpdb&quot;: {
+            &quot;type&quot; : &quot;socket&quot;,
+            &quot;model&quot;: &quot;ProcfsReport&quot;,
+            &quot;uri&quot;: &quot;127.0.0.1&quot;,
+            &quot;port&quot;: self.port
+        }
+    },
+    &quot;output&quot;: {
+        &quot;power_pusher&quot;: {
+            &quot;type&quot;: &quot;mongodb&quot;,
+            &quot;model&quot;: &quot;PowerReport&quot;,
+            &quot;uri&quot;: &quot;mongodb://localhost:27017&quot;
+            &quot;db&quot;: &quot;test_input&quot;,
+            &quot;collection&quot;: &quot;test_output&quot;
+        }
+    },
+    &quot;delay-threshold&quot;: 500,
+    &quot;sensor-reports-sampling-interval&quot;: datetime.timedelta(500)
+}
+</code></pre>
+<p>Start by running Smartwatts with a <code>filedb</code> output.
+Then run <code>virtualwatts</code> using one of the following command line, depending on
+the installation you used:</p>
+<ul>
+<li>via pip : <code>python -m virtualwatts --config-file config_file.json</code></li>
+<li>via docker <code>docker run virtualwatts --config-file config_file.json</code></li>
+<li>via deb file : TODO</li>
+</ul>
+<p>After that run the procfs sensor. Your power reports will be provided in the mongodb.</p>
 
                     </main>
 
@@ -162,6 +225,20 @@
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
