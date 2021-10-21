@@ -139,7 +139,59 @@
 Software-defined power meters are configurable software libraries that can
 estimate the power consumption of software in real-time.
 As a middleware toolkit, PowerAPI offers the capability of assembling power
-meters <em>«à la carte»</em> to accommodate user requirements.</p>
+meters <em>«à la carte»</em> to accommodate user requirements.
+If you want to build your own power meter using PowerAPI, we provide a step by
+step guide.</p>
+<h1 id="creating-your-own-formula"><a class="header" href="#creating-your-own-formula">Creating your own formula</a></h1>
+<p>To develop a formula you have to consider the following parts :</p>
+<ul>
+<li>The configuration parameters needed by the actor</li>
+<li>The dispatching rule of the reports to the different formula actors</li>
+<li>The behavior of the formula actor</li>
+</ul>
+<p>We provide a <a href="https://github.com/powerapi-ng/dummy-formula">dummy formula</a> that
+contain the template to develop your own formula.
+Next we provide a guide on developing your own formula using that template.</p>
+<h2 id="starting"><a class="header" href="#starting">Starting</a></h2>
+<p>To develop a formula there is two major tasks. How to handle the formula actor,
+and the behavior of the formula actor.</p>
+<p>The first thing you need to decide is what will your formula receive as
+inputs, how it will treat it and what will it return.
+Once you've decide this part you need to extract the parameters needed by the
+formula actor.
+In the next of this guide we will treat the handling of the formula actor then
+we will provide some advices on how to develop your formula actor.</p>
+<h2 id="handling-the-actor"><a class="header" href="#handling-the-actor">Handling the actor</a></h2>
+<p>Once you've decided the parameters the formula actor will need, we need to build
+the chain to pass them from the configuration file to the actor.</p>
+<p>First we need to build the parser that will extract the parameters from the
+configuration file.
+For that part we are working on <code>generate_dummy_parser</code> in <code>__main__.py</code>.
+For each parameters <code>arg</code> you should add the following lines :</p>
+<pre><code class="language-python">    parser.add_argument(
+        &quot;arg&quot;,  # name of the arg
+        help=&quot;help on arg&quot;,  # help to display when --help is used
+        type=None,  # type expected
+        default=None,  # Default value if not specified
+    )
+</code></pre>
+<p>Once the configuration is retrieved from the configuration file it is necessary
+to check it.
+For that we use a <code>DummyConfigValidator</code> that will check that each mandatory
+arguments are present and that each arguments have the correct type.</p>
+<p>At this moment the configuration is a Dictionary, it will be transformed to a
+<code>DummyFormulaConfig</code> (in <code>context.py</code>) to be passed to the actor.
+You should put each parameters needed in the formula actor as attribute of that
+class.</p>
+<p>In addition of the configuration you need to specify the dispatch rule of
+<code>route_table</code>. This rule decide which report is send to which formula actor.
+If you choose SENSOR, reports with the same sensor field will be send to the
+same actor. If you choose SOCKET the sort will be made on the <code>sensor</code> field.</p>
+<h2 id="your-formula"><a class="header" href="#your-formula">Your formula</a></h2>
+<p>Now that you actor will receive its parameters, you need to build it.
+You have to write a function <code>receiveMsg_Report(self,message)</code> in <code>actor.py</code> for each type of
+report your formula can receive.
+That function will be called each time your actor receive a report of that type.</p>
 
                     </main>
 
