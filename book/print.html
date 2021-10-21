@@ -1074,9 +1074,18 @@ If you choose SENSOR, reports with the same sensor field will be send to the
 same actor. If you choose SOCKET the sort will be made on the <code>sensor</code> field.</p>
 <h2 id="your-formula"><a class="header" href="#your-formula">Your formula</a></h2>
 <p>Now that you actor will receive its parameters, you need to build it.
-You have to write a function <code>receiveMsg_Report(self,message)</code> in <code>actor.py</code> for each type of
-report your formula can receive.
-That function will be called each time your actor receive a report of that type.</p>
+Your actor will be initialized two times, one as an object and one as an actor.
+You first need to define all the attributes as <code>None</code> is the <code>__init__</code>.
+The supervisor will then call <code> _initialization</code> with a <code>StartMessage</code>
+containing the configuration.</p>
+<p>The <code>receiveMsg_Report(self,message)</code> method will be used each time a report is
+send to the formula actor.
+Once you have treated your reports and produced the output reports, send them
+to the pushers using the following commands :</p>
+<pre><code class="language-python">for name, pusher in self.pushers.items():
+    self.log_debug('send ' + str(report) + ' to ' + name)
+    self.send(pusher, report)
+</code></pre>
 
                     </main>
 
@@ -1092,6 +1101,20 @@ That function will be called each time your actor receive a report of that type.
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

@@ -69,6 +69,18 @@ same actor. If you choose SOCKET the sort will be made on the `sensor` field.
 ## Your formula
 
 Now that you actor will receive its parameters, you need to build it.
-You have to write a function `receiveMsg_Report(self,message)` in `actor.py` for each type of
-report your formula can receive.
-That function will be called each time your actor receive a report of that type.
+Your actor will be initialized two times, one as an object and one as an actor.
+You first need to define all the attributes as `None` is the `__init__`.
+The supervisor will then call ` _initialization` with a `StartMessage`
+containing the configuration.
+
+The `receiveMsg_Report(self,message)` method will be used each time a report is
+send to the formula actor.
+Once you have treated your reports and produced the output reports, send them
+to the pushers using the following commands :
+
+```python
+for name, pusher in self.pushers.items():
+    self.log_debug('send ' + str(report) + ' to ' + name)
+    self.send(pusher, report)
+```
