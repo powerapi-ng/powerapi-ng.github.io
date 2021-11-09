@@ -586,8 +586,8 @@ Then run <code>rapl_formula</code> using one of the following command line, depe
 the installation you used:</p>
 <ul>
 <li>via pip : <code>python -m rapl_formula --config-file config_file.json</code></li>
-<li>via docker <code>docker run rapl_formula --config-file config_file.json</code></li>
-<li>via deb file : TODO</li>
+<li>via docker <code>docker run rapl_formula &lt;configuration&gt;</code></li>
+<li>via deb file : <code>rapl-formula --config-file config_file.json</code></li>
 </ul>
 <p>Your power report will be provided in the mongodb.</p>
 <h1 id="user-guide"><a class="header" href="#user-guide">User guide</a></h1>
@@ -699,8 +699,8 @@ For the sensor use the following config file:</p>
 the installation you used:</p>
 <ul>
 <li>via pip : <code>python -m smartwatts --config-file config_file.json</code></li>
-<li>via docker <code>docker run smartwatts --config-file config_file.json</code></li>
-<li>via deb file : TODO</li>
+<li>via docker <code>docker run smartwatts &lt;configuration&gt;</code></li>
+<li>via deb file : <code>smartwatts --config-file confgi_file.json</code></li>
 </ul>
 <p>Your power report will be provided in the mongodb.</p>
 <h1 id="auto-config-script"><a class="header" href="#auto-config-script">Auto-config Script</a></h1>
@@ -823,8 +823,8 @@ Then run <code>virtualwatts</code> using one of the following command line, depe
 the installation you used:</p>
 <ul>
 <li>via pip : <code>python -m virtualwatts --config-file config_file.json</code></li>
-<li>via docker <code>docker run virtualwatts --config-file config_file.json</code></li>
-<li>via deb file : TODO</li>
+<li>via docker <code>docker run virtualwatts &lt;configuration&gt;</code></li>
+<li>via deb file : <code>virtualwatts --config-file config_file.json</code></li>
 </ul>
 <p>After that run the procfs sensor. Your power reports will be provided in the mongodb.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="hwpc-sensor"><a class="header" href="#hwpc-sensor">Hwpc-Sensor</a></h1>
@@ -883,7 +883,7 @@ release</a></p>
 <p>Start a mongo db and then you can start the sensor with the following command line, depending on your
 installation :</p>
 <ul>
-<li>from docker : <code>docker run --rm --net=host --privileged --pid=host -v /sys:/sys -v /var/lib/docker/containers:/var/lib/docker/containers:ro -v /tmp/powerapi-sensor-reporting:/reporting -v $(pwd):/srv powerapi/hwpc-sensor --config-file config_file.json </code></li>
+<li>from docker : <code>docker run --rm --net=host --privileged --pid=host -v /sys:/sys -v /var/lib/docker/containers:/var/lib/docker/containers:ro -v /tmp/powerapi-sensor-reporting:/reporting -v $(pwd):/srv powerapi/hwpc-sensor &lt;configuration&gt; </code></li>
 <li>from binary : <code>./hwpc-sensor --config-file config_file.json</code></li>
 </ul>
 <p>The reports will be provided in your mongodb.</p>
@@ -923,7 +923,7 @@ release</a></p>
 </code></pre>
 <p>You can start the sensor with the following command line, depending on your installation :</p>
 <ul>
-<li>from docker : <code>docker powerapi/procfs-sensor --config-file config_file.json </code></li>
+<li>from docker : <code>docker powerapi/procfs-sensor &lt;configuration&gt; </code></li>
 <li>from pip : <code>python -m procfs-sensor --config-file config_file.json</code></li>
 </ul>
 <p>You can use a TCP server to retreive the reports.</p>

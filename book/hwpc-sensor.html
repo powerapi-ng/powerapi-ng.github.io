@@ -190,7 +190,7 @@ release</a></p>
 <p>Start a mongo db and then you can start the sensor with the following command line, depending on your
 installation :</p>
 <ul>
-<li>from docker : <code>docker run --rm --net=host --privileged --pid=host -v /sys:/sys -v /var/lib/docker/containers:/var/lib/docker/containers:ro -v /tmp/powerapi-sensor-reporting:/reporting -v $(pwd):/srv powerapi/hwpc-sensor --config-file config_file.json </code></li>
+<li>from docker : <code>docker run --rm --net=host --privileged --pid=host -v /sys:/sys -v /var/lib/docker/containers:/var/lib/docker/containers:ro -v /tmp/powerapi-sensor-reporting:/reporting -v $(pwd):/srv powerapi/hwpc-sensor &lt;configuration&gt; </code></li>
 <li>from binary : <code>./hwpc-sensor --config-file config_file.json</code></li>
 </ul>
 <p>The reports will be provided in your mongodb.</p>

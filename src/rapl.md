@@ -67,8 +67,8 @@ Then run `rapl_formula` using one of the following command line, depending on
 the installation you used:
 
 - via pip : `python -m rapl_formula --config-file config_file.json`
-- via docker `docker run rapl_formula --config-file config_file.json`
-- via deb file : TODO
+- via docker `docker run rapl_formula <configuration>`
+- via deb file : `rapl-formula --config-file config_file.json`
 
 Your power report will be provided in the mongodb.
 

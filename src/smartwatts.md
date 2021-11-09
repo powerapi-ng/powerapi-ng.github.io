@@ -119,8 +119,8 @@ Then run `smartwatts` using one of the following command line, depending on
 the installation you used:
 
 - via pip : `python -m smartwatts --config-file config_file.json`
-- via docker `docker run smartwatts --config-file config_file.json`
-- via deb file : TODO
+- via docker `docker run smartwatts <configuration>`
+- via deb file : `smartwatts --config-file confgi_file.json`
 
 Your power report will be provided in the mongodb.
 

@@ -73,7 +73,7 @@ Then run `virtualwatts` using one of the following command line, depending on
 the installation you used:
 
 - via pip : `python -m virtualwatts --config-file config_file.json`
-- via docker `docker run virtualwatts --config-file config_file.json`
-- via deb file : TODO
+- via docker `docker run virtualwatts <configuration>`
+- via deb file : `virtualwatts --config-file config_file.json`
 
 After that run the procfs sensor. Your power reports will be provided in the mongodb.
