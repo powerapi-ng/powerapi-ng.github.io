@@ -144,6 +144,7 @@ return the mesured power in a PowerReport for each domain.
 This formula do not perform any other computation as its goal is only to track
 global power consumption in a more readable way than raw RAPL.</p>
 <h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<p>You can use <a href="./script/rapl_install.sh">the following script</a> to install RAPL Formula and HWPC Sensor.</p>
 <h2 id="from-pypi"><a class="header" href="#from-pypi">From pypi</a></h2>
 <p><code>pip install rapl-formula</code></p>
 <h2 id="from-docker"><a class="header" href="#from-docker">From docker</a></h2>
@@ -225,6 +226,20 @@ the installation you used:</p>
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

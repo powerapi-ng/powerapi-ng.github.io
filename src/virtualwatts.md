@@ -11,6 +11,8 @@ Sensor](https://github.com/powerapi-ng/procfs-sensor).
 
 # Installation
 
+You can use [the following script](./script/virtualwatts_install.sh) to install VirtualWatts and Procfs Sensor.
+
 ## From pypi
 
 `pip install virtualwatts`
@@ -24,7 +26,7 @@ Sensor](https://github.com/powerapi-ng/procfs-sensor).
 Download the `.deb` file from the [latest
 release](https://github.com/powerapi-ng/virtualwatts-formula/releases)
 
-Install virtualwatts with `sudo apt install ./python3-rapl-virtualtwatts_0.5.0-1_all.deb`
+Install virtualwatts with `sudo apt install ./python3-virtualtwatts_0.1.1-1_all.deb`
 
 # Quickstart
 

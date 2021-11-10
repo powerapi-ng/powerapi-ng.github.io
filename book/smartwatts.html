@@ -157,6 +157,7 @@ reached it learn a new power model, using the previous reports.</p>
 <p>The choice of those specific metrics is motivated in <a href="https://hal.inria.fr/hal-02470128">SmartWatts: Self-Calibrating
 Software-Defined Power Meter for Containers</a></p>
 <h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<p>You can use <a href="./script/smartwatts_install.sh">the following script</a> to install Smartwatts and HWPC Sensor.</p>
 <h2 id="from-pypi"><a class="header" href="#from-pypi">From pypi</a></h2>
 <p><code>pip install smartwatts</code></p>
 <h2 id="from-docker"><a class="header" href="#from-docker">From docker</a></h2>
@@ -164,7 +165,7 @@ Software-Defined Power Meter for Containers</a></p>
 <h2 id="from-deb-file"><a class="header" href="#from-deb-file">From deb file</a></h2>
 <p>Download the <code>.deb</code> file from the <a href="https://github.com/powerapi-ng/smartwatts-formula/releases">latest
 release</a></p>
-<p>Install smartwatts with <code>sudo apt install ./python3-rapl-smartwatts_0.8.0-1_all.deb</code></p>
+<p>Install smartwatts with <code>sudo apt install ./python3-smartwatts_0.8.0-1_all.deb</code></p>
 <h1 id="quickstart"><a class="header" href="#quickstart">Quickstart</a></h1>
 <p>For running the Smartwatts formula we'll need two things:</p>
 <ul>
@@ -190,9 +191,9 @@ release</a></p>
       &quot;collection&quot;: &quot;prep&quot;
     }
   },
-  &quot;cpu-ratio-base&quot;: 19,
-  &quot;cpu-ratio-min&quot;: 4,
-  &quot;cpu-ratio-max&quot;: 42,
+  &quot;cpu-frequency-base&quot;: 19,
+  &quot;cpu-frequency-min&quot;: 4,
+  &quot;cpu-frequency-max&quot;: 42,
   &quot;cpu-error-threshold&quot;: 2.0,
   &quot;disable-dram-formula&quot;: true,
   &quot;sensor-report-sampling-interval&quot;: 1000
@@ -309,6 +310,20 @@ echo &quot;
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

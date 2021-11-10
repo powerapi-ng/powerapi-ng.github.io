@@ -25,6 +25,8 @@ Software-Defined Power Meter for Containers](https://hal.inria.fr/hal-02470128)
 
 # Installation
 
+You can use [the following script](./script/smartwatts_install.sh) to install Smartwatts and HWPC Sensor.
+
 ## From pypi
 
 `pip install smartwatts`
@@ -38,7 +40,7 @@ Software-Defined Power Meter for Containers](https://hal.inria.fr/hal-02470128)
 Download the `.deb` file from the [latest
 release](https://github.com/powerapi-ng/smartwatts-formula/releases)
 
-Install smartwatts with `sudo apt install ./python3-rapl-smartwatts_0.8.0-1_all.deb`
+Install smartwatts with `sudo apt install ./python3-smartwatts_0.8.0-1_all.deb`
 
 # Quickstart
 
@@ -67,9 +69,9 @@ For running the Smartwatts formula we'll need two things:
       "collection": "prep"
     }
   },
-  "cpu-ratio-base": 19,
-  "cpu-ratio-min": 4,
-  "cpu-ratio-max": 42,
+  "cpu-frequency-base": 19,
+  "cpu-frequency-min": 4,
+  "cpu-frequency-max": 42,
   "cpu-error-threshold": 2.0,
   "disable-dram-formula": true,
   "sensor-report-sampling-interval": 1000

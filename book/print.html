@@ -542,6 +542,7 @@ return the mesured power in a PowerReport for each domain.
 This formula do not perform any other computation as its goal is only to track
 global power consumption in a more readable way than raw RAPL.</p>
 <h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<p>You can use <a href="./script/rapl_install.sh">the following script</a> to install RAPL Formula and HWPC Sensor.</p>
 <h2 id="from-pypi"><a class="header" href="#from-pypi">From pypi</a></h2>
 <p><code>pip install rapl-formula</code></p>
 <h2 id="from-docker"><a class="header" href="#from-docker">From docker</a></h2>
@@ -619,6 +620,7 @@ reached it learn a new power model, using the previous reports.</p>
 <p>The choice of those specific metrics is motivated in <a href="https://hal.inria.fr/hal-02470128">SmartWatts: Self-Calibrating
 Software-Defined Power Meter for Containers</a></p>
 <h1 id="installation-1"><a class="header" href="#installation-1">Installation</a></h1>
+<p>You can use <a href="./script/smartwatts_install.sh">the following script</a> to install Smartwatts and HWPC Sensor.</p>
 <h2 id="from-pypi-1"><a class="header" href="#from-pypi-1">From pypi</a></h2>
 <p><code>pip install smartwatts</code></p>
 <h2 id="from-docker-1"><a class="header" href="#from-docker-1">From docker</a></h2>
@@ -626,7 +628,7 @@ Software-Defined Power Meter for Containers</a></p>
 <h2 id="from-deb-file-1"><a class="header" href="#from-deb-file-1">From deb file</a></h2>
 <p>Download the <code>.deb</code> file from the <a href="https://github.com/powerapi-ng/smartwatts-formula/releases">latest
 release</a></p>
-<p>Install smartwatts with <code>sudo apt install ./python3-rapl-smartwatts_0.8.0-1_all.deb</code></p>
+<p>Install smartwatts with <code>sudo apt install ./python3-smartwatts_0.8.0-1_all.deb</code></p>
 <h1 id="quickstart-1"><a class="header" href="#quickstart-1">Quickstart</a></h1>
 <p>For running the Smartwatts formula we'll need two things:</p>
 <ul>
@@ -652,9 +654,9 @@ release</a></p>
       &quot;collection&quot;: &quot;prep&quot;
     }
   },
-  &quot;cpu-ratio-base&quot;: 19,
-  &quot;cpu-ratio-min&quot;: 4,
-  &quot;cpu-ratio-max&quot;: 42,
+  &quot;cpu-frequency-base&quot;: 19,
+  &quot;cpu-frequency-min&quot;: 4,
+  &quot;cpu-frequency-max&quot;: 42,
   &quot;cpu-error-threshold&quot;: 2.0,
   &quot;disable-dram-formula&quot;: true,
   &quot;sensor-report-sampling-interval&quot;: 1000
@@ -772,6 +774,7 @@ of software inside a Virtual Machine (VM) in real-time.</p>
 each process inside the VM, computed by <a href="https://github.com/powerapi-ng/procfs-sensor">Procfs
 Sensor</a>.</p>
 <h1 id="installation-3"><a class="header" href="#installation-3">Installation</a></h1>
+<p>You can use <a href="./script/virtualwatts_install.sh">the following script</a> to install VirtualWatts and Procfs Sensor.</p>
 <h2 id="from-pypi-2"><a class="header" href="#from-pypi-2">From pypi</a></h2>
 <p><code>pip install virtualwatts</code></p>
 <h2 id="from-docker-2"><a class="header" href="#from-docker-2">From docker</a></h2>
@@ -779,7 +782,7 @@ Sensor</a>.</p>
 <h2 id="from-deb-file-2"><a class="header" href="#from-deb-file-2">From deb file</a></h2>
 <p>Download the <code>.deb</code> file from the <a href="https://github.com/powerapi-ng/virtualwatts-formula/releases">latest
 release</a></p>
-<p>Install virtualwatts with <code>sudo apt install ./python3-rapl-virtualtwatts_0.5.0-1_all.deb</code></p>
+<p>Install virtualwatts with <code>sudo apt install ./python3-virtualtwatts_0.1.1-1_all.deb</code></p>
 <h1 id="quickstart-2"><a class="header" href="#quickstart-2">Quickstart</a></h1>
 <p>For running the VirtualWatts formula we'll need several things:</p>
 <ul>
@@ -1101,6 +1104,20 @@ to the pushers using the following commands :</p>
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

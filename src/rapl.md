@@ -13,6 +13,8 @@ global power consumption in a more readable way than raw RAPL.
 
 # Installation
 
+You can use [the following script](./script/rapl_install.sh) to install RAPL Formula and HWPC Sensor.
+
 ## From pypi
 
 `pip install rapl-formula`
