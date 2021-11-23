@@ -58,11 +58,12 @@ VirtualWatts configuration :
     },
     "output": {
         "power_pusher": {
-            "type": "mongodb",
-            "model": "PowerReport",
-            "uri": "mongodb://localhost:27017"
-            "db": "test_input",
-            "collection": "test_output"
+        "type": "influxdb",
+        "model": "PowerReport",
+        "uri": "127.0.0.1",
+        "port": 8086,
+        "db": "test",
+        "collection": "prep"
         }
     },
     "delay-threshold": 500,
@@ -75,7 +76,8 @@ Then run `virtualwatts` using one of the following command line, depending on
 the installation you used:
 
 - via pip : `python -m virtualwatts --config-file config_file.json`
-- via docker `docker run virtualwatts <configuration>`
+- via docker `docker run -v $(pwd)/config_file.json:/config_file.json powerapi/virtualwatts --config-file /config_file.json `
 - via deb file : `virtualwatts --config-file config_file.json`
 
-After that run the procfs sensor. Your power reports will be provided in the mongodb.
+After that run the procfs sensor. Your power report will be provided in the influxdb. You can watch them in a
+grafana using the [following tutorial](./grafana.md)

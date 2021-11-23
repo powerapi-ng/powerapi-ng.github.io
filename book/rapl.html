@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Concepts</li><li class="chapter-item expanded "><a href="reports.html"><strong aria-hidden="true">1.</strong> Reports</a></li><li class="chapter-item expanded affix "><li class="part-title">How to guide</li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.</strong> Configuration files</a></li><li class="chapter-item expanded "><a href="grafana.html"><strong aria-hidden="true">3.</strong> Visualize in grafana</a></li><li class="chapter-item expanded "><a href="cgroup.html"><strong aria-hidden="true">4.</strong> Create cgroup</a></li><li class="chapter-item expanded affix "><li class="part-title">What to use ?</li><li class="chapter-item expanded "><a href="what_to_use.html"><strong aria-hidden="true">5.</strong> What to use</a></li><li class="chapter-item expanded affix "><li class="part-title">Monitoring tools</li><li class="chapter-item expanded "><a href="rapl.html" class="active"><strong aria-hidden="true">6.</strong> RAPL</a></li><li class="chapter-item expanded "><a href="smartwatts.html"><strong aria-hidden="true">7.</strong> SmartWatts</a></li><li class="chapter-item expanded "><a href="jouleit.html"><strong aria-hidden="true">8.</strong> Jouleit</a></li><li class="chapter-item expanded "><a href="virtualwatts.html"><strong aria-hidden="true">9.</strong> VirtualWatts</a></li><li class="chapter-item expanded affix "><li class="part-title">Sensors</li><li class="chapter-item expanded "><a href="hwpc-sensor.html"><strong aria-hidden="true">10.</strong> Hwpc-Sensor</a></li><li class="chapter-item expanded "><a href="procfs-sensor.html"><strong aria-hidden="true">11.</strong> Procfs-Sensor</a></li><li class="chapter-item expanded affix "><li class="part-title">Database</li><li class="chapter-item expanded "><a href="database.html"><strong aria-hidden="true">12.</strong> Database</a></li><li class="chapter-item expanded affix "><li class="part-title">PowerAPI</li><li class="chapter-item expanded "><a href="powerapi.html"><strong aria-hidden="true">13.</strong> PowerAPI</a></li><li class="chapter-item expanded affix "><li class="part-title">FAQ</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="quickstart.html">Quickstart</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Concepts</li><li class="chapter-item expanded "><a href="reports.html"><strong aria-hidden="true">1.</strong> Reports</a></li><li class="chapter-item expanded affix "><li class="part-title">How to guide</li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.</strong> Configuration files</a></li><li class="chapter-item expanded "><a href="grafana.html"><strong aria-hidden="true">3.</strong> Visualize in grafana</a></li><li class="chapter-item expanded "><a href="cgroup.html"><strong aria-hidden="true">4.</strong> Create cgroup</a></li><li class="chapter-item expanded affix "><li class="part-title">What to use ?</li><li class="chapter-item expanded "><a href="what_to_use.html"><strong aria-hidden="true">5.</strong> What to use</a></li><li class="chapter-item expanded affix "><li class="part-title">Monitoring tools</li><li class="chapter-item expanded "><a href="rapl.html" class="active"><strong aria-hidden="true">6.</strong> RAPL</a></li><li class="chapter-item expanded "><a href="smartwatts.html"><strong aria-hidden="true">7.</strong> SmartWatts</a></li><li class="chapter-item expanded "><a href="jouleit.html"><strong aria-hidden="true">8.</strong> Jouleit</a></li><li class="chapter-item expanded "><a href="virtualwatts.html"><strong aria-hidden="true">9.</strong> VirtualWatts</a></li><li class="chapter-item expanded affix "><li class="part-title">Sensors</li><li class="chapter-item expanded "><a href="hwpc-sensor.html"><strong aria-hidden="true">10.</strong> Hwpc-Sensor</a></li><li class="chapter-item expanded "><a href="procfs-sensor.html"><strong aria-hidden="true">11.</strong> Procfs-Sensor</a></li><li class="chapter-item expanded affix "><li class="part-title">Database</li><li class="chapter-item expanded "><a href="database.html"><strong aria-hidden="true">12.</strong> Database</a></li><li class="chapter-item expanded affix "><li class="part-title">PowerAPI</li><li class="chapter-item expanded "><a href="powerapi.html"><strong aria-hidden="true">13.</strong> PowerAPI</a></li><li class="chapter-item expanded affix "><li class="part-title">FAQ</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -173,8 +173,10 @@ release</a></p>
   },
   &quot;output&quot;: {
     &quot;pusher_power&quot;: {
-      &quot;type&quot;: &quot;mongodb&quot;,
-      &quot;uri&quot;: &quot;mongodb://127.0.0.1&quot;,
+      &quot;type&quot;: &quot;influxdb&quot;,
+      &quot;model&quot;: &quot;PowerReport&quot;,
+      &quot;uri&quot;: &quot;127.0.0.1&quot;,
+      &quot;port&quot;: 8086,
       &quot;db&quot;: &quot;test&quot;,
       &quot;collection&quot;: &quot;prep&quot;
     }
@@ -183,16 +185,19 @@ release</a></p>
   &quot;sensor-report-sampling-interval&quot;: 500
 }
 </code></pre>
-<p>Start by running the sensor (see <a href="./hwpc-sensor_quickstart.html">here</a>) and a
-mongodb.
-Then run <code>rapl_formula</code> using one of the following command line, depending on
+<p>Start by installing the hwpc-sensor (see
+<a href="./hwpc-sensor.html#installation">here</a>) and start it (see
+<a href="./hwpc-sensor.html#quickstart">here</a>).
+You also need to start an influxdb 1.8 via the command line <code>docker run -d --name influx_rapl -p 8086:8086 influxdb:1.8 </code>.</p>
+<p>Then run <code>rapl_formula</code> using one of the following command line, depending on
 the installation you used:</p>
 <ul>
 <li>via pip : <code>python -m rapl_formula --config-file config_file.json</code></li>
-<li>via docker <code>docker run rapl_formula &lt;configuration&gt;</code></li>
+<li>via docker <code>docker run -v $(pwd)/config_file.json:/config_file.json powerapi/rapl-formula --config-file /config_file.json </code></li>
 <li>via deb file : <code>rapl-formula --config-file config_file.json</code></li>
 </ul>
-<p>Your power report will be provided in the mongodb.</p>
+<p>Your power report will be provided in the influxdb. You can watch them in a
+grafana using the <a href="./grafana.html">following tutorial</a></p>
 <h1 id="user-guide"><a class="header" href="#user-guide">User guide</a></h1>
 <h2 id="configuration-parameters"><a class="header" href="#configuration-parameters">Configuration parameters</a></h2>
 <ul>

@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Concepts</li><li class="chapter-item expanded "><a href="reports.html"><strong aria-hidden="true">1.</strong> Reports</a></li><li class="chapter-item expanded affix "><li class="part-title">How to guide</li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.</strong> Configuration files</a></li><li class="chapter-item expanded "><a href="grafana.html"><strong aria-hidden="true">3.</strong> Visualize in grafana</a></li><li class="chapter-item expanded "><a href="cgroup.html"><strong aria-hidden="true">4.</strong> Create cgroup</a></li><li class="chapter-item expanded affix "><li class="part-title">What to use ?</li><li class="chapter-item expanded "><a href="what_to_use.html"><strong aria-hidden="true">5.</strong> What to use</a></li><li class="chapter-item expanded affix "><li class="part-title">Monitoring tools</li><li class="chapter-item expanded "><a href="rapl.html"><strong aria-hidden="true">6.</strong> RAPL</a></li><li class="chapter-item expanded "><a href="smartwatts.html"><strong aria-hidden="true">7.</strong> SmartWatts</a></li><li class="chapter-item expanded "><a href="jouleit.html"><strong aria-hidden="true">8.</strong> Jouleit</a></li><li class="chapter-item expanded "><a href="virtualwatts.html" class="active"><strong aria-hidden="true">9.</strong> VirtualWatts</a></li><li class="chapter-item expanded affix "><li class="part-title">Sensors</li><li class="chapter-item expanded "><a href="hwpc-sensor.html"><strong aria-hidden="true">10.</strong> Hwpc-Sensor</a></li><li class="chapter-item expanded "><a href="procfs-sensor.html"><strong aria-hidden="true">11.</strong> Procfs-Sensor</a></li><li class="chapter-item expanded affix "><li class="part-title">Database</li><li class="chapter-item expanded "><a href="database.html"><strong aria-hidden="true">12.</strong> Database</a></li><li class="chapter-item expanded affix "><li class="part-title">PowerAPI</li><li class="chapter-item expanded "><a href="powerapi.html"><strong aria-hidden="true">13.</strong> PowerAPI</a></li><li class="chapter-item expanded affix "><li class="part-title">FAQ</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="quickstart.html">Quickstart</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Concepts</li><li class="chapter-item expanded "><a href="reports.html"><strong aria-hidden="true">1.</strong> Reports</a></li><li class="chapter-item expanded affix "><li class="part-title">How to guide</li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.</strong> Configuration files</a></li><li class="chapter-item expanded "><a href="grafana.html"><strong aria-hidden="true">3.</strong> Visualize in grafana</a></li><li class="chapter-item expanded "><a href="cgroup.html"><strong aria-hidden="true">4.</strong> Create cgroup</a></li><li class="chapter-item expanded affix "><li class="part-title">What to use ?</li><li class="chapter-item expanded "><a href="what_to_use.html"><strong aria-hidden="true">5.</strong> What to use</a></li><li class="chapter-item expanded affix "><li class="part-title">Monitoring tools</li><li class="chapter-item expanded "><a href="rapl.html"><strong aria-hidden="true">6.</strong> RAPL</a></li><li class="chapter-item expanded "><a href="smartwatts.html"><strong aria-hidden="true">7.</strong> SmartWatts</a></li><li class="chapter-item expanded "><a href="jouleit.html"><strong aria-hidden="true">8.</strong> Jouleit</a></li><li class="chapter-item expanded "><a href="virtualwatts.html" class="active"><strong aria-hidden="true">9.</strong> VirtualWatts</a></li><li class="chapter-item expanded affix "><li class="part-title">Sensors</li><li class="chapter-item expanded "><a href="hwpc-sensor.html"><strong aria-hidden="true">10.</strong> Hwpc-Sensor</a></li><li class="chapter-item expanded "><a href="procfs-sensor.html"><strong aria-hidden="true">11.</strong> Procfs-Sensor</a></li><li class="chapter-item expanded affix "><li class="part-title">Database</li><li class="chapter-item expanded "><a href="database.html"><strong aria-hidden="true">12.</strong> Database</a></li><li class="chapter-item expanded affix "><li class="part-title">PowerAPI</li><li class="chapter-item expanded "><a href="powerapi.html"><strong aria-hidden="true">13.</strong> PowerAPI</a></li><li class="chapter-item expanded affix "><li class="part-title">FAQ</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -179,11 +179,12 @@ release</a></p>
     },
     &quot;output&quot;: {
         &quot;power_pusher&quot;: {
-            &quot;type&quot;: &quot;mongodb&quot;,
-            &quot;model&quot;: &quot;PowerReport&quot;,
-            &quot;uri&quot;: &quot;mongodb://localhost:27017&quot;
-            &quot;db&quot;: &quot;test_input&quot;,
-            &quot;collection&quot;: &quot;test_output&quot;
+        &quot;type&quot;: &quot;influxdb&quot;,
+        &quot;model&quot;: &quot;PowerReport&quot;,
+        &quot;uri&quot;: &quot;127.0.0.1&quot;,
+        &quot;port&quot;: 8086,
+        &quot;db&quot;: &quot;test&quot;,
+        &quot;collection&quot;: &quot;prep&quot;
         }
     },
     &quot;delay-threshold&quot;: 500,
@@ -195,10 +196,11 @@ Then run <code>virtualwatts</code> using one of the following command line, depe
 the installation you used:</p>
 <ul>
 <li>via pip : <code>python -m virtualwatts --config-file config_file.json</code></li>
-<li>via docker <code>docker run virtualwatts &lt;configuration&gt;</code></li>
+<li>via docker <code>docker run -v $(pwd)/config_file.json:/config_file.json powerapi/virtualwatts --config-file /config_file.json </code></li>
 <li>via deb file : <code>virtualwatts --config-file config_file.json</code></li>
 </ul>
-<p>After that run the procfs sensor. Your power reports will be provided in the mongodb.</p>
+<p>After that run the procfs sensor. Your power report will be provided in the influxdb. You can watch them in a
+grafana using the <a href="./grafana.html">following tutorial</a></p>
 
                     </main>
 

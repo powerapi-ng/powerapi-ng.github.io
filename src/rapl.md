@@ -52,8 +52,10 @@ For running the RAPL formula we'll need two things:
   },
   "output": {
     "pusher_power": {
-      "type": "mongodb",
-      "uri": "mongodb://127.0.0.1",
+      "type": "influxdb",
+      "model": "PowerReport",
+      "uri": "127.0.0.1",
+      "port": 8086,
       "db": "test",
       "collection": "prep"
     }
@@ -63,16 +65,20 @@ For running the RAPL formula we'll need two things:
 }
 ```
 
-Start by running the sensor (see [here](./hwpc-sensor_quickstart.md)) and a
-mongodb.
+Start by installing the hwpc-sensor (see
+[here](./hwpc-sensor.md#installation)) and start it (see
+[here](./hwpc-sensor.md#quickstart)).
+You also need to start an influxdb 1.8 via the command line `docker run -d --name influx_rapl -p 8086:8086 influxdb:1.8 `.
+
 Then run `rapl_formula` using one of the following command line, depending on
 the installation you used:
 
 - via pip : `python -m rapl_formula --config-file config_file.json`
-- via docker `docker run rapl_formula <configuration>`
+- via docker `docker run -v $(pwd)/config_file.json:/config_file.json powerapi/rapl-formula --config-file /config_file.json `
 - via deb file : `rapl-formula --config-file config_file.json`
 
-Your power report will be provided in the mongodb.
+Your power report will be provided in the influxdb. You can watch them in a
+grafana using the [following tutorial](./grafana.md)
 
 # User guide
 

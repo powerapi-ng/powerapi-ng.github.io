@@ -56,9 +56,10 @@ For running the Smartwatts formula we'll need two things:
   "input": {
     "puller": {
       "model": "HWPCReport",
-      "type": "socket",
-      "uri": "127.0.0.1",
-      "port": 8080
+      "type": "mongodb",
+      "uri": "mongodb://127.0.0.1",
+      "db": "test",
+      "collection": "prep"
     }
   },
   "output": {
@@ -81,50 +82,20 @@ For running the Smartwatts formula we'll need two things:
 The configuration can depend of your hardware, we provide an [auto-configuration
 script](./smartwatts_auto_config.md).
 
-Start by running the sensor (see [here](./hwpc-sensor-quickstart.md)) and a
-mongodb.
-For the sensor use the following config file:
-
-```json
-{
-  "name": "sensor",
-  "verbose": true,
-  "frequency": 500,
-  "output": {
-    "type": "socket",
-    "uri": "127.0.0.1",
-    "port": 8080
-  },
-  "system": {
-    "rapl": {
-      "events": ["RAPL_ENERGY_PKG"],
-      "monitoring_type": "MONITOR_ONE_CPU_PER_SOCKET"
-    },
-    "msr": {
-      "events": ["TSC", "APERF", "MPERF"]
-    }
-  },
-  "container": {
-    "core": {
-      "events": [
-        "CPU_CLK_THREAD_UNHALTED:REF_P",
-        "CPU_CLK_THREAD_UNHALTED:THREAD_P",
-        "LLC_MISSES",
-        "INSTRUCTIONS_RETIRED"
-      ]
-    }
-  }
-}
-```
+Start by installing the hwpc-sensor (see
+[here](./hwpc-sensor.md#installation)) and start it (see
+[here](./hwpc-sensor.md#quickstart)).
+You also need to start an influxdb 1.8 via the command line `docker run -d --name influx_rapl -p 8086:8086 influxdb:1.8 `.
 
 Then run `smartwatts` using one of the following command line, depending on
 the installation you used:
 
 - via pip : `python -m smartwatts --config-file config_file.json`
-- via docker `docker run smartwatts <configuration>`
+- via docker `docker run -v $(pwd)/config_file.json:/config_file.json powerapi/smartwatts-formula --config-file /config_file.json `
 - via deb file : `smartwatts --config-file confgi_file.json`
 
-Your power report will be provided in the mongodb.
+Your power report will be provided in the influxdb. You can watch them in a
+grafana using the [following tutorial](./grafana.md)
 
 # Auto-config Script
 
@@ -154,8 +125,10 @@ echo "
   },
   "output": {
     "pusher_power": {
-      "type": "mongodb",
-      "uri": "mongodb://127.0.0.1",
+      "type": "influxdb",
+      "model": "PowerReport",
+      "uri": "127.0.0.1",
+      "port": 8086,
       "db": "test",
       "collection": "prep"
     }
