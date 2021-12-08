@@ -226,6 +226,26 @@ report.</p>
   &quot;filename&quot;: /tmp/database
 }
 </code></pre>
+<h2 id="prometheus"><a class="header" href="#prometheus">Prometheus</a></h2>
+<p>If you want to use a prometheus as database in your formula your have to specify
+<code>prom</code> as the <code>type</code> of a pusher.</p>
+<p>The list of parameters you have to provide :</p>
+<ul>
+<li><code>tags</code> : specify report tags</li>
+<li><code>uri</code> : Server ip address</li>
+<li><code>port</code> : Server port</li>
+<li><code>metric_name</code> : The metric name</li>
+<li><code>metric_description</code> : The metric description. It default value is <code> energy consumption</code>
+This database can only be used as an output.</li>
+</ul>
+<p>We provide an example of configuration file.</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;prom&quot;,
+  &quot;uri&quot;: &quot;127.0.0.1&quot;,
+  &quot;port&quot;: 8080,
+  &quot;metric_name&quot;: test
+}
+</code></pre>
 
                     </main>
 

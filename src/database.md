@@ -123,3 +123,28 @@ We provide an example of configuration file.
   "filename": /tmp/database
 }
 ```
+
+## Prometheus
+
+If you want to use a prometheus as database in your formula your have to specify
+`prom` as the `type` of a pusher.
+
+The list of parameters you have to provide :
+
+- `tags` : specify report tags
+- `uri` : Server ip address
+- `port` : Server port
+- `metric_name` : The metric name
+- `metric_description` : The metric description. It default value is ` energy consumption`
+  This database can only be used as an output.
+
+We provide an example of configuration file.
+
+```json
+{
+  "type": "prom",
+  "uri": "127.0.0.1",
+  "port": 8080,
+  "metric_name": test
+}
+```

@@ -136,6 +136,22 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="installing"><a class="header" href="#installing">Installing</a></h1>
+<h2 id="rapl-formula"><a class="header" href="#rapl-formula">RAPL Formula</a></h2>
+<p>RAPL Formula is made for tracking the energy consumption of your machine.
+To install RAPL Formula run <a href="./script/rapl_install.sh">the following
+script</a> in a Terminal.</p>
+<p>The script explains what it will do and then pauses before it does it.</p>
+<h2 id="jouleit"><a class="header" href="#jouleit">Jouleit</a></h2>
+<p>Jouleit is made for tracking the energy consumption of a program.
+Jouleit need <code>gawk</code> to run.
+You can get the script from the <a href="https://github.com/powerapi-ng/jouleit">github repository</a>
+Start jouleit by using <code>./jouleit.sh cmd</code>.</p>
+<h2 id="smartwatts"><a class="header" href="#smartwatts">Smartwatts</a></h2>
+<p>Smartwatts is made for tracking the energy consumption of processes on a
+machine.
+To install smartwatts run <a href="./script/smartwatts_install.sh">the following
+script</a> in a Terminal.</p>
+<p>The script explains what it will do and then pauses before it does it.</p>
 <div style="break-before: page; page-break-before: always;"></div><p><img
 src="https://rawgit.com/Spirals-Team/powerapi/master/resources/logo/PowerAPI-logo.png"
 alt="Powerapi" width="1000px"></p>
@@ -603,7 +619,7 @@ grafana using the <a href="./grafana.html">following tutorial</a></p>
 <li><code>enable-cpu-formula</code> (bool) : Enable CPU formula, default=True</li>
 <li><code>enable-dram-formula</code>(bool) : Enable DRAM formula, default=True</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="smartwatts"><a class="header" href="#smartwatts">SmartWatts</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="smartwatts-1"><a class="header" href="#smartwatts-1">SmartWatts</a></h1>
 <p>SmartWatts is a software-defined power meter based on the PowerAPI toolkit.
 SmartWatts is a configurable software that can estimate the power consumption of
 software in real-time.
@@ -727,7 +743,7 @@ echo &quot;
 &quot; &gt; ./config_file.json
 
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="jouleit"><a class="header" href="#jouleit">Jouleit</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="jouleit-1"><a class="header" href="#jouleit-1">Jouleit</a></h1>
 <p>Jouleit is a script that can be used to monitor energy consumption for any program.</p>
 <p>Jouleit uses the Intel &quot;Running Average Power Limit&quot; (RAPL) technology that
 estimates power consumption of the CPU, ram and integrated GPU. This technology
@@ -1003,6 +1019,26 @@ report.</p>
 <pre><code class="language-json">{
   &quot;type&quot;: &quot;socket&quot;,
   &quot;filename&quot;: /tmp/database
+}
+</code></pre>
+<h2 id="prometheus"><a class="header" href="#prometheus">Prometheus</a></h2>
+<p>If you want to use a prometheus as database in your formula your have to specify
+<code>prom</code> as the <code>type</code> of a pusher.</p>
+<p>The list of parameters you have to provide :</p>
+<ul>
+<li><code>tags</code> : specify report tags</li>
+<li><code>uri</code> : Server ip address</li>
+<li><code>port</code> : Server port</li>
+<li><code>metric_name</code> : The metric name</li>
+<li><code>metric_description</code> : The metric description. It default value is <code> energy consumption</code>
+This database can only be used as an output.</li>
+</ul>
+<p>We provide an example of configuration file.</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;prom&quot;,
+  &quot;uri&quot;: &quot;127.0.0.1&quot;,
+  &quot;port&quot;: 8080,
+  &quot;metric_name&quot;: test
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><img src="https://rawgit.com/Spirals-Team/powerapi/master/resources/logo/PowerAPI-logo.png" alt="Powerapi" width="300px">
