@@ -9,6 +9,26 @@ consumption of program.
 The core of this project is the [PowerAPI](./powerapi.md) toolkit for building
 such power meters.
 
+# Getting started
+
+If you want to monitor the energy consumption of your process we have some
+ready-to-use tools
+
+- [RAPL formula](./rapl.md) for monitoring the energy consumption of your device.
+- [SmartWatts formula](./smartwatts.md) for monitoring the energy consumption of
+  your process.
+- [Jouleit](./jouleit.md) for mesuring the energy consumption of a program.
+
+<!-- If you want to develop your own power meter, we encourage you to read about [software-defined power -->
+<!-- meters](powerapi_howitworks.md) before starting. -->
+
+<!-- We provide a [quickstart](./powerapi_quickstart.md) project to develop a first -->
+<!-- basic formula with powerAPI. -->
+<!-- We also provide additional resources for developing your own formula afterward : -->
+
+<!-- - A [User guide](./powerapi_user_guide.md). -->
+<!-- - The [API](./powerapi_api.md). -->
+
 # How it works
 
 A power meter is an application build with the PowerAPI components that can
@@ -70,26 +90,6 @@ There are two connection modes:
   produced.
 
 - `post-mortem` mode which analyses the data already collected by the sensor in a past monitoring phase.
-
-# Getting started
-
-If you want to monitor the energy consumption of your process we have some
-ready-to-use tools
-
-- [RAPL formula](./rapl.md) for monitoring the energy consumption of your device.
-- [SmartWatts formula](./smartwatts.md) for monitoring the nergy consumption of
-  your process.
-- [Jouleit](./jouleit.md) for mesuring the energy consumption of a program.
-
-If you want to develop your own power meter, we encourage you to read about [software-defined power
-meters](powerapi_howitworks.md) before starting.
-
-We provide a [quickstart](./powerapi_quickstart.md) project to develop a first
-basic formula with powerAPI.
-We also provide additional resources for developing your own formula afterward :
-
-- A [User guide](./powerapi_user_guide.md).
-- The [API](./powerapi_api.md).
 
 # Mailing list
 
