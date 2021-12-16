@@ -1,0 +1,309 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Introduction - PowerAPI</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="quickstart.html">Quickstart</a></li><li class="chapter-item expanded affix "><a href="introduction.html" class="active">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Concepts</li><li class="chapter-item expanded "><a href="reports.html"><strong aria-hidden="true">1.</strong> Reports</a></li><li class="chapter-item expanded affix "><li class="part-title">How to guide</li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.</strong> Configuration files</a></li><li class="chapter-item expanded "><a href="grafana.html"><strong aria-hidden="true">3.</strong> Visualize in grafana</a></li><li class="chapter-item expanded "><a href="cgroup.html"><strong aria-hidden="true">4.</strong> Create cgroup</a></li><li class="chapter-item expanded affix "><li class="part-title">What to use ?</li><li class="chapter-item expanded "><a href="what_to_use.html"><strong aria-hidden="true">5.</strong> What to use</a></li><li class="chapter-item expanded affix "><li class="part-title">Monitoring tools</li><li class="chapter-item expanded "><a href="rapl.html"><strong aria-hidden="true">6.</strong> RAPL</a></li><li class="chapter-item expanded "><a href="smartwatts.html"><strong aria-hidden="true">7.</strong> SmartWatts</a></li><li class="chapter-item expanded "><a href="jouleit.html"><strong aria-hidden="true">8.</strong> Jouleit</a></li><li class="chapter-item expanded "><a href="virtualwatts.html"><strong aria-hidden="true">9.</strong> VirtualWatts</a></li><li class="chapter-item expanded affix "><li class="part-title">Sensors</li><li class="chapter-item expanded "><a href="hwpc-sensor.html"><strong aria-hidden="true">10.</strong> Hwpc-Sensor</a></li><li class="chapter-item expanded "><a href="procfs-sensor.html"><strong aria-hidden="true">11.</strong> Procfs-Sensor</a></li><li class="chapter-item expanded affix "><li class="part-title">Database</li><li class="chapter-item expanded "><a href="database.html"><strong aria-hidden="true">12.</strong> Database</a></li><li class="chapter-item expanded affix "><li class="part-title">PowerAPI</li><li class="chapter-item expanded "><a href="powerapi.html"><strong aria-hidden="true">13.</strong> PowerAPI</a></li><li class="chapter-item expanded affix "><li class="part-title">FAQ</li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">PowerAPI</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p><img
+src="https://rawgit.com/Spirals-Team/powerapi/master/resources/logo/PowerAPI-logo.png"
+alt="Powerapi" width="1000px"></p>
+<p>The goal of this projet is to provide a set of tools to go forward a greener
+computing.
+The idea is to provide software-defined power meters to mesure the power
+consumption of program.
+The core of this project is the <a href="./powerapi.html">PowerAPI</a> toolkit for building
+such power meters.</p>
+<h1 id="how-it-works"><a class="header" href="#how-it-works">How it works</a></h1>
+<p>A power meter is an application build with the PowerAPI components that can
+measure the power consumption of software running on a single machine or on a
+cluster of machine.</p>
+<p>This section present each PowerAPI component type and how connect them to build a power meter.</p>
+<h2 id="power-meter-architecture"><a class="header" href="#power-meter-architecture">Power meter Architecture</a></h2>
+<p>A power meter is a set of two components, a sensor and a formula, used to
+produce an estimation of the power consumption of a monitored software.</p>
+<p>The sensor collects raw data correlated with the power consumption of the
+software. The formula is a computational module that use the collected data to
+determine power consumption.
+Both of them are connected by a database that is used to
+transfer information.
+The global architecture of a power meter is represented bellow.</p>
+<p><img
+src="https://raw.githubusercontent.com/powerapi-ng/powerapi-ng.github.io/master/images/powerAPI_archi.png"
+alt="Powerapi" width="1000px"></p>
+<p>The two next sub-sections present how a sensor and a formula work and how they
+should be used.</p>
+<h2 id="sensor"><a class="header" href="#sensor">Sensor</a></h2>
+<p>A sensor is an independent software that collects raw data correlated with the
+power consumption of monitored software.</p>
+<p>Data are collected by querying the hardware’s machine that hosts the monitored
+software. The sensor must be executed on the same machine as the monitored
+software. The data are collected throughout the duration of the software. For
+this reason, the sensor must operate in parallel.</p>
+<p>Collected data are stored in an external database to make the data available to
+the formula. This database may be hosted on an other machine.</p>
+<h3 id="usage"><a class="header" href="#usage">Usage</a></h3>
+<p>Because they collect from different hardware, each sensor are very different
+from one another. Refer to each sensor documentation to know how to use them.</p>
+<h2 id="formula"><a class="header" href="#formula">Formula</a></h2>
+<p>A formula is an independent software that compute an estimation of the power
+consumption of monitored software from the data collected by the sensor.</p>
+<h3 id="sensor-connection"><a class="header" href="#sensor-connection">Sensor Connection</a></h3>
+<p>A formula communicate with the sensor via a database (e.g MongoDB). The sensor
+writes the collected data to the database and the formula reads it afterward.</p>
+<p>There are two connection modes:</p>
+<ul>
+<li>
+<p><code>stream</code> mode where the formula read the data from the sensor as they are
+produced.</p>
+</li>
+<li>
+<p><code>post-mortem</code> mode which analyses the data already collected by the sensor in a past monitoring phase.</p>
+</li>
+</ul>
+<h1 id="getting-started"><a class="header" href="#getting-started">Getting started</a></h1>
+<p>If you want to monitor the energy consumption of your process we have some
+ready-to-use tools</p>
+<ul>
+<li><a href="./rapl.html">RAPL formula</a> for monitoring the energy consumption of your device.</li>
+<li><a href="./smartwatts.html">SmartWatts formula</a> for monitoring the nergy consumption of
+your process.</li>
+<li><a href="./jouleit.html">Jouleit</a> for mesuring the energy consumption of a program.</li>
+</ul>
+<p>If you want to develop your own power meter, we encourage you to read about <a href="powerapi_howitworks.html">software-defined power
+meters</a> before starting.</p>
+<p>We provide a <a href="./powerapi_quickstart.html">quickstart</a> project to develop a first
+basic formula with powerAPI.
+We also provide additional resources for developing your own formula afterward :</p>
+<ul>
+<li>A <a href="./powerapi_user_guide.html">User guide</a>.</li>
+<li>The <a href="./powerapi_api.html">API</a>.</li>
+</ul>
+<h1 id="mailing-list"><a class="header" href="#mailing-list">Mailing list</a></h1>
+<p>You can follow the latest news and asks questions by subscribing to our <a href="mailto:sympa@inria.fr?subject=subscribe powerapi">mailing list</a>.</p>
+<h1 id="contributing"><a class="header" href="#contributing">Contributing</a></h1>
+<p>If you would like to contribute code you can do so through our <a href="https://github.com/powerapi-ng/">Github
+repository</a> by forking it and sending a
+pull request.</p>
+<p>You should start by reading the <a href="https://github.com/powerapi-ng/powerapi/blob/main/contributing.md">contribution
+guide</a></p>
+<h1 id="publications"><a class="header" href="#publications">Publications</a></h1>
+<ul>
+<li><strong><a href="https://hal.inria.fr/hal-01827132v2">The Next 700 CPU Power Models</a></strong>: M. Colmant, R. Rouvoy, M. Kurpicz, A. Sobe, P. Felber, L. Seinturier. <em>Elsevier Journal of Systems and Software</em> (JSS). 144(10):382-396, Elsevier.</li>
+<li><strong><a href="https://hal.inria.fr/hal-01439889">WattsKit: Software-Defined Power Monitoring of Distributed Systems</a></strong>: M. Colmant, P. Felber, R. Rouvoy, L. Seinturier. <em>IEEE/ACM International Symposium on Cluster, Cloud and Grid Computing</em> (CCGrid). April 2017, Spain, France. pp.1-14.</li>
+<li><strong><a href="https://hal.inria.fr/hal-01130030">Process-level Power Estimation in VM-based Systems</a></strong>: M. Colmant, M. Kurpicz, L. Huertas, R. Rouvoy, P. Felber, A. Sobe. <em>European Conference on Computer Systems</em> (EuroSys). April 2015, Bordeaux, France. pp.1-14.</li>
+<li><strong><a href="https://hal.inria.fr/hal-01069142">Monitoring Energy Hotspots in Software</a></strong>: A. Noureddine, R. Rouvoy, L. Seinturier. <em>Journal of Automated Software Engineering</em>, Springer, 2015, pp.1-42.</li>
+<li><strong><a href="https://hal.inria.fr/hal-00912613">Unit Testing of Energy Consumption of Software Libraries</a></strong>: A. Noureddine, R. Rouvoy, L. Seinturier. <em>International Symposium On Applied Computing</em> (SAC), March 2014, Gyeongju, South Korea. pp.1200-1205.</li>
+<li><strong><a href="http://www.jinnove.com/Actualites/Informatique-des-logiciels-mis-au-vert">Informatique : Des logiciels mis au vert</a></strong>: L. Seinturier, R. Rouvoy. <em>J'innove en Nord Pas de Calais</em>, <a href="http://www.jinnove.com">NFID</a>, 2013.</li>
+<li><strong><a href="http://ercim-news.ercim.eu/en92/special/powerapi-a-software-library-to-monitor-the-energy-consumed-at-the-process-level">PowerAPI: A Software Library to Monitor the Energy Consumed at the Process-Level</a></strong>: A. Bourdon, A. Noureddine, R. Rouvoy, L. Seinturier. <em>ERCIM News, Special Theme: Smart Energy Systems</em>, 92, pp.43-44. <a href="http://www.ercim.eu">ERCIM</a>, 2013.</li>
+<li><strong><a href="http://www.lifl.fr/digitalAssets/0/807_01info_130110_16_39.pdf">Mesurer la consommation en énergie des logiciels avec précision</a></strong>: A. Bourdon, R. Rouvoy, L. Seinturier. <em>01 Business &amp; Technologies</em>, 2013.</li>
+<li><strong><a href="https://hal.inria.fr/hal-00912996v2">A review of energy measurement approaches</a></strong>: A. Noureddine, R. Rouvoy, L. Seinturier. <em>ACM SIGOPS Operating Systems Review</em>, ACM, 2013, 47 (3), pp.42-49.</li>
+<li><strong><a href="https://hal.inria.fr/hal-00715331">Runtime Monitoring of Software Energy Hotspots</a></strong>: A. Noureddine, A. Bourdon, R. Rouvoy, L. Seinturier. <em>International Conference on Automated Software Engineering</em> (ASE), September 2012, Essen, Germany. pp.160-169.</li>
+<li><strong><a href="https://hal.inria.fr/hal-00681560">A Preliminary Study of the Impact of Software Engineering on GreenIT</a></strong>: A. Noureddine, A. Bourdon, R. Rouvoy, L. Seinturier. <em>International Workshop on Green and Sustainable Software</em> (GREENS), June 2012, Zurich, Switzerland. pp.21-27.</li>
+</ul>
+<h1 id="credits-and-licence"><a class="header" href="#credits-and-licence">Credits and Licence</a></h1>
+<p>PowerAPI is an open-source project developed by the <a href="https://team.inria.fr/spirals">Spirals research group</a> (University of Lille and Inria)</p>
+<p>This software is licensed under the BSD 3-Clause License, quoted below.</p>
+<blockquote>
+<p>BSD 3-Clause License</p>
+<p>Copyright (c) 2021, INRIA
+Copyright (c) 2021, University of Lille
+All rights reserved.</p>
+<p>Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:</p>
+<ul>
+<li>
+<p>Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.</p>
+</li>
+<li>
+<p>Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.</p>
+</li>
+<li>
+<p>Neither the name of the copyright holder nor the names of its
+contributors may be used to endorse or promote products derived from
+this software without specific prior written permission.</p>
+</li>
+</ul>
+<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="quickstart.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="reports.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="quickstart.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="reports.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
