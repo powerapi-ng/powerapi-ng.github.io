@@ -44,20 +44,20 @@ For running the RAPL formula we'll need two things:
   "input": {
     "puller": {
       "model": "HWPCReport",
-      "type": "socket",
-      "uri": "127.0.0.1",
-      "port": 8080,
-      "collection": "test_hwpc"
+      "type": "mongodb",
+      "uri": "mongodb://127.0.0.1",
+      "db": "test",
+      "collection": "prep"
     }
   },
   "output": {
     "pusher_power": {
-      "type": "influxdb",
+      "type": "mongodb",
       "model": "PowerReport",
-      "uri": "127.0.0.1",
-      "port": 8086,
+      "type": "mongodb",
+      "uri": "mongodb://127.0.0.1",
       "db": "test",
-      "collection": "prep"
+      "collection": "results"
     }
   },
   "enable-dram-formula": false,
