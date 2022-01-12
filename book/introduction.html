@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="quickstart.html">Quickstart</a></li><li class="chapter-item expanded affix "><a href="introduction.html" class="active">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Concepts</li><li class="chapter-item expanded "><a href="reports.html"><strong aria-hidden="true">1.</strong> Reports</a></li><li class="chapter-item expanded affix "><li class="part-title">How to guide</li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.</strong> Configuration files</a></li><li class="chapter-item expanded "><a href="grafana.html"><strong aria-hidden="true">3.</strong> Visualize in grafana</a></li><li class="chapter-item expanded "><a href="cgroup.html"><strong aria-hidden="true">4.</strong> Create cgroup</a></li><li class="chapter-item expanded affix "><li class="part-title">What to use ?</li><li class="chapter-item expanded "><a href="what_to_use.html"><strong aria-hidden="true">5.</strong> What to use</a></li><li class="chapter-item expanded affix "><li class="part-title">Monitoring tools</li><li class="chapter-item expanded "><a href="rapl.html"><strong aria-hidden="true">6.</strong> RAPL</a></li><li class="chapter-item expanded "><a href="smartwatts.html"><strong aria-hidden="true">7.</strong> SmartWatts</a></li><li class="chapter-item expanded "><a href="jouleit.html"><strong aria-hidden="true">8.</strong> Jouleit</a></li><li class="chapter-item expanded "><a href="virtualwatts.html"><strong aria-hidden="true">9.</strong> VirtualWatts</a></li><li class="chapter-item expanded affix "><li class="part-title">Sensors</li><li class="chapter-item expanded "><a href="hwpc-sensor.html"><strong aria-hidden="true">10.</strong> Hwpc-Sensor</a></li><li class="chapter-item expanded "><a href="procfs-sensor.html"><strong aria-hidden="true">11.</strong> Procfs-Sensor</a></li><li class="chapter-item expanded affix "><li class="part-title">Database</li><li class="chapter-item expanded "><a href="database.html"><strong aria-hidden="true">12.</strong> Database</a></li><li class="chapter-item expanded affix "><li class="part-title">PowerAPI</li><li class="chapter-item expanded "><a href="powerapi.html"><strong aria-hidden="true">13.</strong> PowerAPI</a></li><li class="chapter-item expanded affix "><li class="part-title">FAQ</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html" class="active">Introduction</a></li><li class="chapter-item expanded affix "><a href="quickstart.html">Quickstart</a></li><li class="chapter-item expanded affix "><li class="part-title">Concepts</li><li class="chapter-item expanded "><a href="reports.html"><strong aria-hidden="true">1.</strong> Reports</a></li><li class="chapter-item expanded affix "><li class="part-title">How to guide</li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.</strong> Configuration files</a></li><li class="chapter-item expanded "><a href="grafana.html"><strong aria-hidden="true">3.</strong> Visualize in grafana</a></li><li class="chapter-item expanded "><a href="cgroup.html"><strong aria-hidden="true">4.</strong> Create cgroup</a></li><li class="chapter-item expanded affix "><li class="part-title">What to use ?</li><li class="chapter-item expanded "><a href="what_to_use.html"><strong aria-hidden="true">5.</strong> What to use</a></li><li class="chapter-item expanded affix "><li class="part-title">Monitoring tools</li><li class="chapter-item expanded "><a href="rapl.html"><strong aria-hidden="true">6.</strong> RAPL</a></li><li class="chapter-item expanded "><a href="smartwatts.html"><strong aria-hidden="true">7.</strong> SmartWatts</a></li><li class="chapter-item expanded "><a href="jouleit.html"><strong aria-hidden="true">8.</strong> Jouleit</a></li><li class="chapter-item expanded "><a href="virtualwatts.html"><strong aria-hidden="true">9.</strong> VirtualWatts</a></li><li class="chapter-item expanded affix "><li class="part-title">Sensors</li><li class="chapter-item expanded "><a href="hwpc-sensor.html"><strong aria-hidden="true">10.</strong> Hwpc-Sensor</a></li><li class="chapter-item expanded "><a href="procfs-sensor.html"><strong aria-hidden="true">11.</strong> Procfs-Sensor</a></li><li class="chapter-item expanded affix "><li class="part-title">Database</li><li class="chapter-item expanded "><a href="database.html"><strong aria-hidden="true">12.</strong> Database</a></li><li class="chapter-item expanded affix "><li class="part-title">PowerAPI</li><li class="chapter-item expanded "><a href="powerapi.html"><strong aria-hidden="true">13.</strong> PowerAPI</a></li><li class="chapter-item expanded affix "><li class="part-title">FAQ</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -143,6 +143,22 @@ The idea is to provide software-defined power meters to mesure the power
 consumption of program.
 The core of this project is the <a href="./powerapi.html">PowerAPI</a> toolkit for building
 such power meters.</p>
+<h1 id="getting-started"><a class="header" href="#getting-started">Getting started</a></h1>
+<p>If you want to monitor the energy consumption of your process we have some
+ready-to-use tools</p>
+<ul>
+<li><a href="./rapl.html">RAPL formula</a> for monitoring the energy consumption of your device.</li>
+<li><a href="./smartwatts.html">SmartWatts formula</a> for monitoring the energy consumption of
+your process.</li>
+<li><a href="./jouleit.html">Jouleit</a> for mesuring the energy consumption of a program.</li>
+</ul>
+<!-- If you want to develop your own power meter, we encourage you to read about [software-defined power -->
+<!-- meters](powerapi_howitworks.md) before starting. -->
+<!-- We provide a [quickstart](./powerapi_quickstart.md) project to develop a first -->
+<!-- basic formula with powerAPI. -->
+<!-- We also provide additional resources for developing your own formula afterward : -->
+<!-- - A [User guide](./powerapi_user_guide.md). -->
+<!-- - The [API](./powerapi_api.md). -->
 <h1 id="how-it-works"><a class="header" href="#how-it-works">How it works</a></h1>
 <p>A power meter is an application build with the PowerAPI components that can
 measure the power consumption of software running on a single machine or on a
@@ -189,24 +205,6 @@ produced.</p>
 <li>
 <p><code>post-mortem</code> mode which analyses the data already collected by the sensor in a past monitoring phase.</p>
 </li>
-</ul>
-<h1 id="getting-started"><a class="header" href="#getting-started">Getting started</a></h1>
-<p>If you want to monitor the energy consumption of your process we have some
-ready-to-use tools</p>
-<ul>
-<li><a href="./rapl.html">RAPL formula</a> for monitoring the energy consumption of your device.</li>
-<li><a href="./smartwatts.html">SmartWatts formula</a> for monitoring the nergy consumption of
-your process.</li>
-<li><a href="./jouleit.html">Jouleit</a> for mesuring the energy consumption of a program.</li>
-</ul>
-<p>If you want to develop your own power meter, we encourage you to read about <a href="powerapi_howitworks.html">software-defined power
-meters</a> before starting.</p>
-<p>We provide a <a href="./powerapi_quickstart.html">quickstart</a> project to develop a first
-basic formula with powerAPI.
-We also provide additional resources for developing your own formula afterward :</p>
-<ul>
-<li>A <a href="./powerapi_user_guide.html">User guide</a>.</li>
-<li>The <a href="./powerapi_api.html">API</a>.</li>
 </ul>
 <h1 id="mailing-list"><a class="header" href="#mailing-list">Mailing list</a></h1>
 <p>You can follow the latest news and asks questions by subscribing to our <a href="mailto:sympa@inria.fr?subject=subscribe powerapi">mailing list</a>.</p>
@@ -272,10 +270,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="quickstart.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                                <i class="fa fa-angle-left"></i>
-                            </a>
-                            <a rel="next" href="reports.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="quickstart.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -284,30 +279,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="quickstart.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                    <a rel="next" href="reports.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="quickstart.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

@@ -85,7 +85,7 @@ script](./smartwatts_auto_config.md).
 Start by installing the hwpc-sensor (see
 [here](./hwpc-sensor.md#installation)) and start it (see
 [here](./hwpc-sensor.md#quickstart)).
-You also need to start an influxdb 1.8 via the command line `docker run -d --name influx_rapl -p 8086:8086 influxdb:1.8 `.
+You also need to start an mongodb via the command line `docker run -d --name mongo_sw -p 27017:27017 mongo`.
 
 Then run `smartwatts` using one of the following command line, depending on
 the installation you used:
