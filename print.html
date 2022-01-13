@@ -606,7 +606,7 @@ You also need to start an mongodb via the command line <code>docker run -d --nam
 the installation you used:</p>
 <ul>
 <li>via pip : <code>python -m rapl_formula --config-file config_file.json</code></li>
-<li>via docker <code>docker run -v $(pwd)/config_file.json:/config_file.json powerapi/rapl-formula --config-file /config_file.json </code></li>
+<li>via docker <code>docker run -t --net=host -v $(pwd)/config_file.json:/config_file.json powerapi/rapl-formula --config-file /config_file.json </code></li>
 <li>via deb file : <code>rapl-formula --config-file config_file.json</code></li>
 </ul>
 <p>Your power report will be provided in the influxdb. You can watch them in a
@@ -693,7 +693,7 @@ You also need to start an mongodb via the command line <code>docker run -d --nam
 the installation you used:</p>
 <ul>
 <li>via pip : <code>python -m smartwatts --config-file config_file.json</code></li>
-<li>via docker <code>docker run -v $(pwd)/config_file.json:/config_file.json powerapi/smartwatts-formula --config-file /config_file.json </code></li>
+<li>via docker <code>docker run -t --net=host -v $(pwd)/config_file.json:/config_file.json powerapi/smartwatts-formula --config-file /config_file.json </code></li>
 <li>via deb file : <code>smartwatts --config-file confgi_file.json</code></li>
 </ul>
 <p>Your power report will be provided in the influxdb. You can watch them in a
@@ -822,7 +822,7 @@ Then run <code>virtualwatts</code> using one of the following command line, depe
 the installation you used:</p>
 <ul>
 <li>via pip : <code>python -m virtualwatts --config-file config_file.json</code></li>
-<li>via docker <code>docker run -v $(pwd)/config_file.json:/config_file.json powerapi/virtualwatts --config-file /config_file.json </code></li>
+<li>via docker <code>docker run -t --net=host -v $(pwd)/config_file.json:/config_file.json powerapi/virtualwatts --config-file /config_file.json </code></li>
 <li>via deb file : <code>virtualwatts --config-file config_file.json</code></li>
 </ul>
 <p>After that run the procfs sensor. Your power report will be provided in the influxdb. You can watch them in a
