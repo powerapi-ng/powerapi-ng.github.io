@@ -91,7 +91,7 @@ Then run `smartwatts` using one of the following command line, depending on
 the installation you used:
 
 - via pip : `python -m smartwatts --config-file config_file.json`
-- via docker `docker run -v $(pwd)/config_file.json:/config_file.json powerapi/smartwatts-formula --config-file /config_file.json `
+- via docker `docker run -t --net=host -v $(pwd)/config_file.json:/config_file.json powerapi/smartwatts-formula --config-file /config_file.json `
 - via deb file : `smartwatts --config-file confgi_file.json`
 
 Your power report will be provided in the influxdb. You can watch them in a
