@@ -133,9 +133,9 @@ echo "
       "collection": "prep"
     }
   },
-  "cpu-ratio-base": $basefrequency,
-  "cpu-ratio-min": $minfrequency,
-  "cpu-ratio-max": $maxfrequency,
+  "cpu-frequency-base": $basefrequency,
+  "cpu-frequency-min": $minfrequency,
+  "cpu-frequency-max": $maxfrequency,
   "cpu-error-threshold": 2.0,
   "disable-dram-formula": true,
   "sensor-report-sampling-interval": 1000
