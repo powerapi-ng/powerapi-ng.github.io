@@ -227,33 +227,33 @@ basefrequency=$(expr ${basefrequency}\*1000 | bc | cut -d . -f 1)
 
 echo &quot;
 {
-  &quot;verbose&quot;: true,
-  &quot;stream&quot;: true,
-  &quot;input&quot;: {
-    &quot;puller&quot;: {
-      &quot;model&quot;: &quot;HWPCReport&quot;,
-      &quot;type&quot;: &quot;socket&quot;,
-      &quot;uri&quot;: &quot;127.0.0.1&quot;,
-      &quot;port&quot;: 8080,
-      &quot;collection&quot;: &quot;test_hwpc&quot;
+  \&quot;verbose\&quot;: true,
+  \&quot;stream\&quot;: true,
+  \&quot;input\&quot;: {
+    \&quot;puller\&quot;: {
+      \&quot;model\&quot;: \&quot;HWPCReport\&quot;,
+      \&quot;type\&quot;: \&quot;socket\&quot;,
+      \&quot;uri\&quot;: \&quot;127.0.0.1\&quot;,
+      \&quot;port\&quot;: 8080,
+      \&quot;collection\&quot;: \&quot;test_hwpc\&quot;
     }
   },
-  &quot;output&quot;: {
-    &quot;pusher_power&quot;: {
-      &quot;type&quot;: &quot;influxdb&quot;,
-      &quot;model&quot;: &quot;PowerReport&quot;,
-      &quot;uri&quot;: &quot;127.0.0.1&quot;,
-      &quot;port&quot;: 8086,
-      &quot;db&quot;: &quot;test&quot;,
-      &quot;collection&quot;: &quot;prep&quot;
+  \&quot;output\&quot;: {
+    \&quot;pusher_power\&quot;: {
+      \&quot;type\&quot;: \&quot;influxdb\&quot;,
+      \&quot;model\&quot;: \&quot;PowerReport\&quot;,
+      \&quot;uri\&quot;: \&quot;127.0.0.1\&quot;,
+      \&quot;port\&quot;: 8086,
+      \&quot;db\&quot;: \&quot;test\&quot;,
+      \&quot;collection\&quot;: \&quot;prep\&quot;
     }
   },
-  &quot;cpu-frequency-base&quot;: $basefrequency,
-  &quot;cpu-frequency-min&quot;: $minfrequency,
-  &quot;cpu-frequency-max&quot;: $maxfrequency,
-  &quot;cpu-error-threshold&quot;: 2.0,
-  &quot;disable-dram-formula&quot;: true,
-  &quot;sensor-report-sampling-interval&quot;: 1000
+  \&quot;cpu-frequency-base\&quot;: $basefrequency,
+  \&quot;cpu-frequency-min\&quot;: $minfrequency,
+  \&quot;cpu-frequency-max\&quot;: $maxfrequency,
+  \&quot;cpu-error-threshold\&quot;: 2.0,
+  \&quot;disable-dram-formula\&quot;: true,
+  \&quot;sensor-report-sampling-interval\&quot;: 1000
 }
 &quot; &gt; ./config_file.json
 
