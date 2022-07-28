@@ -751,7 +751,7 @@ is available on Intel CPU since the Sandy Bridge generation(2010).</p>
 You can get the script from the <a href="https://github.com/powerapi-ng/jouleit">github repository</a>
 Start jouleit by using <code>./jouleit.sh cmd</code>.</p>
 <h2 id="flags-and-options"><a class="header" href="#flags-and-options">Flags and options</a></h2>
-<table><thead><tr><th><strong>Flag</strong></th><th><strong>Description</strong></th><th style="text-align: center"><strong>Default value</strong></th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th><strong>Flag</strong></th><th><strong>Description</strong></th><th style="text-align: center"><strong>Default value</strong></th></tr></thead><tbody>
 <tr><td>-a</td><td>print the details of all sockets instead of the aggregation</td><td style="text-align: center">False</td></tr>
 <tr><td>-b</td><td>print the results in the format of *KEY1;VALUE1;KEY2;VALUE2..</td><td style="text-align: center">False</td></tr>
 <tr><td>-l</td><td>list all the available domaines ( CPU, DRAM ..etc ) and print them in the form of a header of csv</td><td style="text-align: center"></td></tr>
@@ -760,7 +760,7 @@ Start jouleit by using <code>./jouleit.sh cmd</code>.</p>
 <tr><td>-o <strong>filename</strong></td><td>redirect the output and the log of the executed program in the file `filename</td><td style="text-align: center">current terminal</td></tr>
 <tr><td>-n <strong>N</strong></td><td>Run the programm <strong>N</strong> times and record the measured values in <code>data1234.csv</code> file</td><td style="text-align: center"></td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="virtualwatts"><a class="header" href="#virtualwatts">VirtualWatts</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="virtualwatts"><a class="header" href="#virtualwatts">VirtualWatts</a></h1>
 <p>VirtualWatts is a software-defined power meter based on the PowerAPI toolkit.
 VirtualWatts is a configurable software that can estimate the power consumption
 of software inside a Virtual Machine (VM) in real-time.</p>
@@ -950,9 +950,9 @@ its parameters are specified in its section.</p>
   &quot;collection&quot;: &quot;prep&quot;
 }
 </code></pre>
-<h2 id="influx-db"><a class="header" href="#influx-db">Influx DB</a></h2>
-<p>If you want to use an influxdb in your formula your have to specify
-<code>influxedb</code> as the <code>type</code> of a puller or a pusher.</p>
+<h2 id="influx-db-18"><a class="header" href="#influx-db-18">Influx DB 1.8</a></h2>
+<p>If you want to use influxdb 1.8 in your formula your have to specify
+<code>influxedb</code> as the <code>type</code> of a pusher.</p>
 <p>The list of parameters you have to provide :</p>
 <ul>
 <li><code>uri</code> : IP address of the server with the database</li>
@@ -960,14 +960,37 @@ its parameters are specified in its section.</p>
 <li><code>db</code> : name of the database</li>
 </ul>
 <p>InfluxDB can only be used as an output and its default <code>model</code> is <code>PowerReport</code>.</p>
-<p>We provide an example of configuration file.</p>
+<p>We provide an example of configuration file :</p>
 <pre><code class="language-json">{
   &quot;tags&quot;: &quot;socket&quot;,
   &quot;model&quot;: &quot;PowerReport&quot;,
   &quot;type&quot;: &quot;influxdb&quot;,
   &quot;uri&quot;: &quot;127.0.0.1&quot;,
-  &quot;port&quot;: &quot;8086&quot;,
+  &quot;port&quot;: 8086,
   &quot;db&quot;: &quot;test_influxdb&quot;
+}
+</code></pre>
+<h2 id="influx-db-2"><a class="header" href="#influx-db-2">Influx DB 2</a></h2>
+<p>If you want to use influxdb 2 in your formula your have to specify
+<code>influxedb2</code> as the <code>type</code> of a pusher. </p>
+<p>The list of parameters you have to provide :</p>
+<ul>
+<li><code>uri</code> : IP address of the server with the database</li>
+<li><code>port</code>: port of communication</li>
+<li><code>db</code> : name of the bucket (database) </li>
+<li><code>org</code> : name of the organisation associated to the bucket</li>
+<li><code>token</code> : token for accesing the database.  The token ower must have write/read permissions on the database</li>
+</ul>
+<p>InfluxDB2 can only be used as an output and its default <code>model</code> is <code>PowerReport</code>.</p>
+<p>We provide an example of configuration file :</p>
+<pre><code class="language-json">{
+  &quot;model&quot;: &quot;PowerReport&quot;,
+  &quot;type&quot;: &quot;influxdb2&quot;,
+  &quot;uri&quot;: &quot;http://127.0.0.1&quot;,
+  &quot;port&quot;: 8086,
+  &quot;db&quot;: &quot;influxdb2&quot;,
+  &quot;org&quot;: &quot;org_test&quot;,
+  &quot;token&quot;: &quot;mytoken&quot;
 }
 </code></pre>
 <h2 id="csv"><a class="header" href="#csv">CSV</a></h2>
@@ -1020,17 +1043,18 @@ report.</p>
 }
 </code></pre>
 <h2 id="prometheus"><a class="header" href="#prometheus">Prometheus</a></h2>
-<p>If you want to use a prometheus as database in your formula your have to specify
-<code>prom</code> as the <code>type</code> of a pusher.</p>
+<p>If you want to use a prometheus to expose reports to be scraped, you have to specify
+<code>prom</code> as the <code>type</code> of a pusher in your formula configuration file.</p>
 <p>The list of parameters you have to provide :</p>
 <ul>
 <li><code>tags</code> : specify report tags</li>
 <li><code>uri</code> : Server ip address</li>
 <li><code>port</code> : Server port</li>
 <li><code>metric_name</code> : The metric name</li>
-<li><code>metric_description</code> : The metric description. It default value is <code> energy consumption</code>
-This database can only be used as an output.</li>
+<li><code>metric_description</code> : The metric description. Its default value is <code> energy consumption</code></li>
 </ul>
+<p>Promtheus can only be used as an output that monitors reports but they will be not stored by this service. 
+It has to be configured (via <code>static_configs</code>) by using the uri and port defined by the formula configuration file.</p>
 <p>We provide an example of configuration file.</p>
 <pre><code class="language-json">{
   &quot;type&quot;: &quot;prom&quot;,
