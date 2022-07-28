@@ -12,7 +12,7 @@ case $VAR in
        curl -s https://api.github.com/repos/powerapi-ng/smartwatts-formula/releases/latest |  grep "browser_download_url.*deb" | cut -d : -f 2,3 | tr -d \" | wget -qi -;
        echo "Smartwatts downloaded";
        echo "Building...";
-       sudo apt install ./python3-rapl-smartwatts_*-1_all.deb  || rm python3-rapl-smartwatts_*-1_all.deb ;;
+       sudo apt install ./python3-smartwatts_*-1_all.deb  || rm python3-smartwatts_*-1_all.deb ;;
     *) echo "Not a valid choice. Installation aborted"; exit 0;;
 esac
 echo "Smartwatts Installed"
