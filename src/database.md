@@ -168,7 +168,7 @@ The list of parameters you have to provide :
 - `metric_description` : The metric description. Its default value is ` energy consumption`
 
 Promtheus can only be used as an output that monitors reports but they will be not stored by this service. 
-It has to be configured (via `static_configs`) by using the uri and port defined by the formula configuration file.  
+It has to be configured (via `static_configs`) by using the `uri` and `port` defined by the formula configuration file.  
 
 We provide an example of configuration file.
 
