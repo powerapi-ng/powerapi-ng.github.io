@@ -30,10 +30,10 @@ We provide an example of configuration file.
 }
 ```
 
-## Influx DB
+## Influx DB 1.8
 
-If you want to use an influxdb in your formula your have to specify
-`influxedb` as the `type` of a puller or a pusher.
+If you want to use influxdb 1.8 in your formula your have to specify
+`influxedb` as the `type` of a pusher.
 
 The list of parameters you have to provide :
 
@@ -43,7 +43,7 @@ The list of parameters you have to provide :
 
 InfluxDB can only be used as an output and its default `model` is `PowerReport`.
 
-We provide an example of configuration file.
+We provide an example of configuration file :
 
 ```json
 {
@@ -51,10 +51,40 @@ We provide an example of configuration file.
   "model": "PowerReport",
   "type": "influxdb",
   "uri": "127.0.0.1",
-  "port": "8086",
+  "port": 8086,
   "db": "test_influxdb"
 }
 ```
+
+## Influx DB 2 
+
+If you want to use influxdb 2 in your formula your have to specify
+`influxedb2` as the `type` of a pusher. 
+
+The list of parameters you have to provide :
+
+- `uri` : IP address of the server with the database
+- `port`: port of communication
+- `db` : name of the bucket (database) 
+- `org` : name of the organisation associated to the bucket
+- `token` : token for accesing the database.  The token ower must have write/read permissions on the database
+
+InfluxDB2 can only be used as an output and its default `model` is `PowerReport`.
+
+We provide an example of configuration file :
+
+```json
+{
+  "model": "PowerReport",
+  "type": "influxdb2",
+  "uri": "http://127.0.0.1",
+  "port": 8086,
+  "db": "influxdb2",
+  "org": "org_test",
+  "token": "mytoken"
+}
+```
+
 
 ## CSV
 
@@ -126,8 +156,8 @@ We provide an example of configuration file.
 
 ## Prometheus
 
-If you want to use a prometheus as database in your formula your have to specify
-`prom` as the `type` of a pusher.
+If you want to use a prometheus to expose reports to be scraped, you have to specify
+`prom` as the `type` of a pusher in your formula configuration file.
 
 The list of parameters you have to provide :
 
@@ -135,8 +165,10 @@ The list of parameters you have to provide :
 - `uri` : Server ip address
 - `port` : Server port
 - `metric_name` : The metric name
-- `metric_description` : The metric description. It default value is ` energy consumption`
-  This database can only be used as an output.
+- `metric_description` : The metric description. Its default value is ` energy consumption`
+
+Promtheus can only be used as an output that monitors reports but they will be not stored by this service. 
+It has to be configured (via `static_configs`) by using the uri and port defined by the formula configuration file.  
 
 We provide an example of configuration file.
 
