@@ -1,4 +1,4 @@
 # powerapi-ng.github.io
-PowerAPI website use [mdBook](https://rust-lang.github.io/mdBook/) template. 
+PowerAPI website use [MKDocs](https://www.mkdocs.org/). 
 
-Pushes your change on master to deploy them on the website. 
+Pushes your change on `master` branch to deploy them on the website. 

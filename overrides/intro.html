@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+{% block tabs %}
+{{ super() }}
+<div class="tx-hero__content">
+  <p>The goal of this projet is to provide a set of tools to go forward a greener
+  computing.
+  The idea is to provide software-defined PowerMeters to mesure the power
+  consumption of programs.
+  The core of this project is the [PowerAPI](https://github.com/powerapi-ng/powerapi) toolkit for building
+  such PowerMeters.</p>
+
+  <h1>
+    <span class="highlight">PowerAPI</span>
+  </h1>
+  <a href="{{ page.next_page.url | url }}" title="{{ page.next_page.title | striptags }}" class="md-button md-button--primary">
+    Geting started
+  </a>
+  <a href="{{ config.repo_url }}" title="{{ lang.t('source.link.title') }}" class="md-button">
+    Go to GitHub
+  </a>
+</div>
+{% endblock %}
+{% block content %}{% endblock %}

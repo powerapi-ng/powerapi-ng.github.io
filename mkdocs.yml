@@ -1,0 +1,111 @@
+site_name: "PowerAPI"
+site_description: "PowerAPI"
+repo_url: https://github.com/powerapi-ng/powerapi
+copyright: Copyright &copy; 2023 Inria, University of Lille
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - md_in_html
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.critic
+  - pymdownx.keys
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+
+theme:
+  # Used theme
+  name: material
+
+  # Overrides files
+  custom_dir: overrides
+
+  # favicon to show on the browser
+  favicon: images/favicon.ico
+  # Logo used in the header
+  logo: assets/images/PowerAPI-logo.png
+
+
+  palette:
+    # scheme: slate
+    #accent: light green
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+      primary: red
+      accent: green
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+      primary: red
+      accent: green
+
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    # - navigation.instant
+    - navigation.tabs
+    - navigation.path
+    - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - navigation.sections
+    - content.code.copy
+
+nav:
+- Home: index.md
+- Getting Started: getting_started.md
+- Reference:
+  - Overview: reference/overview.md
+  - Sensors:
+    - HWPC Sensor: reference/sensors/hwpc-sensor.md
+#  - Procfs Sensor: sensors/procfs-sensor.md
+  - Formulas:
+    - RAPL: reference/formulas/rapl.md
+    - SmartWatts: reference/formulas/smartwatts.md
+    - Configuration Files: reference/formulas/configuration_files.md
+  - Sources/Destinations:
+    - Description: reference/database/sources_destinations.md
+  - Reports:
+    - Description: reference/reports/reports.md
+  - Grafana:
+    - Description: reference/grafana/grafana.md
+  - cgroups:
+    - Creation: reference/cgroup/cgroup.md
+    - Activation: reference/cgroup/cgroup_v1_activation.md
+# - Jouleit: jouleit/jouleit.md
+#  - Formula Creation: guides/formula_creation.md
+- Contributing: contributing.md
+- Publications: publications.md
+- Credits and Licence: credits_licence.md
+
+# plugins:
+#  - social
+
+extra:
+  version:
+    provider: mike
+
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/powerapi-ng/powerapi
+    - icon: fontawesome/solid/paper-plane
+      link: mailto:powerapi-staff@inria.fr
