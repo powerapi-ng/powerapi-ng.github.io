@@ -78,11 +78,11 @@ Table below depicts the different group events for comptible Intel and AMD archi
 
 | Architectures                | Group   | Events        |
 | -------------               | -----   | ------------- |
-|Intel Sandy Bridge and newer, AMD Zen (1,2,3,4)  | `rapl`  | `RAPL_ENERGY_PKG`|
-|Intel Sandy Bridge and newer, AMD Zen (1,2,3,4)  | `msr`  | `TSC`, `APERF`, `MPERF`|
-|Intel Sandy Bridge through Broadwell | `core` | `CPU_CLK_THREAD_UNHALTED:REF_P`, `CPU_CLK_THREAD_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
-|Intel Skylake and newer | `core` | `CPU_CLK_UNHALTED:REF_P`, `CPU_CLK_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
-|AMD Zen (1,2,3,4)| `core`| `CYCLES_NOT_IN_HALT`, `RETIRED_INSTRUCTIONS` , `RETIRED_UOPS`|
+|Intel Sandy Bridge and newer, AMD Zen 2  | `rapl`  | `RAPL_ENERGY_PKG`|
+|Intel Sandy Bridge and newer, AMD Zen 2  | `msr`  | `TSC`, `APERF`, `MPERF`|
+|Intel Skylake, Whiskey Lake, Coffe Lake| `core` | `CPU_CLK_THREAD_UNHALTED:REF_P`, `CPU_CLK_THREAD_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
+|Intel Sandy Bridge, Comet Lake | `core` | `CPU_CLK_UNHALTED:REF_P`, `CPU_CLK_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
+|AMD Zen 2 | `core`| `CYCLES_NOT_IN_HALT`, `RETIRED_INSTRUCTIONS` , `RETIRED_UOPS`|
 
 
 ### Running the Sensor with a Configuration File
