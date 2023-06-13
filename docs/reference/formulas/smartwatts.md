@@ -72,16 +72,14 @@ Besides the [basic parameters](../formulas/configuration_files.md), the followin
 |`disable-dram-formula`    | `bool` (flag) | -           | `false`                                                | Disable RAM Formula |
 |`cpu-rapl-ref-event`    | `string` | -           | `"RAPL_ENERGY_PKG"`  | RAPL event used as reference for the CPU power models |
 |`dram-rapl-ref-event`    | `string` | -           | `"RAPL_ENERGY_DRAM"`  | RAPL event used as reference for the DRAM power models |
-|`cpu-tdp`         | `int` | -           | `125`  | CPU TDP (in Watts)|
+|`cpu-tdp`         | `int` | -           | `125`  | CPU TDP (in Watt)|
 |`cpu-base-clock`         | `int` | -           | `100`  | CPU base clock (in MHz) |
-|`cpu-frequency-min`      | `int` | -           | `100`  | CPU minimal frequency (in MHz) |
-|`cpu-frequency-base`     | `int` | -           | `2300`  | CPU base frequency (in MHz) |
-|`cpu-frequency-max`    | `int` | -           | `4000`  | CPU maximal frequency (In MHz, with Turbo-Boost) |
+|`cpu-base-freq`     | `int` | -           | `2100`  | CPU base frequency (in MHz) |
 |`cpu-error-threshold`    | `float` | -           | `2.0`  | Error threshold for the CPU power models (in Watts) |
 |`dram-error-threshold`    | `float` | -           | `2.0`  | Error threshold for the DRAM power models (in Watts) |
 |`learn-min-samples-required`    | `int` | -           | `10`  | Minimum amount of samples required before trying to learn a power model |
-|`learn-history-window-size`    | `int` | -           | `30`  | Size of the history window used to keep samples to learn from |
-|`real-time-mode`    | `bool` | -           | `false`  | Pass the wait for reports from 4 ticks to 1 |
+|`learn-history-window-size`    | `int` | -           | `60`  | Size of the history window used to keep samples to learn from |
+|`sensor-reports-frequency`    | `int` | -           | `1000`  | The frequency with which measurements are made (in milliseconds) |
 
 ### Running the Formula with a Configuration File
 
@@ -109,12 +107,10 @@ Below an example is provided by using MongoDB as Source and InfluxDB as Destinat
       "collection": "power_consumption2"
     }
   },
-  "cpu-frequency-base": 19,
-  "cpu-frequency-min": 4,
-  "cpu-frequency-max": 42,
+  "cpu-base-freq": 1900,
   "cpu-error-threshold": 2.0,
   "disable-dram-formula": true,
-  "sensor-report-sampling-interval": 1000
+  "sensor-reports-frequency": 1000
 }
 ```
 
@@ -155,13 +151,10 @@ the installation you used:
      powerapi/smartwatts-formula --verbose \
      --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
      --output influxdb --model PowerReport --uri 127.0.0.1 --port 8086 --db test_result \
-     --cpu-frequency-base 19 \
-     --cpu-frequency-min 4 \
-     --cpu-frequency-max 42 \
+     --cpu-base-freq 1900 \
      --cpu-error-threshold 2.0 \
      --disable-dram-formula \
-     --sensor-report-sampling-interval 1000 \
-     --real-time-mode false
+     --sensor-reports-frequency 1000
      ```
 
 === "Pip"
@@ -171,13 +164,10 @@ the installation you used:
     --verbose \
     --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
     --output influxdb --model PowerReport --uri 127.0.0.1 --port 8086 --db test_result \
-    --cpu-frequency-base 19 \
-    --cpu-frequency-min 4 \
-    --cpu-frequency-max 42 \
+    --cpu-base-freq 1900 \
     --cpu-error-threshold 2.0 \
     --disable-dram-formula \
-    --sensor-report-sampling-interval 1000 \
-    --real-time-mode false
+    --sensor-reports-frequency 1000
     ```
 
 
@@ -187,50 +177,3 @@ the installation you used:
 
 ???+ tip "Using shortcuts for parameters' names"
     You use `-` instead of `--`.
-
-# Auto-config Script
-
-This script detects the frequencies (assuming that the language of your Linux Distribution is English) of your CPU and use them to provide a
-configuration file for SmartWatts.
-
-```sh
-#!/usr/bin/env bash
-
-maxfrequency=$(lscpu -b -p=MAXMHZ | tail -n -1| cut -d , -f 1)
-minfrequency=$(lscpu -b -p=MINMHZ | tail -n -1 | cut -d , -f 1)
-basefrequency=$(lscpu | grep "Model name" | cut -d @ -f 2 | cut -d G -f 1)
-basefrequency=$(expr ${basefrequency}\*1000 | bc | cut -d . -f 1)
-
-echo "
-{
-  \"verbose\": true,
-  \"stream\": true,
-  \"input\": {
-    \"puller\": {
-      \"model\": \"HWPCReport\",
-      \"type\": \"socket\",
-      \"uri\": \"127.0.0.1\",
-      \"port\": 8080,
-      \"collection\": \"test_hwpc\"
-    }
-  },
-  \"output\": {
-    \"pusher_power\": {
-      \"type\": \"influxdb\",
-      \"model\": \"PowerReport\",
-      \"uri\": \"127.0.0.1\",
-      \"port\": 8086,
-      \"db\": \"test\",
-      \"collection\": \"prep\"
-    }
-  },
-  \"cpu-frequency-base\": $basefrequency,
-  \"cpu-frequency-min\": $minfrequency,
-  \"cpu-frequency-max\": $maxfrequency,
-  \"cpu-error-threshold\": 2.0,
-  \"disable-dram-formula\": true,
-  \"sensor-report-sampling-interval\": 1000
-}
-" > ./config_file.json
-
-```
