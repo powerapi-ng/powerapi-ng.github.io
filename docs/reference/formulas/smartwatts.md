@@ -114,8 +114,7 @@ Below an example is provided by using MongoDB as Source and InfluxDB as Destinat
 }
 ```
 
-Some parameters of this configuration depend of your hardware. You can use we this [auto-configuration
-script](../script/smartwatts_auto_config.md) in order to generate your configuration file.
+Some parameters of this configuration depend of your hardware. In particular, `cpu-base-freq`. You can obtain this value from `CPU MHz` field by using `lscpu` command. 
 
 ???+ info "Alternative Source or Destination"
     If you want to use another Source or Destination, please check the documentation [here](../database/sources_destinations.md) and modify your configuration according to the Source or Destination that you want to use.
