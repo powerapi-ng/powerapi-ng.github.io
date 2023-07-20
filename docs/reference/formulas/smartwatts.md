@@ -123,6 +123,7 @@ In this configuration we are using MongoDB as source and InfluxDB as Destination
 ### Running the Formula with Environment Variables
 
 Parameters are defined by using the prefixes `POWERAPI_`, `POWERAPI_INPUT_` and `POWERAPI_OUTPUT_` in the names of Environment Variables. The following conventions are used:
+
 - `POWERAPI_<PARAMETER_NAME>`
 - `POWERAPI_INPUT_<COMPONENT_NAME>_<PARAMETER_NAME>`
 - `POWERAPI_OUTPUT_<COMPONENT_NAME>_<PARAMETER_NAME>`
@@ -238,4 +239,4 @@ The three running methods can be used to define a configuration. The priority is
 2. Environment Variables
 3. Configuration File
 
-This means that parameters values defined via the CLI have the highest priority while values defined via Environment Variables will be preserved regarding those defined by a Configuration File. 
+This means that parameters values defined via the CLI have the highest priority while values defined via Environment Variables will be preserved regarding those defined by a Configuration File.
