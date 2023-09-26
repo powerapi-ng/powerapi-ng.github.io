@@ -79,7 +79,7 @@ nav:
     - HWPC Sensor: reference/sensors/hwpc-sensor.md
 #  - Procfs Sensor: sensors/procfs-sensor.md
   - Formulas:
-    - RAPL: reference/formulas/rapl.md
+    #- RAPL: reference/formulas/rapl.md
     - SmartWatts: reference/formulas/smartwatts.md
     - Configuration Files: reference/formulas/configuration_files.md
   - Sources/Destinations:
