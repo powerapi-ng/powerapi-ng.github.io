@@ -2,7 +2,7 @@
 
 A PowerAPI Formula uses Sources and Destinations in order to retrieve metrics and store estimations.
 
-For each Source/Destination the parameters to specify are differents. For each one of them,
+For each Source/Destination the parameters to specify are different. For each one of them,
 its parameters are specified in following sections.
 
 ## Summary
@@ -14,7 +14,7 @@ its parameters are specified in following sections.
 | CSV | Yes  | Yes | csv                                      | csv    |
 | Socket | Yes  | No | socket                                      | socket    |
 | File Database | Yes  | Yes | filedb                                      | filedb    |
-| Prometheus | No  | Yes | prom                                      | prom    |
+| Prometheus | No  | Yes | prometheus                                      | prometheus    |
 
 ## MongoDB
 
@@ -23,15 +23,15 @@ If you want to use a Mongo Database in your Formula, you have to specify
 
 ### Parameters
 
-The list of parameters you have to provide are:
+The list of accepted parameters are:
 
-| Parameter     | Type   | CLI shortcut  | Default Value                                              | Description                             |
-| ------------- | -----  | ------------- | -------------                                              | ------------------------------------    |
-|`uri`          | string | `u` (`U` for `HWPCSensor`)           | N/A                                                        | The IP address of your MongoDB instance |
-|`db` (`database` for `HWPCSensor`)           | string | `d` (`D` for `HWPCSensor`)            | N/A                                                        | The name of your database               |
-|`collection`   | string | `c` (`C` for `HWPCSensor`)          | N/A                                                        | The name of the collection inside `db`  |
-|`name`         | string | `n`           | `"puller_mongodb"` (Source), `pusher_mongodb` (Destination)| The related puller/pusher name. This parameter is not used by `HWPCSensor`                 |
-|`model`        | string | `m`           | `"HWPCReport"` (Source), `PowerReport` (Destination)         | The Report type stored by the database  |
+| Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             | Description                             |
+| ------------- | -----  | ------------- | ------------- | ----------                                              | ------------------------------------    |
+|`uri`          | string | `u` (`U` for `HWPCSensor`)           | N/A | Yes                                                       | The IP address of your MongoDB instance |
+|`db` (`database` for `HWPCSensor`)           | string | `d` (`D` for `HWPCSensor`)            | N/A | Yes                                                       | The name of your database               |
+|`collection`   | string | `c` (`C` for `HWPCSensor`)          | N/A | Yes                                                       | The name of the collection inside `db`  |
+|`name`         | string | `n`           | `"puller_mongodb"` (Source), `pusher_mongodb` (Destination)| No | The related puller/pusher name. This parameter is not used by `HWPCSensor`                 |
+|`model`        | string | `m`           | `"HWPCReport"` (Source), `PowerReport` (Destination) | No         | The Report type stored by the database  |
 
 ### JSON File Excerpt
 
@@ -54,16 +54,16 @@ If you want to use InfluxDB 1.8 in your Formula as Destination, you have to spec
 
 ### Parameters
 
-The list of parameters you have to provide are:
+The list of accepted parameters are:
 
-| Parameter     | Type   | CLI shortcut  | Default Value                                        | Description                             |
-| ------------- | -----  | ------------- | -------------                                        | ------------------------------------    |
-|`uri`          | string | `u`           | N/A                                                  | The IP address of your Influxdb instance|
-|`db`           | string | `d`           | N/A                                                  | The name of your database               |
-|`port`         | int    | `p`           | N/A                                                  | The port of communication               |
-|`tags`         | string | `t`           | N/A                                                  | The report tags                         |
-|`name`         | string | `n`           | `"pusher_influxdb"`                                    | The related pusher name                 |
-|`model`        | string | `m`           | `"PowerReport"`                                        | The Report type stored by the database  |
+| Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        | Description                             |
+| ------------- | -----  | ------------- | ------------- | ----------                                        | ------------------------------------    |
+|`uri`          | string | `u`           | N/A | Yes                                                 | The IP address of your Influxdb instance|
+|`db`           | string | `d`           | N/A | Yes                                                 | The name of your database               |
+|`port`         | int    | `p`           | N/A | Yes                                                 | The port of communication               |
+|`tags`         | string | `t`           | N/A | No                                                 | The report tags                         |
+|`name`         | string | `n`           | `"pusher_influxdb"` | No                                    | The related pusher name                 |
+|`model`        | string | `m`           | `"PowerReport"` | No                                      | The Report type stored by the database  |
 
 InfluxDB can only be used as a Destination.
 
@@ -91,18 +91,18 @@ If you want to use InfluxDB 2 in your Formula as Destination, you have to specif
 
 ### Parameters
 
-The list of parameters you have to provide are:
+The list of accepted parameters are:
 
-| Parameter     | Type   | CLI shortcut  | Default Value | Description                             |
-| ------------- | -----  | ------------- | ------------- | ------------------------------------    |
-|`uri`          | string | `u`           | N/A           | The IP address of your Influxdb instance|
-|`db`           | string | `d`           | N/A           | The name of your bucket (database)      |
-|`port`         | int    | `p`           | N/A           | The port of communication               |
-|`token`        | string | `k`           | N/A           | The token for accesing the database. The token owner must have write/read permissions on the bucket               |
-|`org`          | string | `g`           | N/A           | The name of the organisation associated to the bucket               |
-|`tags`         | string | `t`           | N/A           | The report tags                         |
-|`name`         | string | `n`           | `"pusher_influxdb2"`                                    | The related pusher name                 |
-|`model`        | string | `m`           | `"PowerReport"`  | The Report type stored by the database  |
+| Parameter     | Type   | CLI shortcut  | Default Value | Mandatory | Description                             |
+| ------------- | -----  | ------------- | ------------- | ---------- | ------------------------------------    |
+|`uri`          | string | `u`           | N/A           | Yes | The IP address of your Influxdb instance. It can contain the port number|
+|`db`           | string | `d`           | N/A           | Yes | The name of your bucket (database)      |
+|`port`         | int    | `p`           | None           | N/A| The port of communication. It is not mandatory if it is indicated in the `uri`               |
+|`token`        | string | `k`           | N/A           | Yes | The token for accessing the database. The token owner must have write/read permissions on the bucket               |
+|`org`          | string | `g`           | N/A           | Yes | The name of the organization associated to the bucket               |
+|`tags`         | string | `t`           | N/A           | No | The report tags                         |
+|`name`         | string | `n`           | `"pusher_influxdb2"` | No                                    | The related pusher name                 |
+|`model`        | string | `m`           | `"PowerReport"`  | No | The Report type stored by the database  |
 
 
 InfluxDB2 can only be used as a Destination.
@@ -131,14 +131,14 @@ If you want to use a CSV file in your Formula as Source or Destination, you have
 
 ### Parameters
 
-The list of parameters you have to provide are:
+The list of accepted parameters are:
 
-| Parameter     | Type    | CLI shortcut  | Default Value | Description                                                                   |
-| ------------- | -----   | ------------- | ------------- | ------------------------------------                                          |
-|`files`(Source)| string  | `f`           | Empty list           | The list of input CSV files with the format file1,file2,file3...              |
-|`directory` (Destination, `uri` for `HWPCSensor`)| string        | `d` (`U` for `HWPCSensor`)          | Current directory           | The directory where output CSV files will be written          |
-|`name`         | string | `n`           | `"puller_csv"` (Source), `"pusher_csv"` (Destination)| The related puller/pusher name. This parameter is not used by `HWPCSensor`                 |
-|`model`        | string | `m`           | `"HWPCReport"` (Source), `"PowerReport"` (Destination)   | The Report type stored in CSV files. This parameter is not used by `HWPCSensor`     |
+| Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
+| ------------- | -----   | ------------- | ------------- | ----------| ------------------------------------                                          |
+|`files`(Source)| string  | `f`           | Empty list           | No | The list of input CSV files with the format file1,file2,file3...              |
+|`directory` (Destination, `uri` for `HWPCSensor`)| string         |`d` (`U` for `HWPCSensor`)          | Current directory           | No |The directory where output CSV files will be written          |
+|`name`         | string | `n`           | `"puller_csv"` (Source), `"pusher_csv"` (Destination)| No | The related puller/pusher name. This parameter is not used by `HWPCSensor`                 |
+|`model`        | string | `m`           | `"HWPCReport"` (Source), `"PowerReport"` (Destination)   | No | The Report type stored in CSV files. This parameter is not used by `HWPCSensor`     |
 
 ### JSON File Excerpt
 
@@ -159,13 +159,13 @@ This Source is made for `stream` mode active only.
 
 ### Parameters
 
-The list of parameters you have to provide are:
+The list of accepted parameters are:
 
-| Parameter     | Type   | CLI shortcut  | Default Value                                      | Description                             |
-| ------------- | -----  | ------------- | -------------                                      | ------------------------------------    |
-|`port`         | int    | `p`           | N/A                                                | The port of communication               |
-|`name`         | string | `n`           | `"puller_socket"` | The related puller name                 |
-|`model`        | string | `m`           | `"HWPCReport"` | The Report type managed by the socket   |
+| Parameter     | Type   | CLI shortcut  | Default Value| Mandatory                                       | Description                             |
+| ------------- | -----  | ------------- | -------------| ----------                                      | ------------------------------------    |
+|`port`         | int    | `p`           | N/A | Yes                                               | The port of communication               |
+|`name`         | string | `n`           | `"puller_socket"`| No | The related puller name  |
+|`model`        | string | `m`           | `"HWPCReport"` | No | The Report type managed by the socket |
 
 
 ### JSON File Excerpt
@@ -188,13 +188,13 @@ report when used as a Destination.
 
 ### Parameters
 
-The list of parameters you have to provide are:
+The list of accepted parameters are:
 
-| Parameter     | Type   | CLI shortcut  | Default Value                                      | Description                             |
-| ------------- | -----  | ------------- | -------------                                      | ------------------------------------    |
-|`filename`     | int    | `f`           | N/A                                                | The name of the file                    |
-|`name`         | string | `n`           | `"pusher_filedb"` | The related pusher name                 |
-|`model`        | string | `m`           | `"HWPCReport"` (Source) `"PowerReport"` (Destination)  | The Report type stored in the file      |
+| Parameter     | Type   | CLI shortcut  | Default Value| Mandatory                                      | Description                             |
+| ------------- | -----  | ------------- | -------------| ----------                                        | ------------------------------------    |
+|`filename`     | int    | `f`           | N/A                                                | Yes | The name of the file                    |
+|`name`         | string | `n`           | `"pusher_filedb"` | No | The related pusher name |
+|`model`        | string | `m`           | `"HWPCReport"` (Source) `"PowerReport"` (Destination)| No  | The Report type stored in the file      |
 
 ### JSON File Excerpt
 
@@ -210,25 +210,25 @@ Below you find an example of configuration excerpt for this kind of Source/Desti
 ## Prometheus
 
 If you want to use a Prometheus instance to expose reports to be scraped, you have to specify
-`prom` as the `type` of a pusher in your formula configuration file.
+`prometheus` as the `type` of a pusher in your formula configuration file.
 
 ### Parameters
 
-The list of parameters you have to provide are:
+The list of accepted parameters are:
 
-| Parameter     | Type   | CLI shortcut  | Default Value                                      | Description                             |
-| ------------- | -----  | ------------- | -------------                                      | ------------------------------------    |
-|`uri`          | string | `u`           | N/A                                                | The IP address of your Promtheus instance |
-|`port`         | int | `p`              | N/A                                                | The port of communication                  |
-|`tags`         | string | `t`           | N/A                                                | The Report tags                    |
-|`metric_name`  | string | `M`           | N/A                                                | The exposed metric name                    |
-|`metric_description`  | string | `d`    | `"energy consumption"`                               | The exposed metric description                    |
-|`aggregation_period`  | int | `A`    | 15                                                    | The number of second for the metric must be aggregated before compute statistics on them                    |
-|`name`         | string | `n`           | `"pusher_prom"` | The related pusher name                 |
-|`model`        | string | `m`           | `"PowerReport"` | The Report type exposed by Prometheus      |
+| Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                      | Description                             |
+| ------------- | -----  | ------------- | ------------- | ----------                                    | ------------------------------------    |
+|`uri`          | string | `u`           | `127.0.0.1` | No                                               | The IP address of your Prometheus instance |
+|`port`         | int | `p`              | N/A | Yes                                              | The port of communication                  |
+|`tags`         | string | `t`           | N/A | No                                              | The Report tags separated by `,`                    |
+|`metric_name`  | string | `M`           | N/A | Yes                                              | The exposed metric name                    |
+|`metric_description`  | string | `d`    | `"energy consumption"` | No                             | The exposed metric description                    |
+|`name`         | string | `n`           | `"pusher_prom"` | No | The related pusher name                 |
+|`model`        | string | `m`           | `"PowerReport"` | No | The Report type exposed by Prometheus       |
 
 
-Promtheus can only be used as a Destination that monitors reports but they will be not stored by this service.  
+Prometheus can only be used as a Destination that monitors reports but they will be not stored by this service.
+The tags names are metadata keys of reports to be used as labels. If a report doesn't have a provide tag, it will be ignored by the Destination.    
 
 ### JSON File Excerpt
 
@@ -236,7 +236,7 @@ Below you find an example of configuration excerpt for this kind of Destination.
 
 ```json
 {
-  "type": "prom",
+  "type": "prometheus",
   "uri": "127.0.0.1",
   "port": 8080,
   "metric_name": test
