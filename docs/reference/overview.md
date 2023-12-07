@@ -59,5 +59,5 @@ A Formula has two working modes:
 
 ### Usage
 
-Currently, there are two Formulas: [RAPL](formulas/rapl.md) and [SmartWatts](formulas/smartwatts.md).
-Refer to each Formula documentation to know how to use them.
+Currently, there is one Formula: [SmartWatts](formulas/smartwatts.md).
+Refer to the Formula documentation to know how to use it.
