@@ -21,15 +21,6 @@ kernel API) to the real CPU register to read performance counter values.
     docker pull powerapi/hwpc-sensor
     ```
 
-=== "Deb file"
-
-    Download the `.deb` file from the [latest
-    release](https://github.com/powerapi-ng/hwpc-sensor/releases)
-
-    Install the sensor with
-    ```bash
-    sudo apt install hwpc-sensor-<version>.deb
-    ```
 === "Binary file"
 
     You can use the compiled version of the sensor (available
@@ -78,7 +69,7 @@ Table below depicts the different group events for comptible Intel and AMD archi
 
 | Architectures                | Group   | Events        |
 | -------------               | -----   | ------------- |
-|Intel Sandy Bridge and newer, AMD Zen 2  | `rapl`  | `RAPL_ENERGY_PKG`|
+|Intel Sandy Bridge and newer, AMD Zen 2  | `rapl`  | `RAPL_ENERGY_PKG`, `RAPL_ENERGY_DRAM`|
 |Intel Sandy Bridge and newer, AMD Zen 2  | `msr`  | `TSC`, `APERF`, `MPERF`|
 |Intel Skylake, Whiskey Lake, Coffe Lake| `core` | `CPU_CLK_THREAD_UNHALTED:REF_P`, `CPU_CLK_THREAD_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
 |Intel Sandy Bridge, Comet Lake | `core` | `CPU_CLK_UNHALTED:REF_P`, `CPU_CLK_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
