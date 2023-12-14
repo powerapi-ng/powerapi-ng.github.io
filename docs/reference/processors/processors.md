@@ -170,7 +170,7 @@ Below an example is provided by using MongoDB as Source and InfluxDB as Destinat
       "collection": "power_consumption2"
     }
   },
-  {=="pre-processor":{
+  =="pre-processor":{
 
     "p1":{
       "type": "k8s",
@@ -179,7 +179,7 @@ Below an example is provided by using MongoDB as Source and InfluxDB as Destinat
       "timeout-query": 30,
       "puller": "puller"
     }
-  }==},
+  }==,
 
   "cpu-base-freq": 1900,
   "cpu-error-threshold": 2.0,
