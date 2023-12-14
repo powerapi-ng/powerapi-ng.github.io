@@ -1,7 +1,8 @@
 # Processors
 
-Processors enable customized filtering and/or modifications on `Reports`.
+Processors enable customized filtering and/or modifications of `Reports`.
 There are two kinds of processors:
+
 - `PreProcessors`: They are located between the `Puller` and the `Dispatcher`. They are supposed to pre-process the `HWPCReports` before computing estimations.
 - `PostProcessors`: They are located between, the `Formula` and the `Pusher`. They process `PowerReports` before storing them on the `Destination`.
 
@@ -14,9 +15,9 @@ Figure below depicts where are they introduced in the architecture of a Software
 
 ## K8sPreProcessor
 
-This `PreProcessor` the Kubernetes client for Python in order to get information related to `Reports`.
+This `PreProcessor` uses the Kubernetes client for Python in order to get information related to `Reports`.
 In particular, pod's names (`pod_name`) and pod's name space (`pod_namespace`) are collected.
-This information added to metadata of the concerned `Report`.
+This information is added to metadata of the concerned `Report`.
 If a `Report` does not have this information, empty strings are used as values.
 
 If you want to use a `K8sPreProcessor` in your Software `PowerMeter`, you have to specify
@@ -24,7 +25,7 @@ If you want to use a `K8sPreProcessor` in your Software `PowerMeter`, you have t
 
 ### Parameters
 
-| Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             | Description |
+| Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        | Description |
 | ------------- | -----  | ------------- | ------------- | ----------                                              | ------------------------------------    |
 |`k8s-api-mode`| string | `a` | N/A | Yes | The configuration method used to run K8s. Possible values are `local`, `manual` and `cluster`|
 |`time-interval`| int | `t` | 0 | No | The time (in seconds) between each query sent to K8s API |
@@ -169,7 +170,7 @@ Below an example is provided by using MongoDB as Source and InfluxDB as Destinat
       "collection": "power_consumption2"
     }
   },
-  "pre-processor":{
+  {=="pre-processor":{
 
     "p1":{
       "type": "k8s",
@@ -178,7 +179,7 @@ Below an example is provided by using MongoDB as Source and InfluxDB as Destinat
       "timeout-query": 30,
       "puller": "puller"
     }
-  },
+  }==},
 
   "cpu-base-freq": 1900,
   "cpu-error-threshold": 2.0,
