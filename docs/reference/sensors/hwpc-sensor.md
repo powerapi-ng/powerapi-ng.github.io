@@ -21,18 +21,13 @@ kernel API) to the real CPU register to read performance counter values.
     docker pull powerapi/hwpc-sensor
     ```
 
-=== "Binary file"
-
-    You can use the compiled version of the sensor (available
-    [here](https://github.com/powerapi-ng/hwpc-sensor/releases))
-
 ## Usage
 
-For running the sensor, a Destination and a configuration defined via a file or CLI parameters are required.
+For running the sensor, a Source and a configuration defined via a file or CLI parameters are required.
 
-### Destination
+### Source
 
-For running HWPCSensor we are using MongoDB as Destination as a docker container.
+For running HWPC Sensor we are using MongoDB as Source as a docker container.
 
 To start a MongoDB instance via the command line
 
@@ -65,7 +60,7 @@ The table below shows the different parameters related to the Sensor Configurati
 
 ### Events
 
-Table below depicts the different group events for comptible Intel and AMD architectures.
+Table below depicts the different group events for compatible Intel and AMD architectures.
 
 | Architectures                | Group   | Events        |
 | -------------               | -----   | ------------- |
@@ -111,7 +106,7 @@ Table below depicts the different group events for comptible Intel and AMD archi
 }
 ```
 
-Once you have your configuration file, run HWPCSensor using one of the following command lines, depending on the installation you use:
+Once you have your configuration file, run HWPC Sensor using one of the following command lines, depending on the installation you use:
 
 === "Docker"
 
@@ -128,15 +123,9 @@ Once you have your configuration file, run HWPCSensor using one of the following
     powerapi/hwpc-sensor --config-file /config_file.json
     ```
 
-=== "Binary file"
-
-    ```sh
-    ./hwpc-sensor --config-file config_file.json
-    ```
-
 ### Running the Sensor via CLI parameters
 
-In order to run the Sensor without a configuration file, run HWPCSensor using one of the following command lines, depending on the installation you use:
+In order to run the Sensor without a configuration file, run HWPC Sensor using one of the following command lines, depending on the installation you use:
 
 === "Docker"
 
@@ -151,16 +140,6 @@ In order to run the Sensor without a configuration file, run HWPCSensor using on
     -v $(pwd):/srv \
     powerapi/hwpc-sensor \
     -n "$(hostname -f)" \
-    -r "mongodb" -U "mongodb://127.0.0.1" -D "db_sensor" -C "report_0" \
-    -s "rapl" -o -e "RAPL_ENERGY_PKG" \
-    -s "msr" -e "TSC" -e "APERF" -e "MPERF" \
-    -c "core" -e "CPU_CLK_THREAD_UNHALTED:REF_P" -e "CPU_CLK_THREAD_UNHALTED:THREAD_P" -e "LLC_MISSES" -e "INSTRUCTIONS_RETIRED"
-    ```
-
-=== "Binary file"
-
-    ```sh
-    ./hwpc-sensor -n "$(hostname -f)" \
     -r "mongodb" -U "mongodb://127.0.0.1" -D "db_sensor" -C "report_0" \
     -s "rapl" -o -e "RAPL_ENERGY_PKG" \
     -s "msr" -e "TSC" -e "APERF" -e "MPERF" \

@@ -20,8 +20,8 @@ The table below shows basic parameters.
     - Sources: `mongodb`, `csv`, `socket`, `filedb`
     - Destinations: `mongodb`, `influxedb`, `influxedb2`, `csv`, `socket`, `filedb`, `prom`
 
-    ???+ tip "Processors' values"
-        - Pre-Processors: `k8s`, `libvirt`
+???+ tip "Processors' values"
+    - Pre-Processors: `k8s`, `libvirt`
 
 ## Configuration File
 

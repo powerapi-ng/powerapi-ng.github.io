@@ -25,7 +25,7 @@ If you want to use a Mongo Database in your Formula, you have to specify
 
 The list of accepted parameters are:
 
-| Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             | Description                             |
+| Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             Description                             |
 | ------------- | -----  | ------------- | ------------- | ----------                                              | ------------------------------------    |
 |`uri`          | string | `u` (`U` for `HWPCSensor`)           | N/A | Yes                                                       | The IP address of your MongoDB instance |
 |`db` (`database` for `HWPCSensor`)           | string | `d` (`D` for `HWPCSensor`)            | N/A | Yes                                                       | The name of your database               |
