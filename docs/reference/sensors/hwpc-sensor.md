@@ -8,7 +8,7 @@ power consumption. This technology is only available on **Intel Sandy Bridge**
 architecture or **newer**. It is also available on **AMD Zen (1,2,34)**. **Power/ARM/RISCV are not supported** architectures.
 
 In particular, it exploits the `perf` API of the **Linux kernel**. It is only available on Linux
-and need to have **root access** to be used.
+and need to have **root access** to be used. The sensor also requieres **cgroup V1**.
 
 **The sensor can not be used in a virtual machine**, it must have access (via Linux
 kernel API) to the real CPU register to read performance counter values.
