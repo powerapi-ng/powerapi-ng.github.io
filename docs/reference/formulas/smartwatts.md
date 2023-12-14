@@ -10,8 +10,8 @@ SmartWatts need to receive several metrics provided by
 - `TSC`
 - `APERF`
 - `MPERF`
-- `CPU_CLK_THREAD_UNHALTED:REF_P` (Skylake, Whiskey Lake, Coffe Lake) or `CPU_CLK_UNHALTED:REF_P` (Skylake and newer)
-- `CPU_CLK_THREAD_UNHALTED:THREAD_P` (Sandy Bridge, Comet Lake) or `CPU_CLK_UNHALTED:THREAD_P` (Sandy Bridge, Comet Lake)
+- `CPU_CLK_THREAD_UNHALTED:REF_P` (Skylake, Whiskey Lake, Coffe Lake) or `CPU_CLK_UNHALTED:REF_P` (Sandy Bridge, Comet Lake)
+- `CPU_CLK_THREAD_UNHALTED:THREAD_P` (Skylake, Whiskey Lake, Coffe Lake) or `CPU_CLK_UNHALTED:THREAD_P` (Sandy Bridge, Comet Lake)
 - `LLC_MISSES`
 - `INSTRUCTIONS_RETIRED`
 
