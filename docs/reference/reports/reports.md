@@ -4,28 +4,24 @@ PowerAPI toolkit is modular, which means any sensor can be plugged to any monito
 tool as long as the needed information is provided.
 We fixed the way of encoding the information. Those encoding are called reports.
 
-A report specify the `json` fields that has to be provided to pass information of
-a certain kind.
+A report type specify the `json` fields that has to be provided to pass information of
+a certain kind. All reports types have a common basis:
 
-The type of reports required by each formula are specified in their user guide. However, all report have a common basis:
 
-- `timestamp` : at the format "year-month-dayThour:minutes:secondes". The
-  timestamp should reflect the time at which the information correspond, not the
+- `timestamp` : at the format "year-month-dayThour:minutes:seconds". The
+  timestamp reflects the time at which the information correspond, not the
   time the information was computed.
-  For example if a power consumption of a CPU is mesured at time `t` and used to
-  determine the power comsumption of a cgroup in a `PowerReport`, this report
-  should have timestamp `t`.
+  For example if a power consumption of a CPU is measured at time `t` and used to
+  determine the power consumption of a `cgroup` in a `PowerReport`, this report
+  has timestamp `t`.
 
-- `target` : The target should be the subject of the mesure. For example if
+- `target` : The target is the subject of the measure. For example if
     you produce a report that contain information relative to a program, domain,
-    etc. The target should refer to it.
+    etc., the target refers to it. It corresponds to the `cgroup` name.
 
-- `sensor`: It's a name field that should be use to regroup reports for
-  computing modules. For example, in VirtualWatts, the computationnal module need to receive a
-  `ProcfsReport` and a `PowerReport`, for both reports to be send to the same
-  computational module they have to have the same `sensor`.
+- `sensor`: It's a name field that is used to identify the reports produced by or computed thanks to a sensor.  
 
-  A report have the following format:
+  Therefore, a report have the following format:
 
   ```json
   "timestamp":$timestamp,
@@ -34,17 +30,17 @@ The type of reports required by each formula are specified in their user guide. 
   $report_specific_fields
 
   ```
-In the following parts we specify the `$report_specific_fields` for each type of report.
+In the following sections we specify the `$report_specific_fields` for each type of report.
 
-## HWPC Report
+## HWPC Reports
 
-A `HWPCReport` is used to report perfomance counters and RAPL.
+A `HWPCReport` is used to report performance counters and RAPL.
 Its specific fields are the following:
 
 - `groups`: A list of subreport that can be of three kind, `rapl`, `core` and
   `msr`.
 
-  Each group is represented in the same wa:
+  Each group is represented in the same way:
 
   ```json
   {
@@ -125,7 +121,7 @@ Below you can find an example of `HWPCReport`:
 
 ```
 
-## Power Report
+## Power Reports
 
 A `PowerReport` is used to transfer information about power consumption estimations.
 Its specific fields are the following:
