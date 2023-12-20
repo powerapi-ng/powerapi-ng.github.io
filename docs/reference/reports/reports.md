@@ -8,18 +8,18 @@ A report type specify the `json` fields that has to be provided to pass informat
 a certain kind. All reports types have a common basis:
 
 
-- `timestamp` : at the format "year-month-dayThour:minutes:seconds". The
+- `timestamp`: at the format "year-month-dayThour:minutes:seconds". The
   timestamp reflects the time at which the information correspond, not the
   time the information was computed.
   For example if a power consumption of a CPU is measured at time `t` and used to
   determine the power consumption of a `cgroup` in a `PowerReport`, this report
   has timestamp `t`.
 
-- `target` : The target is the subject of the measure. For example if
+- `target`: the target is the subject of the measure. For example if
     you produce a report that contain information relative to a program, domain,
     etc., the target refers to it. It corresponds to the `cgroup` name.
 
-- `sensor`: It's a name field that is used to identify the reports produced by or computed thanks to a sensor.  
+- `sensor`: it's a name field that is used to identify the reports produced by or computed thanks to a sensor.  
 
   Therefore, a report have the following format:
 
@@ -37,7 +37,7 @@ In the following sections we specify the `$report_specific_fields` for each type
 A `HWPCReport` is used to report performance counters and RAPL.
 Its specific fields are the following:
 
-- `groups`: A list of subreport that can be of three kind, `rapl`, `core` and
+- `groups`: a list of subreport that can be of three kind, `rapl`, `core` and
   `msr`.
 
   Each group is represented in the same way:
@@ -126,7 +126,7 @@ Below you can find an example of `HWPCReport`:
 A `PowerReport` is used to transfer information about power consumption estimations.
 Its specific fields are the following:
 
-- `power`: A power value in Watts.
+- `power`: a power value in Watts.
 
 Below you find an exemple of `PowerReport`:
 
