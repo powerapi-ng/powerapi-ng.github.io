@@ -5,7 +5,7 @@ performance counter and the power consumption of CPU.
 
 HWPC Sensor uses the RAPL (Running Average Power Limit) technology to monitor CPU
 power consumption. This technology is only available on **Intel Sandy Bridge**
-architecture or **newer**. It is also available on **AMD Zen (1,2,34)**. **Power/ARM/RISCV are not supported** architectures.
+architecture or **newer**. However, Intel Core **Tiger Lake**, **Alder Lake** and **Raptor Lake** families for **desktop** and **mobile** **are not supported**. The sensor is also available on **AMD Zen (1,2,34)**. **Power/ARM/RISCV are not supported** architectures.
 
 In particular, it exploits the `perf` API of the **Linux kernel**. It is only available on Linux
 and need to have **root access** to be used. The sensor also requieres **cgroup V1**.
