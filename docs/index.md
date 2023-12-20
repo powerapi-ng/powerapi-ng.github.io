@@ -61,6 +61,9 @@ Therefore, you can easily contribute to improve the toolkit.
   <div class="sponsor" markdown>  
 ![Davidson Consulting](assets/images/intro/davidson.png){ width="429px" }
   </div>
+  <div class="sponsor" markdown>  
+![La Poste Groupe](assets/images/intro/la-poste-groupe.jpg){ width="655px" }
+  </div>
 </div>
 ---
 
