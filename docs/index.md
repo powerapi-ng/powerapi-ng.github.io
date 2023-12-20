@@ -50,7 +50,7 @@ Therefore, you can easily contribute to improve the toolkit.
 
 <div class="sponsors" markdown>
   <div class="sponsor" markdown>  
-![Inria](assets/images/intro/inria.png){ width="309px" }
+![[Inria](assets/images/intro/inria.png){ width="309px" }](https://www.inria.fr/fr)
   </div>
   <div class="sponsor" markdown>  
 ![Orange Labs](assets/images/intro/logo-orange.png){ width="338px" }
