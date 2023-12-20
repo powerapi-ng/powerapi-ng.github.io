@@ -61,10 +61,10 @@ Therefore, you can easily contribute to improve the toolkit.
 </div>
 <div class="sponsors" markdown>
   <div class="sponsor" markdown>  
-  ![Davidson Consulting](assets/images/intro/davidson.png){ width="429px" }
+  ![Davidson Consulting](assets/images/intro/davidson.png){ width="400px" }
   </div>
   <div class="sponsor" markdown>  
-  ![La Poste Groupe](assets/images/intro/la-poste-groupe.jpg){ width="328px" }
+  ![La Poste Groupe](assets/images/intro/la-poste-groupe.jpg){ width="300px" }
   </div>
 </div>
 ---
