@@ -50,21 +50,21 @@ Therefore, you can easily contribute to improve the toolkit.
 
 <div class="sponsors" markdown>
   <div class="sponsor" markdown>  
-[![Inria](assets/images/intro/inria.png){ width="309px" }](https://www.inria.fr/fr)
+  [![Inria](assets/images/intro/inria.png){ width="309px" }](https://www.inria.fr/fr)
   </div>
   <div class="sponsor" markdown>  
-![Orange Labs](assets/images/intro/logo-orange.png){ width="338px" }
+  [![Orange Labs](assets/images/intro/logo-orange.png){ width="338px" }](https://lelab.orange.fr/)
   </div>
   <div class="sponsor" markdown>  
-![OVH Cloud](assets/images/intro/ovh-cloud.jpeg){ width="225px" }
+  [![OVH Cloud](assets/images/intro/ovh-cloud.jpeg){ width="225px" }](https://www.ovhcloud.com/fr/)
   </div>
 </div>
 <div class="sponsors" markdown>
   <div class="sponsor" markdown>  
-  ![Davidson Consulting](assets/images/intro/davidson.png){ width="400px" }
+  [![Davidson Consulting](assets/images/intro/davidson.png){ width="400px" }](https://www.davidson.fr/)
   </div>
   <div class="sponsor" markdown>  
-  ![La Poste Groupe](assets/images/intro/la-poste-groupe.jpg){ width="300px" }
+  [![La Poste Groupe](assets/images/intro/la-poste-groupe.jpg){ width="300px" }](https://www.lapostegroupe.com/fr)
   </div>
 </div>
 ---
