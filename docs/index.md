@@ -58,13 +58,13 @@ Therefore, you can easily contribute to improve the toolkit.
   <div class="sponsor" markdown>  
 ![OVH Cloud](assets/images/intro/ovh-cloud.jpeg){ width="225px" }
   </div>
-  <div class="sponsor" markdown>  
-![Davidson Consulting](assets/images/intro/davidson.png){ width="429px" }
-  </div>
 </div>
 <div class="sponsors" markdown>
   <div class="sponsor" markdown>  
-  ![La Poste Groupe](assets/images/intro/la-poste-groupe.jpg){ width="655px" }
+  ![Davidson Consulting](assets/images/intro/davidson.png){ width="429px" }
+  </div>
+  <div class="sponsor" markdown>  
+  ![La Poste Groupe](assets/images/intro/la-poste-groupe.jpg){ width="328px" }
   </div>
 </div>
 ---
