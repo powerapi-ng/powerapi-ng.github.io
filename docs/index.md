@@ -18,7 +18,7 @@ Measuring Power Consumption of your Applications.
 
   </div>
 
-![PowerAPI Overview](assets/images/intro/overview.png){ width="800px" align=right .tx-hero__image}
+![PowerAPI Overview](assets/images/intro/overview.png){ width="900px" align=right .tx-hero__image}
 
 </div>
 ---
