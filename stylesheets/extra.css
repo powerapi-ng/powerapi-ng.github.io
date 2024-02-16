@@ -1,0 +1,89 @@
+.tx-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tx-hero__image {
+  flex-grow: 2;
+  order: 1;
+  padding: 1.5rem;
+}
+
+.tx-hero__content {
+  flex-shrink: 1;
+  padding-bottom: 1rem;
+  padding-left: 0.6rem;
+  margin: 0 auto;
+}
+
+.top-hr {
+  width: 100%;
+  display: flex;
+  max-width: 61rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.feature-item {
+  flex: 1;
+  min-width: 0;
+}
+
+.feature-item .icon {
+  color: var(--md-accent-fg-color);
+}
+
+
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 100%;
+  flex: 1;
+  min-width: 0;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 var(--md-accent-fg-color);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
+}
+
+.grid-container {
+ display: inline-grid;
+ /*grid-template-columns: auto auto auto;*/
+ padding: 10px;
+ column-gap: 10px;
+ /*width: 100%;*/
+ /*max-width: 61rem;*/
+ /*margin-right: auto;
+ margin-left: auto;*/
+}
+
+
+.sponsors {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 61rem;
+  justify-content: space-between;
+}
+
+.sponsor {
+  display: flex;
+  padding: 30px;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 400px) {
+  .grid-container { grid-template-columns: repeat(3, 1fr); }
+}
