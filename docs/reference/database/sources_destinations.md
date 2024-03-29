@@ -9,7 +9,6 @@ its parameters are specified in following sections.
 | Name     | Source   | Destination  | CLI `input`/`ouput` parameter value                                      | JSON `type` tag parameter value                             |
 | ------------- | -----  | ------------- | -------------                                      | ------------------------------------    |
 | MongoDB | Yes  | Yes | mongodb                                      | mongodb    |
-| InfluxDB | No  | Yes | influxdb                                      | influxdb    |
 | InfluxDB2 | No  | Yes | influxdb2                                      | influxdb2    |
 | CSV | Yes  | Yes | csv                                      | csv    |
 | Socket | Yes  | No | socket                                      | socket    |
@@ -46,43 +45,6 @@ Below you find a configuration excerpt for this kind of Source/Destination.
 }
 ```
 !!! info "The default port for MongoDB is 27017"
-
-## Influx DB 1.8
-
-If you want to use InfluxDB 1.8 in your Formula as Destination, you have to specify
-`influxedb` as the `type` of a pusher.
-
-### Parameters
-
-The list of accepted parameters are:
-
-| Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        | Description                             |
-| ------------- | -----  | ------------- | ------------- | ----------                                        | ------------------------------------    |
-|`uri`          | string | `u`           | N/A | Yes                                                 | The IP address of your Influxdb instance|
-|`db`           | string | `d`           | N/A | Yes                                                 | The name of your database               |
-|`port`         | int    | `p`           | N/A | Yes                                                 | The port of communication               |
-|`tags`         | string | `t`           | N/A | No                                                 | The report tags                         |
-|`name`         | string | `n`           | `"pusher_influxdb"` | No                                    | The related pusher name                 |
-|`model`        | string | `m`           | `"PowerReport"` | No                                      | The Report type stored by the database  |
-
-InfluxDB can only be used as a Destination.
-
-### JSON File Excerpt
-
-Below you find an example of configuration excerpt for this kind of Destination.
-
-```json
-{
-  "tags": "socket",
-  "model": "PowerReport",
-  "type": "influxdb",
-  "uri": "127.0.0.1",
-  "port": 8086,
-  "db": "test_influxdb"
-}
-```
-
-!!! info "The name used for InfluxDB measurements is `power_consumption`"
 
 ## Influx DB 2
 
