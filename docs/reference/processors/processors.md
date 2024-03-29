@@ -29,8 +29,8 @@ If you want to use a `K8sPreProcessor` in your Software `PowerMeter`, you have t
 | ------------- | -----  | ------------- | ------------- | ----------                                              | ------------------------------------    |
 |`api-mode`| string | `a` | N/A | Yes | The configuration method used to run K8s. Possible values are `local`, `manual` and `cluster`|
 |`puller`| string | `p` | N/A| Yes | The puller's name associated with the `PreProcessor`|
-|`api-host`| string | `h` | `http://localhost` | No | The host associated with K8s. To be used with `k8s-api-mode` = `manual`  together with `api-key`|
-|`api-key`| string | `k` | `YOUR_API_KEY` | No | The API Key associated with K8s. To be used with `k8s-api-mode` = `manual`  together with `host` |
+|`api-host`| string | `h` | `http://localhost` | No | The host associated with K8s. To be used with `api-mode` = `manual`  together with `api-key`|
+|`api-key`| string | `k` | `YOUR_API_KEY` | No | The API Key associated with K8s. To be used with `api-mode` = `manual`  together with `api-host` |
 |`name`| string | `n` | N/A | Yes | The name of the `PreProcessors`|
 
 
