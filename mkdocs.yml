@@ -90,9 +90,9 @@ nav:
     - Description: reference/reports/reports.md
   - Grafana:
     - Description: reference/grafana/grafana.md
-  - cgroups:
+  - cgroups V1:
     - Creation: reference/cgroup/cgroup.md
-    - V1 Activation: reference/cgroup/cgroup_v1_activation.md
+    - Activation: reference/cgroup/cgroup_v1_activation.md
 # - Jouleit: jouleit/jouleit.md
 #  - Formula Creation: guides/formula_creation.md
 - Contributing: contributing.md
