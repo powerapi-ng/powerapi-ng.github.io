@@ -27,11 +27,9 @@ If you want to use a `K8sPreProcessor` in your Software `PowerMeter`, you have t
 
 | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        | Description |
 | ------------- | -----  | ------------- | ------------- | ----------                                              | ------------------------------------    |
-|`k8s-api-mode`| string | `a` | N/A | Yes | The configuration method used to run K8s. Possible values are `local`, `manual` and `cluster`|
-|`time-interval`| int | `t` | 0 | No | The time (in seconds) between each query sent to K8s API |
-|`timeout-query`| int |`o`| 5 | No | The timeout (in seconds) associated with a K8s query |
+|`api-mode`| string | `a` | N/A | Yes | The configuration method used to run K8s. Possible values are `local`, `manual` and `cluster`|
 |`puller`| string | `p` | N/A| Yes | The puller's name associated with the `PreProcessor`|
-|`host`| string | `h` | `http://localhost` | No | The host associated with K8s. To be used with `k8s-api-mode` = `manual`  together with `api-key`|
+|`api-host`| string | `h` | `http://localhost` | No | The host associated with K8s. To be used with `k8s-api-mode` = `manual`  together with `api-key`|
 |`api-key`| string | `k` | `YOUR_API_KEY` | No | The API Key associated with K8s. To be used with `k8s-api-mode` = `manual`  together with `host` |
 |`name`| string | `n` | N/A | Yes | The name of the `PreProcessors`|
 
@@ -43,9 +41,7 @@ If you want to use a `K8sPreProcessor` in your Software `PowerMeter`, you have t
 
 "p1":{
    "type": "k8s",
-   "k8s-api-mode": "local",
-   "time-interval": 20,
-   "timeout-query": 30,
+   "api-mode": "local",
    "puller": "puller"
 
 }
@@ -64,7 +60,7 @@ As notice, a `PreProcessor` is defined inside the `pre-processor` group. In this
      powerapi/smartwatts-formula --verbose \
      --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
      --output influxdb --model PowerReport --uri 127.0.0.1 --port 8086 --db test_result \
-     {==--pre-processor k8s --name p1 --k8s-api-mode local --time-interval 20 --timeout-query 30 --puller puller==} \
+     {==--pre-processor k8s --name p1 --api-mode local --puller puller==} \
      --cpu-base-freq 1900 \
      --cpu-error-threshold 2.0 \
      --disable-dram-formula \
@@ -78,7 +74,7 @@ As notice, a `PreProcessor` is defined inside the `pre-processor` group. In this
     --verbose \
     --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
     --output influxdb --model PowerReport --uri 127.0.0.1 --port 8086 --db test_result \
-    {==--pre-processor k8s --name p1 --k8s-api-mode local --time-interval 20 --timeout-query 30 --puller puller==} \
+    {==--pre-processor k8s --name p1 --api-mode local --puller puller==} \
     --cpu-base-freq 1900 \
     --cpu-error-threshold 2.0 \
     --disable-dram-formula \
@@ -109,9 +105,7 @@ As notice, a `PreProcessor` is defined inside the `pre-processor` group. In this
     -e POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086 \
     -e POWERAPI_OUTPUT_PUSHER_POWER_DB=test_result \
     {==-e POWERAPI_PRE_PROCESSOR_P1_TYPE=k8s \
-    -e POWERAPI_PRE_PROCESSOR_P1_K8S_API_MODE=local \
-    -e POWERAPI_PRE_PROCESSOR_P1_TIME_INTERVAL=20 \
-    -e POWERAPI_PRE_PROCESSOR_P1_TIMEOUT_QUERY=30 \
+    -e POWERAPI_PRE_PROCESSOR_P1_API_MODE=local \
     -e POWERAPI_PRE_PROCESSOR_P1_PULLER=puller==} \
     powerapi/smartwatts-formula
     ```
@@ -136,9 +130,7 @@ As notice, a `PreProcessor` is defined inside the `pre-processor` group. In this
     export POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086
     export POWERAPI_OUTPUT_PUSHER_POWER_DB=test_result
     {==export POWERAPI_PRE_PROCESSOR_P1_TYPE=k8s
-    export POWERAPI_PRE_PROCESSOR_P1_K8S_API_MODE=local
-    export POWERAPI_PRE_PROCESSOR_P1_TIME_INTERVAL=20
-    export POWERAPI_PRE_PROCESSOR_P1_TIMEOUT_QUERY=30
+    export POWERAPI_PRE_PROCESSOR_P1_API_MODE=local
     export POWERAPI_PRE_PROCESSOR_P1_PULLER=puller==}
     python -m smartwatts
     ```
@@ -163,20 +155,17 @@ Below an example is provided by using MongoDB as Source and InfluxDB as Destinat
   },
   "output": {
     "pusher_power": {
-      "type": "influxdb",
-      "uri": "127.0.0.1",
-      "port": 8086,
+      "type": "mongodb",
+      "uri": "mongodb://127.0.0.1",
       "db": "test_results",
-      "collection": "power_consumption2"
+      "collection": "power_consumption"
     }
   },
   "pre-processor":{
 
     "p1":{
       "type": "k8s",
-      "k8s-api-mode": "local",
-      "time-interval": 20,
-      "timeout-query": 30,
+      "api-mode": "local",
       "puller": "puller"
     }
   },
