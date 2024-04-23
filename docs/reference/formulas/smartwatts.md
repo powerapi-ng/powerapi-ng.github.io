@@ -3,22 +3,17 @@
 SmartWatts is a software-defined power meter based on the PowerAPI toolkit.
 SmartWatts is a configurable software that can estimate the power consumption of
 software in real-time.
-SmartWatts need to receive several metrics provided by
+SmartWatts needs to receive several metrics provided by
 [HWPC Sensor](../sensors/hwpc-sensor.md#events) :
 
 - The Running Average Power Limit (`RAPL`)
-- `TSC`
-- `APERF`
-- `MPERF`
-- `CPU_CLK_THREAD_UNHALTED:REF_P` (Skylake, Whiskey Lake, Coffe Lake) or `CPU_CLK_UNHALTED:REF_P` (Sandy Bridge, Comet Lake)
-- `CPU_CLK_THREAD_UNHALTED:THREAD_P` (Skylake, Whiskey Lake, Coffe Lake) or `CPU_CLK_UNHALTED:THREAD_P` (Sandy Bridge, Comet Lake)
-- `LLC_MISSES`
-- `INSTRUCTIONS_RETIRED`
+- `msr` events (`TSC`, `APERF`, `MPERF`)
+- `core` events which depend on the Processor Architucture
 
 These metrics are then used as inputs for a power model that estimates the power
 consumption of each software.
-The model can derive from the reality, each time the `cpu-error-threshold` is
-reached it learns a new power model, using the previous reports.
+The model is calibrated each time a `cpu-error-threshold` is
+reached by learning a new power model with previous reports.
 
 The choice of those specific metrics is motivated in [SmartWatts: Self-Calibrating
 Software-Defined Power Meter for Containers](https://hal.inria.fr/hal-02470128)
@@ -42,7 +37,7 @@ You can use the following command to install SmartWatts:
 For running the SmartWatts Formula you need: a Source and a Destination, a Sensor that provides `HWPCReports` and a configuration.
 
 ### Source and Destination
-For running SmartWatts we are using MongoDB as Source and InfluxDB as Destination as dockers containers.
+For running SmartWatts we are using MongoDB as Source and InfluxDB 2.0 as Destination as dockers containers.
 
 To start a MongoDB instance via the command line
 
@@ -52,8 +47,10 @@ docker run -d --name mongo_source -p 27017:27017 mongo
 And a InfluxDB instance
 
 ```sh
-docker run -d --name influx_dest -p 8086:8086 influxdb:1.8
+docker run -p 8086:8086 -v "/tmp/data:/var/lib/influxdb2" -v "/tmp/config:/etc/influxdb2" influxdb:2
 ```
+???+ tip "Set up influxdb 2 for the first time"
+    If it is the first time that you are using `influxdb 2`, there are several methods (UI, CLI, API) to make a set up. Please check [here](https://docs.influxdata.com/influxdb/v2/get-started/setup/) for more information.  
 
 
 ### Sensor
@@ -92,7 +89,7 @@ In order to run the Formula, you can execute one of the following command lines,
      --net=host \
      powerapi/smartwatts-formula --verbose \
      --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
-     --output influxdb --model PowerReport --uri 127.0.0.1 --port 8086 --db test_result \
+     --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
      --cpu-base-freq 1900 \
      --cpu-error-threshold 2.0 \
      --disable-dram-formula \
@@ -105,17 +102,17 @@ In order to run the Formula, you can execute one of the following command lines,
     python -m smartwatts \
     --verbose \
     --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
-    --output influxdb --model PowerReport --uri 127.0.0.1 --port 8086 --db test_result \
+    --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken\
     --cpu-base-freq 1900 \
     --cpu-error-threshold 2.0 \
     --disable-dram-formula \
     --sensor-reports-frequency 1000
     ```
 
-In this configuration we are using MongoDB as source and InfluxDB as Destination. Some parameters values depend of your hardware. In particular, `cpu-base-freq`. You can obtain this value from `CPU MHz` field by using `lscpu` command.
+In this configuration we are using MongoDB as source and InfluxDB 2.0 as Destination. Some parameters values depend of your hardware. In particular, `cpu-base-freq`. You can obtain this value from `CPU MHz` field by using `lscpu` command.
 
 ???+ info "Estimations' Storage"
-    Your `PowerReports` will be stored on InfluxDB. You can watch them in a grafana by using the [following tutorial](../grafana/grafana.md).
+    Your `PowerReports` will be stored on InfluxDB2. You can watch them in a grafana by using the [following tutorial](../grafana/grafana.md).
 
 ???+ tip "Using shortcuts for parameters' names"
     You use `-` instead of `--`.
@@ -149,10 +146,12 @@ Below you find an example for running the Formula with Docker and Pip:
     -e POWERAPI_INPUT_PULLER_DB=test \
     -e POWERAPI_INPUT_PULLER_COLLECTION=prep \
     -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport \
-    -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb \
+    -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb2 \
     -e POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1 \
     -e POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086 \
-    -e POWERAPI_OUTPUT_PUSHER_POWER_DB=power_consumption2 \
+    -e POWERAPI_OUTPUT_PUSHER_POWER_DB=power_consumption \
+    -e POWERAPI_OUTPUT_PUSHER_POWER_ORG=org_test \
+    -e POWERAPI_OUTPUT_PUSHER_POWER_TOKEN=mytoken \
     powerapi/smartwatts-formula
     ```
 
@@ -171,10 +170,12 @@ Below you find an example for running the Formula with Docker and Pip:
     export POWERAPI_INPUT_PULLER_DB=test
     export POWERAPI_INPUT_PULLER_COLLECTION=prep
     export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport
-    export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb
+    export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb2
     export POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1
     export POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086
-    export POWERAPI_OUTPUT_PUSHER_POWER_DB=power_consumption2
+    export POWERAPI_OUTPUT_PUSHER_POWER_DB=power_consumption
+    export POWERAPI_OUTPUT_PUSHER_POWER_ORG=org_test
+    export POWERAPI_OUTPUT_PUSHER_POWER_TOKEN=mytoken
     python -m smartwatts
     ```
 
@@ -197,11 +198,12 @@ Below an example is provided by using MongoDB as Source and InfluxDB as Destinat
   },
   "output": {
     "pusher_power": {
-      "type": "influxdb",
+      "type": "influxdb2",
       "uri": "127.0.0.1",
       "port": 8086,
-      "db": "test_results",
-      "collection": "power_consumption2"
+      "db": "power_consumption",
+      "org": "org_test",
+      "token": "mytoken"
     }
   },
   "cpu-base-freq": 1900,
