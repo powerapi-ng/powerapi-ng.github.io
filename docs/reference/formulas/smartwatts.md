@@ -37,20 +37,20 @@ You can use the following command to install SmartWatts:
 For running the SmartWatts Formula you need: a Source and a Destination, a Sensor that provides `HWPCReports` and a configuration.
 
 ### Source and Destination
-For running SmartWatts we are using MongoDB as Source and InfluxDB 2.0 as Destination as dockers containers.
+For running SmartWatts we are using MongoDB as Source and InfluxDB 2.X as Destination as dockers containers.
 
 To start a MongoDB instance via the command line
 
 ```sh
 docker run -d --name mongo_source -p 27017:27017 mongo
 ```
-And a InfluxDB instance
+And a InfluxDB 2.X instance
 
 ```sh
 docker run -p 8086:8086 -v "/tmp/data:/var/lib/influxdb2" -v "/tmp/config:/etc/influxdb2" influxdb:2
 ```
-???+ tip "Set up influxdb 2 for the first time"
-    If it is the first time that you are using `influxdb 2`, there are several methods (UI, CLI, API) to make a set up. Please check [here](https://docs.influxdata.com/influxdb/v2/get-started/setup/) for more information.  
+???+ tip "Set up influxdb 2.X for the first time"
+    If it is the first time that you are using `influxdb 2.X`, there are several methods (UI, CLI, API) to make a set up. Please check [here](https://docs.influxdata.com/influxdb/v2/get-started/setup/) for more information.  
 
 
 ### Sensor
@@ -109,7 +109,7 @@ In order to run the Formula, you can execute one of the following command lines,
     --sensor-reports-frequency 1000
     ```
 
-In this configuration we are using MongoDB as source and InfluxDB 2.0 as Destination. Some parameters values depend of your hardware. In particular, `cpu-base-freq`. You can obtain this value from `CPU MHz` field by using `lscpu` command.
+In this configuration we are using MongoDB as source and InfluxDB 2.X as Destination. Some parameters values depend of your hardware. In particular, `cpu-base-freq`. You can obtain this value from `CPU MHz` field by using `lscpu` command.
 
 ???+ info "Estimations' Storage"
     Your `PowerReports` will be stored on InfluxDB2. You can watch them in a grafana by using the [following tutorial](../grafana/grafana.md).
