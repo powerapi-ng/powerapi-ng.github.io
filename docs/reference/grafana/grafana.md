@@ -11,12 +11,12 @@ This screenshot shows the visualisation of power consumption of a Web browser an
 In this tutorial, we describe how to connect a Formula to a Grafana instance by using InfluxDB 2.X as Destination.
 Then, we will see how to configure Grafana to visualize the power estimation computed by the Formula.
 
-This tutorial assumes that you know how launch a Formula and a Sensor to compute power estimation and that you have an InfluxDB 2.X and a Grafana instance running on your local machine.
+This tutorial assumes that you know how launch a Formula and a Sensor to compute power estimation and that you have an InfluxDB 2.X and a Grafana instances running on your local machine.
 The InfluxDB 2.X instance listen on port `8086` and Grafana instance listen on port `3000`.
 
 ## Connect Grafana to the InfluxDB 2.X instance
 
-Connect to your Grafana instance and go to the "Data sources" section (in the configuration part of the side bar).
+Connect to your Grafana instance and go to the `"Data sources"`` section (in the configuration part of the side bar).
 
 <img
 src="https://powerapi.org/assets/images/reference/grafana/grafana_home.png"
@@ -26,7 +26,7 @@ Click on the `"Add new data source"` button and select `"InfluxDB"`. Enter:
 
 1. A data source *Name* (here we choose "InfluxDB-2"),
 2. A *Query Language*, i.e., `InfluxQL`
-3. A instance *URL* (`http://localhost:8086`)
+3. An instance *URL* (`http://localhost:8086`)
 4. A *Custom HTTP Header* called `Authorization` with Value `Token <mytoken>`, where `<mytoken>` is the token provided by InfluxDB 2.X for your organization.
 5. A *Database* name, (here we choose `power_consumption`) that is the `db` value of your destination defined in your formula configuration.
 
