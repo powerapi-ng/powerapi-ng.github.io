@@ -1,5 +1,5 @@
 # How to active cgroups V1
-You can enable cgroups V1 by adding `systemd.unified_cgroup_hierarchy=false` and `systemd.legagy_systemd_cgroup_controller=false` as permanent parameters of the kernel. In order to that follow these instructions:
+You can enable cgroups V1 by adding `systemd.unified_cgroup_hierarchy=false` and `systemd.legacy_systemd_cgroup_controller=false` as permanent parameters of the kernel. In order to that follow these instructions:
 
  - Open the GRUB file:
 ```
