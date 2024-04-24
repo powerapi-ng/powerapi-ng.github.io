@@ -9,7 +9,7 @@ sudo nano /etc/default/grub
  - Add to `GRUB_CMDLINE_LINUX_DEFAULT` the two parameters:
 
 ```
-GRUB_CMDLINE_LINUX_DEFAULT="quit splash {==systemd.unified_cgroup_hierarchy=false systemd.legagy_systemd_cgroup_controller=false==}"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash {==systemd.unified_cgroup_hierarchy=false systemd.legacy_systemd_cgroup_controller=false==}"
 
 ```
 
