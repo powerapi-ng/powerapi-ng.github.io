@@ -8,13 +8,13 @@ alt="viz_by_process" width="1000px">
 
 This screenshot shows the visualisation of power consumption of a Web browser and tools used for monitoring (Source, Destination, Sensor, Formula)
 
-In this tutorial, we describe how to connect a Formula to a Grafana instance by using InfluxDB as Destination.
+In this tutorial, we describe how to connect a Formula to a Grafana instance by using InfluxDB 2.X as Destination.
 Then, we will see how to configure Grafana to visualize the power estimation computed by the Formula.
 
-This tutorial assumes that you know how launch a Formula and a Sensor to compute power estimation and that you have an InfluxDB and a Grafana instance running on your local machine.
-The InfluxDB instance listen on port `1234` and Grafana instance listen on port `4321`.
+This tutorial assumes that you know how launch a Formula and a Sensor to compute power estimation and that you have an InfluxDB 2.X and a Grafana instance running on your local machine.
+The InfluxDB 2.X instance listen on port `8086` and Grafana instance listen on port `3000`.
 
-## Connect Grafana to the InfluxDB instance
+## Connect Grafana to the InfluxDB 2.X instance
 
 Connect to your Grafana instance and go to the "Data sources" section (in the configuration part of the side bar).
 
@@ -22,9 +22,16 @@ Connect to your Grafana instance and go to the "Data sources" section (in the co
 src="https://powerapi.org/assets/images/reference/grafana/grafana_home.png"
 alt="grafana_home" width="300px">
 
-Click on the `"Add data source"` button and select `"InfluxDB"`.
+Click on the `"Add new data source"` button and select `"InfluxDB"`. Enter:   
 
-Enter a data source name (here we choose "InfluxDB-1"), the instance URI (`http://localhost:4321`) and the Destination name you use in the file `config_formula.json` then click on the `"Save and test"` button.
+1. A data source *Name* (here we choose "InfluxDB-2"),
+2. A *Query Language*, i.e., `InfluxQL`
+3. A instance *URL* (`http://localhost:8086`)
+4. A *Custom HTTP Header* called `Authorization` with Value `Token <mytoken>`, where `<mytoken>` is the token provided by InfluxDB 2.X for your organization.
+5. A *Database* name, (here we choose `power_consumption`) that is the `db` value of your destination defined in your formula configuration.
+
+Then click on the `"Save & test"` button. *User* and *Password* are not required as we use a token for authentification.  
+
 
 <img
 src="https://powerapi.org/assets/images/reference/grafana/add_db.png"
@@ -32,13 +39,13 @@ alt="add_db" width="400px">
 
 ## Visualize the power consumption on a dashboard in real-time
 
-Go to the `"Create Dashboard"` section on the side bar to create a new dashboard.
+Go to the `"Dashboard"` section on the side bar and select on `New > New dashboard`. Then click on `+ Add visualisation` Then select `influxdb-2` as data source.
 
 <img
 src="https://powerapi.org/assets/images/reference/grafana/add_dashboard.png"
-alt="add_dashboard" width="300px">
+alt="add_dashboard" width="1000px">
 
-Click on the `"add Query"` button and write the following query on the `Query` field to request the power estimations from the InfluxDB measurement:
+Click on the query edition button (the one with a pencil on it) and write the following query on the `Query` field to request the power estimations from the InfluxDB 2.X measurement:
 
 ```sql
 SELECT power FROM "power_consumption" GROUP BY target
