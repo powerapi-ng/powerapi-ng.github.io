@@ -4,7 +4,7 @@ If you want to monitor the energy consumption of your process we have some
 ready-to-use tools
 
 ???+ info "Source and Destination"
-    In order to use any Formula, you need to run a Source and a Destination. The former is used by a Sensor to store metrics. The later allows the Formula to make available the estimations. For starting, you can use [MongoDB](https://hub.docker.com/_/mongo) as Source and [InfluxDB:1.8](https://hub.docker.com/_/influxdb) as Destination by installing them as Docker containers.
+    In order to use any Formula, you need to run a Source and a Destination. The former is used by a Sensor to store metrics. The later allows the Formula to make available the estimations. For starting, you can use [MongoDB](https://hub.docker.com/_/mongo) as Source and [InfluxDB:2.X](https://hub.docker.com/_/influxdb) as Destination by installing them as Docker containers.
     For more details about Sources and Destinations please check this [section](reference/database/sources_destinations.md).
 
 
