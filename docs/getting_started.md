@@ -27,9 +27,9 @@ well as a **comptible Intel** (Sandy Bridge and newer) or **AMD Processor** (Zen
 ## **SmartWatts Formula**
 
 !!! note ""
-    for monitoring the energy consumption of your process
+    for monitoring the power consumption of your process
 
-Smartwatts is made for tracking the energy consumption of processes on a
+Smartwatts is made for tracking the power consumption of processes on a
 machine.
 To install Smartwatts on a baremetal server or a PC run [the following
 script](script/smartwatts_install.sh) in a Terminal.
@@ -42,7 +42,7 @@ well as a **comptible Intel** (Sandy Bridge and newer) or **AMD Processor** (Zen
 
 
 #### CGroups
-If you need to monitor a process or a group of process via SmartWatts, please follow this [tutorial](reference/cgroup/cgroup.md). Please notice that **cgroup V1** is required for HWPC Sensor. If you need to enable this `cgroup` version please follow this [tutorial](reference/cgroup/cgroup_v1_activation.md).    
+If you need to monitor a process or a group of process via SmartWatts by using HWPC Sensor **version 1.2 or older**, you can follow this [tutorial](reference/cgroup/cgroup.md). Please notice that **cgroup V1** is required **only** for HWPC Sensor **version 1.2 or older**. If you need to enable this `cgroup` version please follow this [tutorial](reference/cgroup/cgroup_v1_activation.md).    
 
 <!---
 ## **Jouleit**
