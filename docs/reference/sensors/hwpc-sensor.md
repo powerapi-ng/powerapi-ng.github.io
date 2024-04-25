@@ -8,7 +8,7 @@ power consumption. This technology is only available on **Intel Sandy Bridge**
 architecture or **newer**. However, Intel Core **Tiger Lake**, **Alder Lake** and **Raptor Lake** families for **desktop** and **mobile** **are not supported**. The sensor is also available on **AMD Zen (1,2,34)**. **Power/ARM/RISCV are not supported** architectures.
 
 In particular, it exploits the `perf` API of the **Linux kernel**. It is only available on Linux
-and need to have **root access** to be used. If your are using version **1.2 or older**, sensor requieres **cgroup V1**.
+and need to have **root access** to be used. If you are using version **1.2 or older**, the sensor requires **cgroup V1**.
 
 **The sensor can not be used in a virtual machine**, it must have access (via Linux
 kernel API) to the real CPU register to read performance counter values.
