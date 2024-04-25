@@ -8,7 +8,7 @@ power consumption. This technology is only available on **Intel Sandy Bridge**
 architecture or **newer**. However, Intel Core **Tiger Lake**, **Alder Lake** and **Raptor Lake** families for **desktop** and **mobile** **are not supported**. The sensor is also available on **AMD Zen (1,2,34)**. **Power/ARM/RISCV are not supported** architectures.
 
 In particular, it exploits the `perf` API of the **Linux kernel**. It is only available on Linux
-and need to have **root access** to be used. The sensor also requieres **cgroup V1**.
+and need to have **root access** to be used. If your are using version **1.2 or older**, sensor requieres **cgroup V1**.
 
 **The sensor can not be used in a virtual machine**, it must have access (via Linux
 kernel API) to the real CPU register to read performance counter values.
@@ -44,7 +44,7 @@ The table below shows the different parameters related to the Sensor Configurati
 |`verbose`                 | `bool` (flag) | `v`             | `false`                                            | Verbose or quiet mode                   |
 |`frequency`                 | `int` | `f`             | `1000`                                            | The time in milliseconds between two reports                   |
 |`name`                 | `string` | `n`             | -                                            | Name of the sensor                   |
-|`cgroup_basepath`                 | `string` | `p`             | `/sys/fs/cgroup/perf_event` (`cgroup` V2)       |  The base path for `cgroups`. To use `cgroup` V1 `/sys/fs/cgroup/perf_event` needs to be used as value                   |
+|`cgroup_basepath`                 | `string` | `p`             | `/sys/fs/cgroup` (`cgroup` V2)       |  The base path for `cgroups`. To use `cgroup` V1 `/sys/fs/cgroup/perf_event` needs to be used as value                   |
 |`system`                 | `dict` | `s`             | -                                            | A system group with a monitoring type and a list of system events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
 |`container`                 | `dict` | `c`          | -                                            | A group with a monitoring type and a list of  events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
 |`output`                 | Destination | `r`             | ` csv`                                            | The Destination used as output. The Sensor only supports [MongoDB](../database/sources_destinations.md#mongodb) (`mongodb`) and [CSV](../database/sources_destinations.md#csv) (`csv`) as Destination.                    |
