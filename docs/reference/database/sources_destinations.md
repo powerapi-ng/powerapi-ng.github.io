@@ -62,7 +62,7 @@ The list of accepted parameters are:
 |`port`         | int    | `p`           | None           | N/A| The port of communication. It is not mandatory if it is indicated in the `uri`               |
 |`token`        | string | `k`           | N/A           | Yes | The token for accessing the database. The token owner must have write/read permissions on the bucket               |
 |`org`          | string | `g`           | N/A           | Yes | The name of the organization associated to the bucket               |
-|`tags`         | string | `t`           | N/A           | No | The report tags                         |
+|`tags`         | string | `t`           | N/A           | No | List of metadata keys of the report separated by `,` that will be kept. `sensor` and `target` are always kept as report metadata                           |
 |`name`         | string | `n`           | `"pusher_influxdb2"` | No                                    | The related pusher name                 |
 |`model`        | string | `m`           | `"PowerReport"`  | No | The Report type stored by the database  |
 
@@ -182,7 +182,7 @@ The list of accepted parameters are:
 | ------------- | -----  | ------------- | ------------- | ----------                                    | ------------------------------------    |
 |`uri`          | string | `u`           | `127.0.0.1` | No                                               | The IP address of your Prometheus instance |
 |`port`         | int | `p`              | N/A | Yes                                              | The port of communication                  |
-|`tags`         | string | `t`           | N/A | No                                              | The Report tags separated by `,`                    |
+|`tags`         | string | `t`           | N/A | No                                              | List of metadata keys of the report separated by `,` that will be kept. `sensor` and `target` are always kept as report metadata                    |
 |`metric_name`  | string | `M`           | N/A | Yes                                              | The exposed metric name                    |
 |`metric_description`  | string | `d`    | `"energy consumption"` | No                             | The exposed metric description                    |
 |`name`         | string | `n`           | `"pusher_prom"` | No | The related pusher name                 |
