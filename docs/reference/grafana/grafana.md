@@ -12,7 +12,15 @@ In this tutorial, we describe how to connect a Formula to a Grafana instance by 
 Then, we will see how to configure Grafana to visualize the power estimation computed by the Formula.
 
 This tutorial assumes that you know how launch a Formula and a Sensor to compute power estimation and that you have an InfluxDB 2.X and a Grafana instances running on your local machine.
-The InfluxDB 2.X instance listen on port `8086` and Grafana instance listen on port `3000`.
+The InfluxDB 2.X instance listen on port `8086`.
+
+## Setup Grafana
+
+```sh
+docker run -d -p 3000:3000 grafana/grafana
+```
+
+After the launch, Grafana will be available at http://localhost:3000. On the signin page, enter *admin* for username and password.
 
 ## Connect Grafana to the InfluxDB 2.X instance
 
