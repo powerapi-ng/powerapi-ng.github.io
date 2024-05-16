@@ -32,12 +32,12 @@ well as a **comptible Intel** (Sandy Bridge and newer) or **AMD Processor** (Zen
 Smartwatts is made for tracking the power consumption of processes on a
 machine.
 To install Smartwatts on a baremetal server or a PC run [the following
-script](script/smartwatts_install.sh) in a Terminal.
+script](script/smartwatts_install.sh) in a Terminal. Please notice that you will need [pip](https://pip.pypa.io/en/stable/installation/) or [docker](https://docs.docker.com/engine/install/) in order to use the Formula.
 
 The script explains what it will do and then pauses before it does it.
 
 Please notice that you need a **Linux distribution** in order to use the HWPC Sensor installed by the script as
-well as a **comptible Intel** (Sandy Bridge and newer) or **AMD Processor** (Zen). **Power/ARM/RISCV are not supported** architectures. HWPC Sensor will **not work on a Virtual Machine**. However, you can install the Formula by hand in a Virtual Machine if need it.
+well as a **comptible Intel** (Sandy Bridge and newer) or **AMD Processor** (Zen). You also need [docker](https://docs.docker.com/engine/install/).  **Power/ARM/RISCV are not supported** architectures. HWPC Sensor will **not work on a Virtual Machine**. However, you can install the Formula by hand in a Virtual Machine if need it.
 
 
 
