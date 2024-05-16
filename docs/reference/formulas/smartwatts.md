@@ -47,7 +47,7 @@ docker run -d --name mongo_source -p 27017:27017 mongo
 And a InfluxDB 2.X instance
 
 ```sh
-docker run -p 8086:8086 -v "/tmp/data:/var/lib/influxdb2" -v "/tmp/config:/etc/influxdb2" influxdb:2
+docker run -p 8086:8086 -v "/tmp/powerapi-influx/data:/var/lib/influxdb2" -v "/tmp/powerapi-influx/config:/etc/influxdb2" influxdb:2
 ```
 ???+ tip "Set up influxdb 2.X for the first time"
     If it is the first time that you are using `influxdb 2.X`, there are several methods (UI, CLI, API) to make a set up. Please check [here](https://docs.influxdata.com/influxdb/v2/get-started/setup/) for more information.  
