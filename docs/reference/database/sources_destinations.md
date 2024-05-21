@@ -98,7 +98,7 @@ The list of accepted parameters are:
 | Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
 | ------------- | -----   | ------------- | ------------- | ----------| ------------------------------------                                          |
 |`files`(Source)| string  | `f`           | Empty list           | No | The list of input CSV files with the format file1,file2,file3...              |
-|`directory` (Destination, `uri` for `HWPCSensor`)| string         |`d` (`U` for `HWPCSensor`)          | Current directory           | No |The directory where output CSV files will be written          |
+|`directory` (Destination and `HWPCSensor`)| string         |`d` (`U` for `HWPCSensor`)          | Current directory           | No |The directory where output CSV files will be written          |
 |`name`         | string | `n`           | `"puller_csv"` (Source), `"pusher_csv"` (Destination)| No | The related puller/pusher name. This parameter is not used by `HWPCSensor`                 |
 |`model`        | string | `m`           | `"HWPCReport"` (Source), `"PowerReport"` (Destination)   | No | The Report type stored in CSV files. This parameter is not used by `HWPCSensor`     |
 
