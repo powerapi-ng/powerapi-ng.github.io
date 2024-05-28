@@ -125,7 +125,8 @@ The list of accepted parameters are:
 
 | Parameter     | Type   | CLI shortcut  | Default Value| Mandatory                                       | Description                             |
 | ------------- | -----  | ------------- | -------------| ----------                                      | ------------------------------------    |
-|`port`         | int    | `p`           | N/A | Yes                                               | The port of communication               |
+|`port`         | int    | `P`           | N/A | Yes                                               | The port of communication               |
+|`uri`/ `host`         | int    | `U`           | N/A | Yes                                               | The IP address of the machine running the socket               |
 |`name`         | string | `n`           | `"puller_socket"`| No | The related puller name  |
 |`model`        | string | `m`           | `"HWPCReport"` | No | The Report type managed by the socket |
 
@@ -137,7 +138,8 @@ Below you find an example of configuration excerpt for this kind of Source.
 ```json
 {
   "type": "socket",
-  "port": 8080
+  "port": 8080,
+  "host": "127.0.0.1"
 }
 ```
 
