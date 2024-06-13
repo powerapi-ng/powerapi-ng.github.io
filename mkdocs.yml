@@ -1,7 +1,7 @@
 site_name: "PowerAPI"
 site_description: "PowerAPI"
 repo_url: https://github.com/powerapi-ng/powerapi
-copyright: Copyright &copy; 2023 Inria, University of Lille
+copyright: Copyright &copy; 2024 Inria, University of Lille
 extra_css:
   - stylesheets/extra.css
 
