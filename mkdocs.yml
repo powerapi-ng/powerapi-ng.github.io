@@ -5,6 +5,9 @@ copyright: Copyright &copy; 2024 Inria, University of Lille
 extra_css:
   - stylesheets/extra.css
 
+extra_javascript:
+  - javascripts/citation-dialog.js
+
 markdown_extensions:
   - tables
   - attr_list

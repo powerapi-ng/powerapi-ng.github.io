@@ -13,6 +13,8 @@ and need to have **root access** to be used. If you are using version **1.2 or o
 **The sensor can not be used in a virtual machine**, it must have access (via Linux
 kernel API) to the real CPU register to read performance counter values.
 
+The sensor provides raw values of performance counters as well as `RAPL` values in microjoules.   
+
 ## Installation
 
 === "Docker"

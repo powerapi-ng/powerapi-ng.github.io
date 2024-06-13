@@ -87,3 +87,27 @@
 @media (min-width: 400px) {
   .grid-container { grid-template-columns: repeat(3, 1fr); }
 }
+
+#citation-dialog::backdrop {
+  background-color: darkgray;
+  opacity: 0.75;
+}
+
+#close-citation-dialog-button {
+  cursor: pointer;
+  background-color: transparent;
+  color: salmon;
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+}
+
+#citation-dialog{
+  box-shadow: 5px 10px #888888;
+  border-radius: 4px;
+  border: none;
+}
+
+#citation-dialog header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
