@@ -57,7 +57,17 @@
         {% include "partials/source.html" %}
       </div>
     {% endif %}
-    <button id="export-button" class="md-header__button md-icon .md-clipboard" title="Export Citation"/>
+    <a ref="#" id="export-button" class="md-header__button md-icon" title="Export Citation">
+        Citation
+        {% include "partials/citation-dialog.html" %}
+        {% include ".icons/" ~ icon ~ ".svg" %}
+        {% set icon = config.theme.icon.search or "material/magnify" %}
+    </a>
+    {% block scripts %}
+        <script type="text/javascript">
+          {% include "../docs/javascripts/extra.js" %}
+        </script>
+    {% endblock %}
   </nav>
   {% if "navigation.tabs.sticky" in features %}
     {% if "navigation.tabs" in features %}
