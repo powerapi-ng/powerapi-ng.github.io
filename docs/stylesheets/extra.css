@@ -103,6 +103,10 @@
 
 #copy-citation-dialog-button {
   cursor: pointer;
+  top: auto !important;
+  right: 2% !important;
+  bottom: 5% !important;
+  font-size: 30px !important;
 }
 
 #citation-dialog{
