@@ -57,10 +57,7 @@
         {% include "partials/source.html" %}
       </div>
     {% endif %}
-    <button id="export-button" class="md-header__button md-icon" title="Export Citation">
-      {% set icon = format-quote-close %}
-      {% include ".icons/" ~ icon ~ ".svg" %}
-  </button>
+    <button id="export-button" class="md-header__button md-icon .md-clipboard" title="Export Citation"/>
   <dialog id="citation-dialog">
 
       <header>
