@@ -13,7 +13,7 @@ hide:
 
 Measuring Power Consumption of your Applications.
 
-[Geting started](getting_started){ .md-button .md-button--primary}
+[Geting started](getting_started.md){ .md-button .md-button--primary}
 [:fontawesome-brands-github: GitHub](https://github.com/powerapi-ng/){ .md-button}  
 
   </div>

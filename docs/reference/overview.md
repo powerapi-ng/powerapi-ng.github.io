@@ -17,7 +17,7 @@ cluster of machine.
 
 The Figure below depicts the global architecture of a software PowerMeter in PowerAPI.
 
-![PowerAPI Architecture Overview](../../assets/images/reference/overview/global-architecture.jpg){ width="1000px"}
+![PowerAPI Architecture Overview](../assets/images/reference/overview/global-architecture.jpg){ width="1000px"}
 
 
 <!--img

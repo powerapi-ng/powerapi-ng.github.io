@@ -98,6 +98,11 @@
   background-color: transparent;
   color: salmon;
   box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+  font-size: 20px;
+}
+
+#copy-citation-dialog-button {
+  cursor: pointer;
 }
 
 #citation-dialog{

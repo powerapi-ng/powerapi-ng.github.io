@@ -13,7 +13,7 @@ and need to have **root access** to be used. If you are using version **1.2 or o
 **The sensor can not be used in a virtual machine**, it must have access (via Linux
 kernel API) to the real CPU register to read performance counter values.
 
-The sensor provides raw values of performance counters as well as `RAPL` values in microjoules.   
+The sensor provides raw values of performance counters as well as `RAPL` raw values in microjoules.   
 
 ## Installation
 
@@ -151,7 +151,7 @@ In order to run the Sensor without a configuration file, run HWPC Sensor using o
 
 
 ???+ info "Reports' Storage"
-    Your [`HWPCReports`](../reports/reports.md#hwpc-report) will be stored on MongoDB.
+    Your [`HWPCReports`](../reports/reports.md#hwpc-reports) will be stored on MongoDB.
 
 ???+ tip "CLI parameters' names"
     You can only use shortcuts.
