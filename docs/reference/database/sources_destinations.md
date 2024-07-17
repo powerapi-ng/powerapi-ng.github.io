@@ -185,8 +185,8 @@ The list of accepted parameters are:
 |`uri`          | string | `u`           | `127.0.0.1` | No                                               | The IP address of your Prometheus instance |
 |`port`         | int | `p`              | N/A | Yes                                              | The port of communication                  |
 |`tags`         | string | `t`           | N/A | No                                              | List of metadata keys of the report separated by `,` that will be kept. `sensor` and `target` are always kept as report metadata                    |
-|`metric_name`  | string | `M`           | N/A | Yes                                              | The exposed metric name                    |
-|`metric_description`  | string | `d`    | `"energy consumption"` | No                             | The exposed metric description                    |
+|`metric-name`  | string | `M`           | N/A | Yes                                              | The exposed metric name                    |
+|`metric-description`  | string | `d`    | `"energy consumption"` | No                             | The exposed metric description                    |
 |`name`         | string | `n`           | `"pusher_prom"` | No | The related pusher name                 |
 |`model`        | string | `m`           | `"PowerReport"` | No | The Report type exposed by Prometheus       |
 
@@ -203,6 +203,6 @@ Below you find an example of configuration excerpt for this kind of Destination.
   "type": "prometheus",
   "uri": "127.0.0.1",
   "port": 8080,
-  "metric_name": test
+  "metric-name": "test"
 }
 ```
