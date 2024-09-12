@@ -11,14 +11,14 @@ hide:
 
 # PowerAPI
 
-Measuring Power Consumption of your Applications.
+Measuring power consumption of your applications.
 
-[Geting started](getting_started.md){ .md-button .md-button--primary}
+[Getting started](getting_started.md){ .md-button .md-button--primary}
 [:fontawesome-brands-github: GitHub](https://github.com/powerapi-ng/){ .md-button}  
 
   </div>
 
-![PowerAPI Overview](assets/images/intro/overview.png){ width="900px" align=right .tx-hero__image}
+![PowerAPI overview](assets/images/intro/overview.png){ width="900px" align=right .tx-hero__image}
 
 </div>
 ---
@@ -27,15 +27,15 @@ Measuring Power Consumption of your Applications.
 
 <div class="grid-container" markdown>
   <div class="grid-item card container" markdown>
-:material-lightning-bolt-circle:{ .lg .middle } __PowerMeter as Software__
+:material-lightning-bolt-circle:{ .lg .middle } __PowerMeter as a Software__
 ---
- You don't need any additional physical PowerMeter or hardware in order to estimate power consumption of your applications.
- PowerAPI toolkit allows you to use Software PowerMeters providing power consumption at different granularity levels: *global*, *virtual machine*, *container*, *application*, *processus*, *code*.
+ You do not need any additional physical power-meter or hardware to estimate power consumption of your applications.
+ The PowerAPI toolkit allows you to deploy software-defined power-meters to report power consumption at different granularity levels: *global*, *virtual machine*, *container*, *application*, *processus*, *code*.
   </div>
   <div class="grid-item card container" markdown>
 :fontawesome-solid-arrow-up-right-from-square:{ .lg .middle } __Extensible__
 ---
-The actor based architecture of PowerAPI toolkit enables you to create customized PowerMeters by adding new mechanisms for storing metrics and estimations as well as for computing the latter ones.
+The actor-based architecture of the PowerAPI toolkit enables you to create customized power-meters by adding new plugins for storing metrics and estimations, as well as for computing the latter ones.
   </div>
   <div class="grid-item card container" markdown>
 :material-open-source-initiative:{ .lg .middle } __Open Source__
