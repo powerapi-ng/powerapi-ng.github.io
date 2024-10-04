@@ -1,17 +1,13 @@
 # SmartWatts Formula
 
-SmartWatts is a software-defined power meter based on the PowerAPI toolkit.
-SmartWatts is a configurable software that can estimate the power consumption of
-software in real-time.
-SmartWatts needs to receive several metrics provided by
-[HWPC Sensor](../sensors/hwpc-sensor.md#events) :
+SmartWatts is a Formula, a configurable software that can estimate the power consumption of software in real-time.
+SmartWatts needs to receive several metrics available in [Reports](../report/report.md), [HWPC Sensor](../sensors/hwpc-sensor.md#events) is a Sensor compatible (i.e making the necessary metrics available in HWPC Reports):
 
 - The Running Average Power Limit (`RAPL`)
 - `msr` events (`TSC`, `APERF`, `MPERF`)
 - `core` events which depend on the Processor Architucture
 
-These metrics are then used as inputs for a power model that estimates the power
-consumption of each software.
+These metrics are then used as inputs for a power model that estimates the power consumption of each software, those estimations are recorded in Power Reports.
 The model is calibrated each time a `cpu-error-threshold` is
 reached by learning a new power model with previous reports.
 
@@ -20,7 +16,8 @@ Software-Defined Power Meter for Containers](https://hal.inria.fr/hal-02470128)
 
 ## Installation
 
-You can use the following command to install SmartWatts:
+The default installation is done through Docker container.  
+The different images can be found on the [Docker Hub](https://hub.docker.com/r/powerapi/smartwatts-formula/tags)
 
 === "Docker"
     ```
@@ -36,32 +33,45 @@ You can use the following command to install SmartWatts:
 
 For running the SmartWatts Formula you need: a Source and a Destination, a Sensor that provides `HWPCReports` and a configuration.
 
-### Source and Destination
-For running SmartWatts we are using MongoDB as Source and InfluxDB 2.X as Destination as dockers containers.
+### Input and Output
+As any Formula, SmartWatts needs both inputs and outputs.
+We can choose those among [this list](../database/sources_destinations.md#summary)
 
-To start a MongoDB instance via the command line
-
-```sh
-docker run -d --name mongo_source -p 27017:27017 mongo
+#### MongoDB as input
+MongoDB can be used as input for Reports.
+You can start a MongoDB instance via a Docker container by running:
 ```
-And a InfluxDB 2.X instance
+docker run -d --name mongo_output -p 27017:27017 mongo:latest
+```
+The different images can be found on the [Docker Hub](https://hub.docker.com/_/mongo/tags)
 
+#### InfluxDB as output
+On the other hand, we can use InfluxDB instance as output for our Power Reports
+
+You can start an InfluxDB instance, in version >= 2.0.0 via a Docker container by running:
 ```sh
 docker run -p 8086:8086 -v "/tmp/powerapi-influx/data:/var/lib/influxdb2" -v "/tmp/powerapi-influx/config:/etc/influxdb2" influxdb:2
 ```
+The different images can be found on the [Docker Hub](https://hub.docker.com/_/influxdb/tags?name=2)
+
 ???+ tip "Set up influxdb 2.X for the first time"
     If it is the first time that you are using `influxdb 2.X`, there are several methods (UI, CLI, API) to make a set up. Please check [here](https://docs.influxdata.com/influxdb/v2/get-started/setup/) for more information.  
 
 
 ### Sensor
-[HWPC Sensor](../sensors/hwpc-sensor.md) is used in order to get `HWPCReports`. Start by installing the HWPC Sensor (see
-[here](../sensors/hwpc-sensor.md#installation)) and start it (see
-[here](../sensors/hwpc-sensor.md#usage)).
+[HWPC Sensor](../sensors/hwpc-sensor.md) can be used in order to get `HWPCReports` which provided the necessary information for SmartWatts.
+If you wish to use it : 
+- Install the HWPC Sensor (see [here](../sensors/hwpc-sensor.md#installation))
+- Start the Sensor (see [here](../sensors/hwpc-sensor.md#usage))
 
 
 ### Parameters
 
 Besides the [basic parameters](../formulas/configuration_files.md), the following ones are specific to SmartWatts:
+
+???+ info "Hardware dependent values"
+    Some parameters values depend of your hardware. In particular, `cpu-base-freq`. You can obtain this value from `CPU MHz` field by using `lscpu` command.
+
 
 | Parameter                | Type   | CLI shortcut  | Default Value                                      | Description                             |
 | -------------            | -----  | ------------- | -------------                                      | ------------------------------------    |
@@ -71,7 +81,7 @@ Besides the [basic parameters](../formulas/configuration_files.md), the followin
 |`dram-rapl-ref-event`    | `string` | -           | `"RAPL_ENERGY_DRAM"`  | RAPL event used as reference for the DRAM power models |
 |`cpu-tdp`         | `int` | -           | `125`  | CPU TDP (in Watt)|
 |`cpu-base-clock`         | `int` | -           | `100`  | CPU base clock (in MHz) |
-|`cpu-base-freq`     | `int` | -           | `2100`  | CPU base frequency (in MHz) |
+|`cpu-base-freq`     | `int` | -           | `2100`  | CPU base frequency (in MHz), depend of your hardware. You can obtain this value from `CPU MHz` field by using `lscpu` command. |
 |`cpu-error-threshold`    | `float` | -           | `2.0`  | Error threshold for the CPU power models (in Watts) |
 |`dram-error-threshold`    | `float` | -           | `2.0`  | Error threshold for the DRAM power models (in Watts) |
 |`learn-min-samples-required`    | `int` | -           | `10`  | Minimum amount of samples required before trying to learn a power model |
@@ -109,7 +119,7 @@ In order to run the Formula, you can execute one of the following command lines,
     --sensor-reports-frequency 1000
     ```
 
-In this configuration we are using MongoDB as source and InfluxDB 2.X as Destination. Some parameters values depend of your hardware. In particular, `cpu-base-freq`. You can obtain this value from `CPU MHz` field by using `lscpu` command.
+In this configuration we are using MongoDB as source and InfluxDB 2.X as Destination. 
 
 ???+ info "Estimations' Storage"
     Your `PowerReports` will be stored on InfluxDB2. You can watch them in a grafana by using the [following tutorial](../grafana/grafana.md).
