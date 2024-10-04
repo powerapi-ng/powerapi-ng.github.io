@@ -4,42 +4,54 @@ HardWare Performance Counter (HWPC) Sensor is a tool that monitors the Intel CPU
 performance counter and the power consumption of CPU.
 
 HWPC Sensor uses the RAPL (Running Average Power Limit) technology to monitor CPU
-power consumption. This technology is only available on **Intel Sandy Bridge**
-architecture or **newer**. However, Intel Core **Tiger Lake**, **Alder Lake** and **Raptor Lake** families for **desktop** and **mobile** **are not supported**. The sensor is also available on **AMD Zen (1,2,34)**. **Power/ARM/RISCV are not supported** architectures.
+power consumption. The following table gives a glimpse of RAPL support regarding
+most common architectures:  
 
-In particular, it exploits the `perf` API of the **Linux kernel**. It is only available on Linux
-and need to have **root access** to be used. If you are using version **1.2 or older**, the sensor requires **cgroup V1**.
+???+ info "HWPC Sensor PreRequisites"
+    `lscpu` will give you the necessary information about your CPU Architecture 
 
-**The sensor can not be used in a virtual machine**, it must have access (via Linux
-kernel API) to the real CPU register to read performance counter values.
+| Architecture | RAPL Supported |
+|--------------|----------------|
+| Intel Tiger Lake | :material-close: Not Supported |
+| Intel Alder Lake | :material-close: Not Supported |
+| Intel Raptor Lake | :material-close: Not Supported |
+| Power / ARM / RISCV | :material-close: Not Supported |
+| AMD Zen (1, 2, 3, 4) | :material-check: Supported |
+| Intel Sandy Bridge and [newer](https://en.wikipedia.org/wiki/List_of_Intel_Core_processors#Core_i_(2nd_gen)) (except for above mentions) | :material-check: Supported |
+
+???+ info "HWPC Sensor PreRequisites"
+    In addition of a supported architecture, there is some pre-requisites:
+    - Using a Linux distribution exposing the [perf](https://perf.wiki.kernel.org/index.php/Main_Page) api  
+    - Using Cgroup version 1 when using version 1.2 or older. See [this section](../cgroup/cgroup_v1_activation.md) about its configuration 
+    - Deploying on a physical device as the HWPC Sensor must have access to the real CPU register
+
+![HWPC Sensor Overview](../../assets/images/reference/sensors/hwpc-sensor-overview.svg){ width="1000px"}
+
+## Sensor outputs
 
 The sensor provides raw values of performance counters as well as `RAPL` raw values in microjoules.   
 
 ## Installation
 
+The default installation is done through Docker container.  
+The different images can be found on the [Docker Hub](https://hub.docker.com/r/powerapi/hwpc-sensor/tags)
+
+Here is a sample to deploy the latest image version available.
 === "Docker"
 
     ```bash
-    docker pull powerapi/hwpc-sensor
+    docker pull powerapi/hwpc-sensor:latest
+
     ```
 
 ## Usage
 
-For running the sensor, a Source and a configuration defined via a file or CLI parameters are required.
+An HWPC Sensor instance needs several parameteres to be configured in order to be used.  
+The following tabs gives a complete overview of available parameters, along with their default values and description.
 
-### Source
+### Global parameters
 
-For running HWPC Sensor we are using MongoDB as Source as a docker container.
-
-To start a MongoDB instance via the command line
-
-```
-docker run -d --name mongo_destination -p 27017:27017 mongo
-```
-
-### Root Parameters
-
-The table below shows the different parameters related to the Sensor Configuration:
+The table below shows the different parameters related to the Sensor global configuration, nested objects (system, container, output) are described in dedicated sections below:
 
 | Parameter                | Type   | CLI shortcut  | Default Value                                      | Description                             |
 | -------------            | -----  | ------------- | -------------                                      | ------------------------------------    |
@@ -49,16 +61,16 @@ The table below shows the different parameters related to the Sensor Configurati
 |`cgroup_basepath`                 | `string` | `p`             | `/sys/fs/cgroup` (`cgroup` V2)       |  The base path for `cgroups`. To use `cgroup` V1 `/sys/fs/cgroup/perf_event` needs to be used as value                   |
 |`system`                 | `dict` | `s`             | -                                            | A system group with a monitoring type and a list of system events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
 |`container`                 | `dict` | `c`          | -                                            | A group with a monitoring type and a list of  events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
-|`output`                 | Destination | `r`             | ` csv`                                            | The Destination used as output. The Sensor only supports [MongoDB](../database/sources_destinations.md#mongodb) (`mongodb`) and [CSV](../database/sources_destinations.md#csv) (`csv`) as Destination.                    |
-
-
+|`output`                 | Output | `r`             | ` csv`                                            | The [output information](hwpc-sensor.md#output), the Sensor only supports [MongoDB](../database/sources_destinations.md#mongodb) (`mongodb`) and [CSV](../database/sources_destinations.md#csv) (`csv`) as output.                    |
 
 ### `system` and `container` Groups Parameters
 
+The table below shows the different parameters related to the Sensor `system` and `container` configuration fields:
+
 | Parameter                | Type   | CLI shortcut  | Default Value                                      | Description                             |
 | -------------            | -----  | ------------- | -------------                                      | ------------------------------------    |
-|`events`     | `string`   | `e`           | -                                             | List of events to be monitored. As CLI parameter, each event is indicated with `e`                    |
-|`monitoring_type`     | `string` (`MONITOR_ONE_CPU_PER_SOCKET`, `MONITOR_ALL_CPU_PER_SOCKET` )    | `o` (flag)          |  `MONITOR_ALL_CPU_PER_SOCKET`                                             | The monitoring type. If `o` is specified as CLI parameter, `MONITOR_ONE_CPU_PER_SOCKET` is used as type   
+|`events`     | `string`   | `e`           | -                                             | List of events to be monitored. As CLI parameter, each event is indicated with `e`. The structure of events is given [below](hwpc-sensor.md#events)                    |
+|`monitoring_type`     | `string` (`MONITOR_ONE_CPU_PER_SOCKET`, `MONITOR_ALL_CPU_PER_SOCKET` )    | `o` (flag)          |  `MONITOR_ALL_CPU_PER_SOCKET`                                             | The monitoring type. If `o` is specified as CLI parameter, `MONITOR_ONE_CPU_PER_SOCKET` is used as type  |
 
 ### Events
 
@@ -68,13 +80,42 @@ Table below depicts the different group events for compatible Intel and AMD arch
 | -------------               | -----   | ------------- |
 |Intel Sandy Bridge and newer, AMD Zen 2  | `rapl`  | `RAPL_ENERGY_PKG`, `RAPL_ENERGY_DRAM`|
 |Intel Sandy Bridge and newer, AMD Zen 2  | `msr`  | `TSC`, `APERF`, `MPERF`|
-|Intel Skylake, Whiskey Lake, Coffe Lake| `core` | `CPU_CLK_THREAD_UNHALTED:REF_P`, `CPU_CLK_THREAD_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
+|Intel Skylake, Whiskey Lake, Coffee Lake| `core` | `CPU_CLK_THREAD_UNHALTED:REF_P`, `CPU_CLK_THREAD_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
 |Intel Sandy Bridge, Comet Lake | `core` | `CPU_CLK_UNHALTED:REF_P`, `CPU_CLK_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
 |AMD Zen 2 | `core`| `CYCLES_NOT_IN_HALT`, `RETIRED_INSTRUCTIONS` , `RETIRED_UOPS`|
 |AMD Zen 3 | `core`| `CYCLES_NOT_IN_HALT`, `RETIRED_INSTRUCTIONS` , `RETIRED_OPS`|
 
+### Output
+
+As precised, two kinds of outputs are supported, MongoDB and CSV files.
+
+#### MongoDB Output
+
+Table below depicts the different parameters for MongoDB type output with HWPC Sensor:  
+| Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             Description                             |
+| ------------- | -----  | ------------- | ------------- | ----------                                              | ------------------------------------    |
+| `uri`          | string | `U`           | N/A | Yes                                                       | The IP address of your MongoDB instance |
+| `database`          | string | `D`            | N/A | Yes                                                       | The name of your database               |
+| `collection`   | string | `HWPCSensor`          | N/A | Yes                                                       | The name of the collection inside `db`  |
+
+You can start a MongoDB instance via a Docker container by running:
+
+```
+docker run -d --name mongo_output -p 27017:27017 mongo:latest
+```
+
+The different images can be found on the [Docker Hub](https://hub.docker.com/_/mongo/tags)
+
+#### CSV Output
+
+Table below depicts the different parameters for CSV type output:  
+| Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
+| ------------- | -----   | ------------- | ------------- | ----------| ------------------------------------                                          |
+| `directory` | string         | `U`           | "." (Current directory)           | No |The directory where output CSV files will be written          |
 
 ### Running the Sensor with a Configuration File
+
+The following snippet describe the configuration of an HWPC Sensor instance, writting reports to a MongoDB intance as output:
 
 ```json
 {
@@ -109,8 +150,7 @@ Table below depicts the different group events for compatible Intel and AMD arch
 }
 ```
 
-Once you have your configuration file, run HWPC Sensor using one of the following command lines, depending on the installation you use:
-
+The following CLI command shows how to use this configuration file in the deployment of an HWPC Sensor container :
 === "Docker"
 
     ```sh
@@ -128,8 +168,7 @@ Once you have your configuration file, run HWPC Sensor using one of the followin
 
 ### Running the Sensor via CLI parameters
 
-In order to run the Sensor without a configuration file, run HWPC Sensor using one of the following command lines, depending on the installation you use:
-
+The following CLI command shows how to launch an instance of HWPC Sensor with the same configuration as [above](hwpc-sensor.md#running-the-sensor-with-a-configuration-file)
 === "Docker"
 
     ```sh
@@ -148,8 +187,6 @@ In order to run the Sensor without a configuration file, run HWPC Sensor using o
     -s "msr" -e "TSC" -e "APERF" -e "MPERF" \
     -c "core" -e "CPU_CLK_THREAD_UNHALTED:REF_P" -e "CPU_CLK_THREAD_UNHALTED:THREAD_P" -e "LLC_MISSES" -e "INSTRUCTIONS_RETIRED"
     ```
-
-
 
 ???+ info "Reports' Storage"
     Your [`HWPCReports`](../reports/reports.md#hwpc-reports) will be stored on MongoDB.
