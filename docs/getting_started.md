@@ -46,8 +46,7 @@ STRESS_PID="$(pgrep stress-ng)"
 
 ## Which components to get a complete stack  
 
-If you wish to get started as soon as possible, the following docker-compose 
-file will allow you to deploy the following elements :  
+If you wish to get started as soon as possible, the following archive will allow you to deploy the following elements :  
 
 1. A MongoDB instance to store the [Sensor](./reference/sensors/hwpc-sensor.md)
 Reports
@@ -70,15 +69,20 @@ instance
 
 ## Preparation
 
+You can download the archive using :   
+
+```sh 
+wget "https://github.com/powerapi-ng/powerapi-ng.github.io/tree/master/examples/powerapi-stack.zip"
+unzip powerapi-stack.zip && cd powerapi-stack
+```
+
+From this archive, you will have all the necessary files to get started, let us break down each elements.  
+
 ### Docker-Compose 
 
-You can download it through:  
-
-```sh
-wget "https://raw.githubusercontent.com/powerapi-ng/powerapi-ng.github.io/refs/heads/master/examples/docker-compose.yml"
-``` 
-
 ```yaml
+# ./docker-compose.yaml
+
 version: '3.8'
 services:
   mongodb:
@@ -163,13 +167,11 @@ networks:
 As described in the [HWPC-Sensor Documentation](./reference/sensors/hwpc-sensor.md#global-parameters) 
 several parameters can be set, both globally and for specific Groups monitored. 
 The provided docker-compose.yaml file use configuration files to set those parameters.  
-An example configuration file for HWPC-Sensor is given below, it can also be downloaded through:  
-
-```sh
-wget "https://raw.githubusercontent.com/powerapi-ng/powerapi-ng.github.io/refs/heads/master/examples/hwpc-sensor-config.json"
-```
+An example configuration file for HWPC-Sensor is given below and available in the archive presented [above](./getting_started.md#preparation) :  
 
 ```json
+# ./hwpc-sensor-config.json
+
 {
   "verbose": false,
   "frequency": 1000,
@@ -197,13 +199,11 @@ wget "https://raw.githubusercontent.com/powerapi-ng/powerapi-ng.github.io/refs/h
 As described in the [SmartWatts Documentation](./reference/formulas/smartwatts.md#global-parameters) 
 several parameters can be set for the Formulas. 
 The provided docker-compose.yaml file use configuration files to set those parameters.  
-An example configuration file for SmartWatts is given below, it can also be downloaded through:  
-
-```sh
-wget "https://raw.githubusercontent.com/powerapi-ng/powerapi-ng.github.io/refs/heads/master/examples/smartwatts-config.json"
-```
+An example configuration file for SmartWatts is given below and available in the archive presented [above](./getting_started.md#preparation) :  
 
 ```json
+# ./smartwatts-config.json
+
 {
   "cpu_tdp": 125,
   "cpu_base_clock": 100,
@@ -224,7 +224,7 @@ wget "https://raw.githubusercontent.com/powerapi-ng/powerapi-ng.github.io/refs/h
     "token": "INFLUXDB_API_TOKEN_GENERATED"
   }
 }
-```  
+```
 
 ### Grafana Configuration
 
@@ -233,17 +233,19 @@ it should also know our dashboard file in order to visualize it.
 
 #### Filesystem structure 
 
-Create the following filesystem structure in the current working directory :  
+The following filesystem structure is presented in the archive presented [above](./getting_started.md#preparation) :   :  
 
 
 ```sh
-| grafana_config/
-|--provisioning/
-|----dashboards/
-|------dashboard.yaml
-|------reports.json
-|----datasources/
-|------datasource.yaml
+|powerapi-stack/
+|--grafana_config/
+|----provisioning/
+|------dashboards/
+|--------dashboard.yaml
+|--------reports.json
+|------datasources/
+|--------datasource.yaml
+|...
 ```
 
 #### Datasource file
@@ -251,7 +253,7 @@ Create the following filesystem structure in the current working directory :
 The following file gives information to Grafana to use InfluxDB2 as Datasource:
 
 ```yaml
-# datasource.yaml
+# ./grafana_config/provisioning/datasources/datasource.yaml
 
 apiVersion: 1
 datasources:
@@ -279,7 +281,7 @@ The following files give information to Grafana:
 2. How to configure our Dashboards
 
 ```yaml
-# dashboard.yaml
+# ./grafana_config/provisioning/dashboards/dashboard.yaml
 
 apiVersion: 1
 providers:
@@ -290,8 +292,8 @@ providers:
       path: /etc/grafana/provisioning/dashboards
 ```
 
-```yaml
-# reports.json
+```json
+# ./grafana_config/provisioning/dashboards/reports.json
 
 {
   "id": null,
@@ -309,29 +311,29 @@ providers:
 
 ## Turn the key 
 
-Once all set, you shall be able to run the complete stack with :  
+Once all set, you shall be able to initiate the stack with :  
 
 ```sh
 docker-compose -d up
 ```
 
-This first spin-up before deleting containers will create the DBs and the Sensor.  
+This first spin-up will create the DBs and the Sensor.  
 Both SmartWatts Formulas and Grafana will struggle as they need an InfluxDB API key.  
 To resolve this, you can run :  
 ```sh
 influx auth create --org powerapi_org --read-buckets --write-buckets
 ```
 
-You will obtain a token to change in the `smartwatts-config.json` file and in `grafana_config/provisioning/datasources/datasource.yaml`  
+You will obtain a token to replace the *INFLUXDB_API_TOKEN_GENERATED* placeholder in the `smartwatts-config.json` file and in `grafana_config/provisioning/datasources/datasource.yaml`  
 
 Once both changed, another `docker-compose -d up` should do the trick to start the
 remaining components.  
 
 Thus, once deployed, you can access [Grafana](https://localhost:3000) by default
-on http://localhost:8080 with its basic credentials : admin/admin.
+on http://localhost:8080 with its basic credentials : `admin/admin`.
 
-In the dashboards sections, basic dashboards will be fueled with PowerReports 
+In the dashboards sections, basic dashboards will be provisionned with PowerReports 
 from SmartWatts providing real time insights about you consumption.  
 
 Feel free to try yo make your own visualization and take a look at 
-[this documentation](./reference/grafana/grafana.md) for further details.
+[this documentation](./reference/grafana/grafana.md) for further details.  
