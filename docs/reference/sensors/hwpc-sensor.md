@@ -3,6 +3,9 @@
 HardWare Performance Counter (HWPC) Sensor is a tool that monitors the Intel CPU
 performance counter and the power consumption of CPU.
 
+The figure below depicts how Sensor works in general :  
+![HWPC Sensor Overview](../../assets/images/reference/sensors/PowerAPI_HWPCSensorOverview.drawio.svg){ width="1000px"}
+
 HWPC Sensor uses the RAPL (Running Average Power Limit) technology to monitor CPU
 power consumption. The following table gives a glimpse of RAPL support regarding
 most common architectures:  
@@ -25,7 +28,6 @@ most common architectures:
     - Using Cgroup version 1 when using version 1.2 or older. See [this section](../cgroup/cgroup_v1_activation.md) about its configuration 
     - Deploying on a physical device as the HWPC Sensor must have access to the real CPU register
 
-![HWPC Sensor Overview](../../assets/images/reference/sensors/hwpc-sensor-overview.svg){ width="1000px"}
 
 ## Sensor outputs
 
