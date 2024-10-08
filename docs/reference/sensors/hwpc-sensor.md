@@ -41,14 +41,13 @@ The different images can be found on the [Docker Hub](https://hub.docker.com/r/p
 Here is a sample to deploy the latest image version available.
 === "Docker"
 
-    ```bash
+    ```sh
     docker pull powerapi/hwpc-sensor:latest
-
     ```
 
 ## Usage
 
-An HWPC Sensor instance needs several parameteres to be configured in order to be used.  
+An HWPC Sensor instance needs several parameters to be configured in order to be used.  
 The following tabs gives a complete overview of available parameters, along with their default values and description.
 
 ### Global parameters
@@ -63,7 +62,7 @@ The table below shows the different parameters related to the Sensor global conf
 |`cgroup_basepath`                 | `string` | `p`             | `/sys/fs/cgroup` (`cgroup` V2)       |  The base path for `cgroups`. To use `cgroup` V1 `/sys/fs/cgroup/perf_event` needs to be used as value                   |
 |`system`                 | `dict` | `s`             | -                                            | A system group with a monitoring type and a list of system events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
 |`container`                 | `dict` | `c`          | -                                            | A group with a monitoring type and a list of  events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
-|`output`                 | Output | `r`             | ` csv`                                            | The [output information](hwpc-sensor.md#output), the Sensor only supports [MongoDB](../database/sources_destinations.md#mongodb) (`mongodb`) and [CSV](../database/sources_destinations.md#csv) (`csv`) as output.                    |
+|`output`                 | `dict`| `r`             |  { "type": "csv", "directory": "." } | The [output information](hwpc-sensor.md#output), the Sensor only supports [MongoDB](./hwpc-sensor.md#mongodb-output) (`mongodb`), [CSV](./hwpc-sensor.md#csv-output) (`csv`), [socket](./hwpc-sensor.md#socket-output) and [FileDB](./hwpc-sensor.md#filedb-output) as output.                    |
 
 ### `system` and `container` Groups Parameters
 
@@ -72,7 +71,7 @@ The table below shows the different parameters related to the Sensor `system` an
 | Parameter                | Type   | CLI shortcut  | Default Value                                      | Description                             |
 | -------------            | -----  | ------------- | -------------                                      | ------------------------------------    |
 |`events`     | `string`   | `e`           | -                                             | List of events to be monitored. As CLI parameter, each event is indicated with `e`. The structure of events is given [below](hwpc-sensor.md#events)                    |
-|`monitoring_type`     | `string` (`MONITOR_ONE_CPU_PER_SOCKET`, `MONITOR_ALL_CPU_PER_SOCKET` )    | `o` (flag)          |  `MONITOR_ALL_CPU_PER_SOCKET`                                             | The monitoring type. If `o` is specified as CLI parameter, `MONITOR_ONE_CPU_PER_SOCKET` is used as type  |
+|`monitoring_type`     | `string` ( **one of** `MONITOR_ONE_CPU_PER_SOCKET` **or** `MONITOR_ALL_CPU_PER_SOCKET` )    | `o` (flag)          |  `MONITOR_ALL_CPU_PER_SOCKET`                                             | The monitoring type. If `o` is specified as CLI parameter, `MONITOR_ONE_CPU_PER_SOCKET` is used as type  |
 
 ### Events
 
@@ -94,26 +93,28 @@ As precised, two kinds of outputs are supported, MongoDB and CSV files.
 #### MongoDB Output
 
 Table below depicts the different parameters for MongoDB type output with HWPC Sensor:  
+
 | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             Description                             |
 | ------------- | -----  | ------------- | ------------- | ----------                                              | ------------------------------------    |
 | `uri`          | string | `U`           | N/A | Yes                                                       | The IP address of your MongoDB instance |
 | `database`          | string | `D`            | N/A | Yes                                                       | The name of your database               |
-| `collection`   | string | `HWPCSensor`          | N/A | Yes                                                       | The name of the collection inside `db`  |
-
-You can start a MongoDB instance via a Docker container by running:
-
-```
-docker run -d --name mongo_output -p 27017:27017 mongo:latest
-```
-
-The different images can be found on the [Docker Hub](https://hub.docker.com/_/mongo/tags)
+| `collection`   | string | `C`          | N/A | Yes                                                       | The name of the collection inside `db`  |
 
 #### CSV Output
 
 Table below depicts the different parameters for CSV type output:  
+
 | Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
 | ------------- | -----   | ------------- | ------------- | ----------| ------------------------------------                                          |
 | `directory` | string         | `U`           | "." (Current directory)           | No |The directory where output CSV files will be written          |
+
+#### Socket Output
+
+[!TODO]
+
+#### FileDB Output  
+
+[!TODO]
 
 ### Running the Sensor with a Configuration File
 
@@ -152,7 +153,8 @@ The following snippet describe the configuration of an HWPC Sensor instance, wri
 }
 ```
 
-The following CLI command shows how to use this configuration file in the deployment of an HWPC Sensor container :
+The following CLI command shows how to use this configuration file in the deployment of an HWPC Sensor container :  
+
 === "Docker"
 
     ```sh

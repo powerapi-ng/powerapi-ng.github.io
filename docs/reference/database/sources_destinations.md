@@ -1,19 +1,23 @@
-# Sources and Destinations
+# Storage Options
 
-A PowerAPI Formula uses Sources and Destinations in order to retrieve metrics and store estimations.
+Different storage options are available to serve different purpose both for [Sensors](../overview.md#Sensor) and [Formulas](../overview.md#Formula).  
 
-For each Source/Destination the parameters to specify are different. For each one of them,
-its parameters are specified in following sections.
+Storage is needed to save reports produced by each components.  
+- Sensors store their usage reports  
+- Formulas retrieve usage reports and store energy consumption reports  
+- Visualization tools or individuals need to access reports for analysis  
 
 ## Summary
-| Name     | Source   | Destination  | CLI `input`/`ouput` parameter value                                      | JSON `type` tag parameter value                             |
-| ------------- | -----  | ------------- | -------------                                      | ------------------------------------    |
-| MongoDB | Yes  | Yes | mongodb                                      | mongodb    |
-| InfluxDB2 | No  | Yes | influxdb2                                      | influxdb2    |
-| CSV | Yes  | Yes | csv                                      | csv    |
-| Socket | Yes  | No | socket                                      | socket    |
-| File Database | Yes  | Yes | filedb                                      | filedb    |
-| Prometheus | No  | Yes | prometheus                                      | prometheus    |
+
+The following table defines the existing storage options for Sensors usage reports :  
+
+| Name      | CLI `ouput` parameter value  | JSON `type` tag parameter value|
+| ------------ | --------------------------------------| -------------------------------------------|
+| MongoDB | mongodb | mongodb |
+| CSV |  csv | csv |
+| Socket | socket | socket    |
+| File Database | filedb | filedb |
+
 
 ## MongoDB
 

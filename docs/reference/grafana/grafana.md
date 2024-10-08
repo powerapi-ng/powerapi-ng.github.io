@@ -6,9 +6,9 @@ Here it is explained how to visualize the power estimation computed by a Formula
 src="https://powerapi.org/assets/images/reference/grafana/viz_by_process.png"
 alt="viz_by_process" width="1000px">
 
-This screenshot shows the visualisation of power consumption of a Web browser and tools used for monitoring (Source, Destination, Sensor, Formula)
+This screenshot shows the visualisation of power consumption of a Web browser and tools used for monitoring (Databases, Sensor, Formula)
 
-In this tutorial, we describe how to connect a Formula to a Grafana instance by using InfluxDB 2.X as Destination.
+In this tutorial, we describe how to connect a Formula to a Grafana instance by using InfluxDB 2.X as output for PowerReport.
 Then, we will see how to configure Grafana to visualize the power estimation computed by the Formula.
 
 This tutorial assumes that you know how launch a Formula and a Sensor to compute power estimation and that you have an InfluxDB 2.X and a Grafana instances running on your local machine.
