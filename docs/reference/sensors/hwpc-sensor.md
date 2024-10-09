@@ -35,7 +35,7 @@ The sensor provides raw values of performance counters as well as `RAPL` raw val
 
 ## Installation
 
-The default installation is done through Docker container.  
+The default installation is done through a Docker container.  
 The different images can be found on the [Docker Hub](https://hub.docker.com/r/powerapi/hwpc-sensor/tags)
 
 Here is a sample to deploy the latest image version available.
@@ -61,7 +61,7 @@ The table below shows the different parameters related to the Sensor global conf
 |`cgroup_basepath`                 | `string` | `p`             | `/sys/fs/cgroup` (`cgroup` V2)       |  The base path for `cgroups`. To use `cgroup` V1 `/sys/fs/cgroup/perf_event` needs to be used as value                   |
 |`system`                 | `dict` | `s`             | -                                            | A system group with a monitoring type and a list of system events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
 |`container`                 | `dict` | `c`          | -                                            | A group with a monitoring type and a list of  events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
-|`output`                 | `dict`| `r`             |  { "type": "csv", "directory": "." } | The [output information](hwpc-sensor.md#output), the Sensor only supports [MongoDB](./hwpc-sensor.md#mongodb-output) (`mongodb`), [CSV](./hwpc-sensor.md#csv-output) (`csv`), [socket](./hwpc-sensor.md#socket-output) and [FileDB](./hwpc-sensor.md#filedb-output) as output.                    |
+|`output`                 | `dict`| `r`             |  { "type": "csv", "directory": "." } | The [output information](hwpc-sensor.md#output), the Sensor only supports [MongoDB](./hwpc-sensor.md#mongodb-output) (`mongodb`), [CSV](./hwpc-sensor.md#csv-output) (`csv`) and [socket](./hwpc-sensor.md#socket-output) as output.                    |
 
 ### `system` and `container` Groups Parameters
 
@@ -95,9 +95,9 @@ Table below depicts the different parameters for MongoDB type output with HWPC S
 
 | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             Description                             |
 | ------------- | -----  | ------------- | ------------- | ----------                                              | ------------------------------------    |
-| `uri`          | string | `U`           | N/A | Yes                                                       | The IP address of your MongoDB instance |
-| `database`          | string | `D`            | N/A | Yes                                                       | The name of your database               |
-| `collection`   | string | `C`          | N/A | Yes                                                       | The name of the collection inside `db`  |
+| `uri`          | string | `U`           | - | Yes                                                       | The IP address of your MongoDB instance |
+| `database`          | string | `D`            | - | Yes                                                       | The name of your database               |
+| `collection`   | string | `C`          | - | Yes                                                       | The name of the collection inside `db`  |
 
 #### CSV Output
 
@@ -109,89 +109,92 @@ Table below depicts the different parameters for CSV type output:
 
 #### Socket Output
 
-[!TODO]
+Table below depicts the different parameters for Socket type output:  
+
+| Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
+| ------------- | -----   | ------------- | ------------- | ----------| ------------------------------------                                          |
+| `uri` | string         | `U`           | -           | Yes | The IP address of the machine running the socket         |
+| `port` | int         | `P`           | -           | Yes | The port of communication        |
 
 ### Running the Sensor with a Configuration File
 
 The following snippets describe the configuration file of an HWPC Sensor instance, two examples are provided for both possible outputs:
 
-=== "MongoDB Output"
-
-```json
-# config-file.json
-
-{
-  "name": "sensor",
-  "verbose": true,
-  "frequency": 500,
-  "output": {
-    "type": "mongodb",
-    "uri": "mongodb://127.0.0.1",
-    "database": "db_sensor",
-    "collection": "report_0"
-  },
-  "system": {
-    "rapl": {
-      "events": ["RAPL_ENERGY_PKG"],
-      "monitoring_type": "MONITOR_ONE_CPU_PER_SOCKET"
-    },
-    "msr": {
-      "events": ["TSC", "APERF", "MPERF"]
-    }
-  },
-  "container": {
-    "core": {
-      "events": [
-        "CPU_CLK_THREAD_UNHALTED:REF_P",
-        "CPU_CLK_THREAD_UNHALTED:THREAD_P",
-        "LLC_MISSES",
-        "INSTRUCTIONS_RETIRED"
-      ]
-    }
-  }
-}
-```
-
-=== "CSV Output"
-
-```json
-# config-file.json
-
-{
-  "name": "sensor",
-  "verbose": true,
-  "frequency": 500,
-  "output": {
-    "type": "csv",
-    "directory": "hwpc_reports"
-  },
-  "system": {
-    "rapl": {
-      "events": ["RAPL_ENERGY_PKG"],
-      "monitoring_type": "MONITOR_ONE_CPU_PER_SOCKET"
-    },
-    "msr": {
-      "events": ["TSC", "APERF", "MPERF"]
-    }
-  },
-  "container": {
-    "core": {
-      "events": [
-        "CPU_CLK_THREAD_UNHALTED:REF_P",
-        "CPU_CLK_THREAD_UNHALTED:THREAD_P",
-        "LLC_MISSES",
-        "INSTRUCTIONS_RETIRED"
-      ]
-    }
-  }
-}
-```
+???+ example "Examples using a Configuration File"
+    
+    === "MongoDB Output"
+        
+        ```json hl_lines="7 8 9 10" title="config_file.json"
+        {
+          "name": "sensor",
+          "verbose": true,
+          "frequency": 500,
+          "output": {
+            "type": "mongodb",
+            "uri": "mongodb://127.0.0.1",
+            "database": "db_sensor",
+            "collection": "report_0"
+          },
+          "system": {
+            "rapl": {
+              "events": ["RAPL_ENERGY_PKG"],
+              "monitoring_type": "MONITOR_ONE_CPU_PER_SOCKET"
+            },
+            "msr": {
+              "events": ["TSC", "APERF", "MPERF"]
+            }
+          },
+          "container": {
+            "core": {
+              "events": [
+                "CPU_CLK_THREAD_UNHALTED:REF_P",
+                "CPU_CLK_THREAD_UNHALTED:THREAD_P",
+                "LLC_MISSES",
+                "INSTRUCTIONS_RETIRED"
+              ]
+            }
+          }
+        }
+        ```
+    
+    === "CSV Output"
+        
+        ```json hl_lines="6 7" title="config_file.json"
+        {
+          "name": "sensor",
+          "verbose": true,
+          "frequency": 500,
+          "output": {
+            "type": "csv",
+            "directory": "hwpc_reports"
+          },
+          "system": {
+            "rapl": {
+              "events": ["RAPL_ENERGY_PKG"],
+              "monitoring_type": "MONITOR_ONE_CPU_PER_SOCKET"
+            },
+            "msr": {
+              "events": ["TSC", "APERF", "MPERF"]
+            }
+          },
+          "container": {
+            "core": {
+              "events": [
+                "CPU_CLK_THREAD_UNHALTED:REF_P",
+                "CPU_CLK_THREAD_UNHALTED:THREAD_P",
+                "LLC_MISSES",
+                "INSTRUCTIONS_RETIRED"
+              ]
+            }
+          }
+        }
+        ```
 
 The following CLI command shows how to use this configuration file in the deployment of an HWPC Sensor instance as a Docker container :  
 
 === "Docker"
 
-    ```sh
+    ```sh hl_lines="9 10"
     docker run --rm  \
     --net=host \
     --privileged \
@@ -208,43 +211,45 @@ The following CLI command shows how to use this configuration file in the deploy
 
 The following CLI command shows how to launch an instance of HWPC Sensor with the same configuration as [above](hwpc-sensor.md#running-the-sensor-with-a-configuration-file), again two example are provided for both possible output: 
 
-=== "Docker with MongoDB output"
-
-```sh
-docker run --rm \
-  --net=host \
-  --privileged \
-  --pid=host \
-  -v /sys:/sys \
-  -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
-  -v /tmp/powerapi-sensor-reporting:/reporting \
-  -v $(pwd):/srv \
-  powerapi/hwpc-sensor \
-  -n "$(hostname -f)" \
-  -r "mongodb" -U "mongodb://127.0.0.1" -D "db_sensor" -C "report_0" \
-  -s "rapl" -o -e "RAPL_ENERGY_PKG" \
-  -s "msr" -e "TSC" -e "APERF" -e "MPERF" \
-  -c "core" -e "CPU_CLK_THREAD_UNHALTED:REF_P" -e "CPU_CLK_THREAD_UNHALTED:THREAD_P" -e "LLC_MISSES" -e "INSTRUCTIONS_RETIRED"
-```
-
-=== "Docker with CSV output"
-
-```sh
-docker run --rm \
-  --net=host \
-  --privileged \
-  --pid=host \
-  -v /sys:/sys \
-  -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
-  -v /tmp/powerapi-sensor-reporting:/reporting \
-  -v $(pwd):/srv \
-  powerapi/hwpc-sensor \
-  -n "$(hostname -f)" \
-  -r "csv" -U "hwpc_reports" \
-  -s "rapl" -o -e "RAPL_ENERGY_PKG" \
-  -s "msr" -e "TSC" -e "APERF" -e "MPERF" \
-  -c "core" -e "CPU_CLK_THREAD_UNHALTED:REF_P" -e "CPU_CLK_THREAD_UNHALTED:THREAD_P" -e "LLC_MISSES" -e "INSTRUCTIONS_RETIRED"
-```
+???+ example "Examples using a CLI Parameters"
+    
+    === "CLI with MongoDB Output"
+        
+        ```sh
+        docker run --rm \
+          --net=host \
+          --privileged \
+          --pid=host \
+          -v /sys:/sys \
+          -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
+          -v /tmp/powerapi-sensor-reporting:/reporting \
+          -v $(pwd):/srv \
+          powerapi/hwpc-sensor \
+          -n "$(hostname -f)" \
+          -r "mongodb" -U "mongodb://127.0.0.1" -D "db_sensor" -C "report_0" \
+          -s "rapl" -o -e "RAPL_ENERGY_PKG" \
+          -s "msr" -e "TSC" -e "APERF" -e "MPERF" \
+          -c "core" -e "CPU_CLK_THREAD_UNHALTED:REF_P" -e "CPU_CLK_THREAD_UNHALTED:THREAD_P" -e "LLC_MISSES" -e "INSTRUCTIONS_RETIRED"
+        ```
+    
+    === "Docker with CSV output"
+        
+        ```sh
+        docker run --rm \
+          --net=host \
+          --privileged \
+          --pid=host \
+          -v /sys:/sys \
+          -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
+          -v /tmp/powerapi-sensor-reporting:/reporting \
+          -v $(pwd):/srv \
+          powerapi/hwpc-sensor \
+          -n "$(hostname -f)" \
+          -r "csv" -U "hwpc_reports" \
+          -s "rapl" -o -e "RAPL_ENERGY_PKG" \
+          -s "msr" -e "TSC" -e "APERF" -e "MPERF" \
+          -c "core" -e "CPU_CLK_THREAD_UNHALTED:REF_P" -e "CPU_CLK_THREAD_UNHALTED:THREAD_P" -e "LLC_MISSES" -e "INSTRUCTIONS_RETIRED"
+        ```
 
 
 ???+ info "Reports' Storage"

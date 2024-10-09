@@ -8,7 +8,7 @@ A report type specify the `json` fields that has to be provided to pass informat
 a certain kind. All reports types have a common basis:
 
 
-- `timestamp`: at the [format](https://en.wikipedia.org/wiki/ISO_8601) "YYYY-MM-DDThh:mm:ss\.sss". The timestamp indicates when the data was collected, not when it was processed.  
+- `timestamp`: at the [format](https://en.wikipedia.org/wiki/ISO_8601) "YYYY-MM-DDThh\:mm\:ss\.sss". The timestamp indicates when the data was collected, not when it was processed.  
 
 - `target`: The target refers to the entity being measured. For example, if a report contains data related to a specific program, domain, or other entity, the target identifies that subject. In this context, it corresponds to the cgroup name.
 

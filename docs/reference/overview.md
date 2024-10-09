@@ -14,8 +14,8 @@ The diagram below illustrates the overall architecture of a PowerMeter within th
 ![PowerAPI Architecture Overview](../assets/images/reference/overview/global-architecture.jpg){ width="1000px"}
 
 A PowerMeter consists of two essential components:  
-- A [Sensor](./overview.md#Sensor), which collects system usage metrics and generates usage reports.  
-- A [Formula](./overview.md#Formula), which applies a computational model to the usage reports, producing power consumption data (in mJ).
+- A [Sensor](#Sensor), which collects system usage metrics and generates usage reports.  
+- A [Formula](#Formula), which applies a computational model to the usage reports, producing power consumption data (in mJ).
 
 Additionally, [Preprocessors](./overview.md#Preprocessors) can be utilized to modify usage reports before they are processed by the Formula.
 
