@@ -4,7 +4,7 @@
 
 ### Create a cGroup
 
-We need a subset of runnings programs to be monitored. For this, we use the 
+We need a subset of running processes to be monitored. For this, we use the 
 Linux abstraction of [cGroups](https://www.redhat.com/sysadmin/cgroups-part-one).  
 
 In order to create a cGroup, the following command can be used from CLI :  
@@ -16,9 +16,9 @@ cgcreate -g perf_event:new_cgroup_name
 Check [here](./reference/cgroup/cgroup_v1_activation.md) if you have trouble 
 creating the cgroup.  
 
-### Add programs to the group
+### Add processes to the group
 
-Once the group created, we need to fill it with programs to be monitored. 
+Once the group created, we need to fill it with processes to be monitored. 
 To do so, you can use the following :  
 
 ```sh
@@ -26,9 +26,9 @@ cgclassify -g perf_event:new_cgroup_name PID
 ```
 
 with `PID`, the pid of the process you want to monitor. If you want to monitor a
-program composed of many process, replace PID with `$(pidof program_name)`.
+process composed of many processes, replace PID with `$(pidof process_name)`.
 
-### Example program to monitor
+### Example process to monitor
 
 [stress-ng](https://wiki.ubuntu.com/Kernel/Reference/stress-ng) can be used to 
 generate load on one's system.  
