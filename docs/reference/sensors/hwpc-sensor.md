@@ -47,7 +47,6 @@ Here is a sample to deploy the latest image version available.
 
 ## Usage
 
-An HWPC Sensor instance needs several parameters to be configured in order to be used.  
 The following tabs gives a complete overview of available parameters, along with their default values and description.
 
 ### Global parameters
@@ -112,15 +111,15 @@ Table below depicts the different parameters for CSV type output:
 
 [!TODO]
 
-#### FileDB Output  
-
-[!TODO]
-
 ### Running the Sensor with a Configuration File
 
-The following snippet describe the configuration of an HWPC Sensor instance, writting reports to a MongoDB intance as output:
+The following snippets describe the configuration file of an HWPC Sensor instance, two examples are provided for both possible outputs:
+
+=== "MongoDB Output"
 
 ```json
+# config-file.json
+
 {
   "name": "sensor",
   "verbose": true,
@@ -153,7 +152,42 @@ The following snippet describe the configuration of an HWPC Sensor instance, wri
 }
 ```
 
-The following CLI command shows how to use this configuration file in the deployment of an HWPC Sensor container :  
+=== "CSV Output"
+
+```json
+# config-file.json
+
+{
+  "name": "sensor",
+  "verbose": true,
+  "frequency": 500,
+  "output": {
+    "type": "csv",
+    "directory": "hwpc_reports"
+  },
+  "system": {
+    "rapl": {
+      "events": ["RAPL_ENERGY_PKG"],
+      "monitoring_type": "MONITOR_ONE_CPU_PER_SOCKET"
+    },
+    "msr": {
+      "events": ["TSC", "APERF", "MPERF"]
+    }
+  },
+  "container": {
+    "core": {
+      "events": [
+        "CPU_CLK_THREAD_UNHALTED:REF_P",
+        "CPU_CLK_THREAD_UNHALTED:THREAD_P",
+        "LLC_MISSES",
+        "INSTRUCTIONS_RETIRED"
+      ]
+    }
+  }
+}
+```
+
+The following CLI command shows how to use this configuration file in the deployment of an HWPC Sensor instance as a Docker container :  
 
 === "Docker"
 
@@ -172,28 +206,49 @@ The following CLI command shows how to use this configuration file in the deploy
 
 ### Running the Sensor via CLI parameters
 
-The following CLI command shows how to launch an instance of HWPC Sensor with the same configuration as [above](hwpc-sensor.md#running-the-sensor-with-a-configuration-file)
-=== "Docker"
+The following CLI command shows how to launch an instance of HWPC Sensor with the same configuration as [above](hwpc-sensor.md#running-the-sensor-with-a-configuration-file), again two example are provided for both possible output: 
 
-    ```sh
-    docker run --rm \
-    --net=host \
-    --privileged \
-    --pid=host \
-    -v /sys:/sys \
-    -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
-    -v /tmp/powerapi-sensor-reporting:/reporting \
-    -v $(pwd):/srv \
-    powerapi/hwpc-sensor \
-    -n "$(hostname -f)" \
-    -r "mongodb" -U "mongodb://127.0.0.1" -D "db_sensor" -C "report_0" \
-    -s "rapl" -o -e "RAPL_ENERGY_PKG" \
-    -s "msr" -e "TSC" -e "APERF" -e "MPERF" \
-    -c "core" -e "CPU_CLK_THREAD_UNHALTED:REF_P" -e "CPU_CLK_THREAD_UNHALTED:THREAD_P" -e "LLC_MISSES" -e "INSTRUCTIONS_RETIRED"
-    ```
+=== "Docker with MongoDB output"
+
+```sh
+docker run --rm \
+  --net=host \
+  --privileged \
+  --pid=host \
+  -v /sys:/sys \
+  -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
+  -v /tmp/powerapi-sensor-reporting:/reporting \
+  -v $(pwd):/srv \
+  powerapi/hwpc-sensor \
+  -n "$(hostname -f)" \
+  -r "mongodb" -U "mongodb://127.0.0.1" -D "db_sensor" -C "report_0" \
+  -s "rapl" -o -e "RAPL_ENERGY_PKG" \
+  -s "msr" -e "TSC" -e "APERF" -e "MPERF" \
+  -c "core" -e "CPU_CLK_THREAD_UNHALTED:REF_P" -e "CPU_CLK_THREAD_UNHALTED:THREAD_P" -e "LLC_MISSES" -e "INSTRUCTIONS_RETIRED"
+```
+
+=== "Docker with CSV output"
+
+```sh
+docker run --rm \
+  --net=host \
+  --privileged \
+  --pid=host \
+  -v /sys:/sys \
+  -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
+  -v /tmp/powerapi-sensor-reporting:/reporting \
+  -v $(pwd):/srv \
+  powerapi/hwpc-sensor \
+  -n "$(hostname -f)" \
+  -r "csv" -U "hwpc_reports" \
+  -s "rapl" -o -e "RAPL_ENERGY_PKG" \
+  -s "msr" -e "TSC" -e "APERF" -e "MPERF" \
+  -c "core" -e "CPU_CLK_THREAD_UNHALTED:REF_P" -e "CPU_CLK_THREAD_UNHALTED:THREAD_P" -e "LLC_MISSES" -e "INSTRUCTIONS_RETIRED"
+```
+
 
 ???+ info "Reports' Storage"
-    Your [`HWPCReports`](../reports/reports.md#hwpc-reports) will be stored on MongoDB.
+    Your [`HWPCReports`](../reports/reports.md#hwpc-reports) will be stored on MongoDB or in the `hwpc_reports.d`directory regarding the output type selected.
 
 ???+ tip "CLI parameters' names"
     You can only use shortcuts.
