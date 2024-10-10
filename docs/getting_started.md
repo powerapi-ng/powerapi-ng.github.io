@@ -1,57 +1,177 @@
 # Getting started
 
-If you want to monitor the energy consumption of your process we have some
-ready-to-use tools
+!!! info "Pre-Requisites"
+    
+    **In order to follow this tutorial, you will need several elements ready on
+    the target server:  
+    - A compatible processor  
+    - A python installation ready  
+    - Docker & Docker-Compose ready  
+    - Root access**
 
-???+ info "Source and Destination"
-    In order to use any Formula, you need to run a Source and a Destination. The former is used by a Sensor to store metrics. The later allows the Formula to make available the estimations. For starting, you can use [MongoDB](https://hub.docker.com/_/mongo) as Source and [InfluxDB:2.X](https://hub.docker.com/_/influxdb) as Destination by installing them as Docker containers.
-    For more details about Sources and Destinations please check this [section](reference/database/sources_destinations.md).
+!!! warning "Testing purpose tutorial"
+    
+    This quick Getting-Started will guide you to get a quick view of PowerAPI 
+    capabilities.  
+    To do so in a light way, **the final output displayed is not the 
+    intended use of the tools for an everyday deployment**, you'll only get quick & concise 
+    statistics on the tested period.
 
+## Define elements to monitor
 
-<!---
-## **RAPL Formula**
+PowerAPI being a monitoring tool for energy consumption, we will need to define 
+the necessary elements to monitor. An example is also given if you do not already 
+have a process you wish to monitor.  
 
-!!! note ""
-    for monitoring the energy consumption of your device
+### Create a cGroup
 
-RAPL Formula is made for tracking the energy consumption of your machine.
-To install RAPL Formula on a baremetal server or a PC run [the following
-script](script/rapl_install.sh) in a Terminal.
+We need a subset of running processes to be monitored. For this, we use the 
+Linux abstraction of [cGroups](https://www.redhat.com/sysadmin/cgroups-part-one).  
 
-The script explains what it will do and then pauses before it does it.
+In order to create a cGroup, the following command can be used from CLI :  
 
-Please notice that you need a **Linux distribution** in order to use the HWPC Sensor installed by the script as
-well as a **comptible Intel** (Sandy Bridge and newer) or **AMD Processor** (Zen). **Power/ARM/RISCV are not supported** architectures. HWPC Sensor will **not work on a Virtual Machine**. However, you can install the Formula by hand in a Virtual Machine if need it.
--->
+```sh
+cgcreate -g perf_event:new_cgroup_name
+```
 
-## **SmartWatts Formula**
+Check [here](./reference/cgroup/cgroup_v1_activation.md) if you have trouble 
+creating the cgroup.  
 
-!!! note ""
-    for monitoring the power consumption of your process
+### Add processes to the group
 
-Smartwatts is made for tracking the power consumption of processes on a
-machine.
-To install Smartwatts on a baremetal server or a PC run [the following
-script](script/smartwatts_install.sh) in a Terminal. Please notice that you will need [pip](https://pip.pypa.io/en/stable/installation/) or [docker](https://docs.docker.com/engine/install/) in order to use the Formula.
+Once the group created, we need to fill it with processes to be monitored. 
+To do so, you can use the following :  
 
-The script explains what it will do and then pauses before it does it.
+```sh
+cgclassify -g perf_event:new_cgroup_name PID
+```
 
-Please notice that you need a **Linux distribution** in order to use the HWPC Sensor installed by the script as
-well as a **comptible Intel** (Sandy Bridge and newer) or **AMD Processor** (Zen). You also need [docker](https://docs.docker.com/engine/install/).  **Power/ARM/RISCV are not supported** architectures. HWPC Sensor will **not work on a Virtual Machine**. However, you can install the Formula by hand in a Virtual Machine if need it.
+with `PID`, the pid of the process you want to monitor. If you want to monitor a
+process composed of many processes, replace PID with `$(pidof process_name)`.
 
+### Installing a process to monitor
 
+[stress-ng](https://wiki.ubuntu.com/Kernel/Reference/stress-ng) can be used to 
+generate load on one's system.  
+An example usage, once installed :  
 
-#### CGroups
-If you need to monitor a process or a group of process via SmartWatts by using HWPC Sensor **version 1.2 or older**, you can follow this [tutorial](reference/cgroup/cgroup.md). Please notice that **cgroup V1** is required **only** for HWPC Sensor **version 1.2 or older**. If you need to enable this `cgroup` version please follow this [tutorial](reference/cgroup/cgroup_v1_activation.md).    
+```sh  
+cgcreate -g perf_event:stress-ng-cgroup
+stress-ng --cpu 1 --timeout 5m
+cgclassify -g perf_event:stress-ng-cgroup $!
+```
 
-<!---
-## **Jouleit**
+## Which components to get a complete stack  
 
-!!! note ""
-    for mesuring the energy consumption of a program
+If you wish to get started as soon as possible, the following archive will allow you to deploy the following elements :  
 
-Jouleit is made for tracking the energy consumption of a program.
-Jouleit need `gawk` to run.
-You can get the script from the [github repository](https://github.com/powerapi-ng/jouleit)
-Start jouleit by using `./jouleit.sh cmd`.
--->
+1. A MongoDB instance to store the [Sensor](./reference/sensors/hwpc-sensor.md)
+Reports
+
+3. An [HWPC-Sensor](./reference/sensors/hwpc-sensor.md) that outputs its 
+[HWPCReports](./reference/reports/report.md#HWPCReport) in a MongoDB Database, 
+within the HWPCReport Collection.  
+
+4. A [SmartWatts](./reference/formulas/smartwatts.md) that streams the 
+[HWPCReports](./reference/reports/report.md#HWPCReport) from the MongoDB 
+Database Collection, processes it and outputs its 
+[PowerReports](./reference/reports/report.md#PowerReports) as CSV files for a 
+quick glimpse 
+
+## Preparation
+
+You can download the archive using :   
+
+```sh 
+wget "https://github.com/powerapi-ng/powerapi-ng.github.io/tree/master/examples/powerapi-stack.zip"
+unzip powerapi-stack.zip && cd powerapi-stack
+```
+
+From this archive, you will have all the necessary files to get started, let us break down each elements.  
+
+### Archive content
+
+```sh
+|powerapi-stack/
+|--docker-compose.yaml
+|--configs.d/
+|----hwpc-sensor-config.json
+|----smartwatts-config.json
+|--start.py
+|--reports.d/
+|----powerreports.csv
+```
+
+#### HWPC-Sensor Configuration
+
+As described in the [HWPC-Sensor Documentation](./reference/sensors/hwpc-sensor.md#global-parameters) 
+several parameters can be set, both globally and for specific Groups monitored. 
+The provided docker-compose.yaml file use configuration files to set those parameters.  
+An example configuration file for HWPC-Sensor is given below and available in the archive presented [above](./getting_started.md#preparation) :  
+
+```json title="powerapi-stack/hwpc-sensor-config.json"
+
+{
+  "verbose": false,
+  "frequency": 1000,
+  "name": "hwpc-sensor",
+  "cgroup_basepath": "/sys/fs/cgroup/perf_event",
+  "system": {
+    "type": "MONITOR_ALL_CPU_PER_SOCKET",
+    "events": ["RAPL_ENERGY_PKG", "RAPL_ENERGY_DRAM"]
+  },
+  "container": {
+    "type": "MONITOR_ALL_CPU_PER_SOCKET",
+    "events": ["RAPL_ENERGY_PKG", "RAPL_ENERGY_DRAM"]
+  },
+  "output": {
+    "type": "mongodb",
+    "uri": "mongodb://mongodb:27017",
+    "db": "powerapi",
+    "collection": "HWPCReports"
+  }
+}
+```
+
+### SmartWatts Configuration
+
+As described in the [SmartWatts Documentation](./reference/formulas/smartwatts.md#global-parameters) 
+several parameters can be set for the Formulas. 
+The provided docker-compose.yaml file use configuration files to set those parameters.  
+An example configuration file for SmartWatts is given below and available in the archive presented [above](./getting_started.md#preparation) :  
+
+```json title="powerapi-stack/smartwatts-config.json"
+{
+  "verbose": true,
+  "stream": true,
+  "input": {
+    "puller": {
+      "model": "HWPCReport",
+      "type": "mongodb",
+      "uri": "mongodb://127.0.0.1",
+      "db": "powerapi",
+      "collection": "HWPCReports"
+    }
+  },
+  "output": {
+    "pusher_power": {
+      "type": "csv",
+      "directory": "reports.d",
+      "files": "powerreports.csv"
+    }
+  },
+  "cpu-base-freq": 1900,
+  "cpu-error-threshold": 2.0,
+  "disable-dram-formula": true,
+  "sensor-reports-frequency": 1000
+}
+```
+
+## Turn the key 
+
+Once all set, you shall be able to initiate the stack with :  
+
+```sh
+python3 start.py
+```
+

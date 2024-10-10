@@ -4,7 +4,7 @@ Processors enable customized filtering and/or modifications of `Reports`.
 There are two kinds of processors:
 
 - `PreProcessors`: They are located between the `Puller` and the `Dispatcher`. They are supposed to pre-process the `HWPCReports` before computing estimations.
-- `PostProcessors`: They are located between, the `Formula` and the `Pusher`. They process `PowerReports` before storing them on the `Destination`.
+- `PostProcessors`: They are located between, the `Formula` and the `Pusher`. They process `PowerReports` before storing them on the output storage option.
 
 Figure below depicts where are they introduced in the architecture of a Software `PowerMeters`.
 
@@ -140,7 +140,7 @@ As notice, a `PreProcessor` is defined inside the `pre-processor` group. In this
 
 ### Example of Usage with SmartWatts Formula via a Configuration File
 
-Below an example is provided by using MongoDB as Source and InfluxDB as Destination.
+Below an example is provided by using MongoDB as input and InfluxDB as output.
 
 ```json
 {
