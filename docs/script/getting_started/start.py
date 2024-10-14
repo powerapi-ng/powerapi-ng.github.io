@@ -1,5 +1,8 @@
+from subprocess import call
 import subprocess
 import json
+import sys
+from time import sleep
 
 # List of available processor architectures
 # Template: "n - Arch name"
@@ -80,10 +83,8 @@ def start_demo():
 
     print("Starting the demo...")
 
-'''
-    up = subprocess.run(["docker", "compose", "up", "--abort-on-container-exit"], text=True, capture_output=True)
-    print(up.stdout)
-    print(up.stderr)
-'''
+    rc = call("./start.sh")
+
+
 if __name__ == '__main__':
     start_demo()
