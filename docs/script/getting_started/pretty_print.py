@@ -13,7 +13,7 @@ def start_pretty_print():
 
     directory = './csv'
 
-    print("The consumption are given in Watt, note that the precision depend on the value given in the configuration file (the base CPU frequence, the CPU TDP, ...) ")
+    print("\nThe consumptions are given in Watt, note that the precision depend on the value given in the configuration file (the base CPU frequence, the CPU TDP, ...) \n")
 
     # Get all the csv power report in the csv directory
     for dirpath, dirnames, filenames in os.walk(directory):
@@ -44,7 +44,10 @@ def start_pretty_print():
         max_consumption = max(consumptions)
         min_consumption = min(consumptions)
 
-        result.append([target, f"{avg_consumption:.2f}", f"{max_consumption:.2f}", f"{min_consumption:.2f}"])
+        if not target == 'global':
+            result.append([target, f"{avg_consumption:.2f}", f"{max_consumption:.2f}", f"{min_consumption:.2f}"])
+        else:
+            total = [avg_consumption, max_consumption, min_consumption]
 
     print(f"{'Cgroup':<20} {'Average consumption':<20} {'Maximum consumption':<20} {'Minimum consumption':<20}")
     print("=" * 80)
@@ -52,6 +55,10 @@ def start_pretty_print():
     for row in result[1:]:
         print(f"{row[0]:<20} {row[1]:<20} {row[2]:<20} {row[3]:<20}")
 
+    print("=" * 80)
+    print(f"{'Global':<20} {total[0]:<20.2f} {total[1]:<20.2f} {total[2]:<20.2f}")
+
+    print("\nIf you want to get a more precise evaluation, we encourage you to read the documentation of PowerAPI and adapte the sensor and formula configuration file in consequence \n")
 
 if __name__ == '__main__':
     start_pretty_print()

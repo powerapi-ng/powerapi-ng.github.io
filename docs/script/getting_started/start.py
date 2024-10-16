@@ -101,7 +101,7 @@ def start_demo():
 
     print("The demo has ended, "
           "you can see the result under the /csv directory"
-          " or use 'python pretty_print.py' "
+          " or use 'python3 pretty_print.py' "
           "to get a quick summary of the result in the terminal")
 
 
