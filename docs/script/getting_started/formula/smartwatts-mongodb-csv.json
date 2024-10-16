@@ -1,5 +1,5 @@
 {
-    "verbose": true,
+    "verbose": false,
     "stream": true,
     "input": {
       "puller_mongodb": {
