@@ -26,7 +26,7 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+import os
 import sys
 from subprocess import call
 import subprocess
@@ -55,6 +55,7 @@ def start_demo():
           "\n" + list_arch[3] +
           "\n")
 
+    val = ""
     choice = True
     while choice:
         try:
@@ -123,13 +124,30 @@ def start_demo():
         json.dump(data, f, indent=4)
 
     print("Starting the demo...")
+    print("The demo will run for approximately 2 minutes\n")
 
     call("./start.sh")
 
-    print("The demo has ended, "
-          "you can see the result under the /csv directory"
-          " or use 'python3 pretty_print.py' "
-          "to get a quick summary of the result in the terminal")
+    verification = 0
+
+    # Get all the csv power report in the csv directory
+    for root, _, files in os.walk('./csv'):
+        for filename in files:
+            if filename.endswith('.csv'):
+                verification += 1
+                file_path = os.path.join(root, filename)
+                print("The power report is available at: " + file_path)
+
+    if verification == 0:
+        print("\nNo power report available, "
+              "please check the configuration file "
+              "and the sensor availability for your "
+              "processor architecture\n")
+    else:
+        print("\nThe demo has ended, "
+              "you can see the result under the /csv directory"
+              " or use 'python3 pretty_print.py' "
+              "to get a quick summary of the result in the terminal\n")
 
 
 if __name__ == '__main__':

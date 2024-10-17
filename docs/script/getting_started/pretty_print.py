@@ -31,76 +31,81 @@ import csv
 import os
 
 
-def start_pretty_print():
+def load_data(directory='./csv'):
     """
-    Pretty print the result of the demo by parsing the csv files,
-    then proceed to calculate the average, maximum, and minimum consumption
-    and print them in a table format
+    Load CSV files from the specified directory and return the data as a list of dictionaries.
     """
     data = []
-    result = [["Cgroup",
-               "Average consumption",
-               "Maximum consumption",
-               "Minimum consumption"]]
-
-    print("\nThe consumptions are given in Watt, "
-          "note that the precision depend on the value given in the "
-          "configuration file (the base CPU frequency, the CPU TDP, ...) \n")
-
-    # Get all the csv power report in the csv directory
-    for root, _, files in os.walk('./csv'):
+    for root, _, files in os.walk(directory):
         for filename in files:
             if filename.endswith('.csv'):
                 file_path = os.path.join(root, filename)
-
                 with open(file_path, mode='r', newline='', encoding='UTF-8') as f:
-                    for row in csv.DictReader(f):
-                        data.append(row)
+                    data.extend(csv.DictReader(f))
+    return data
 
-    cgroup_data = {}
-    total = [0, 0, 0]
-    # We remove rapl, but it's still available in the csv files
+
+def calculate_statistics(data, scope):
+    """
+    Calculate average, maximum, and minimum consumption for the given scope (cpu or dram).
+    """
+    stats = {}
     for row in data:
-        target = row['target']
-        consumption = float(row['power'])
+        if row['scope'] == scope and row['target'] != 'rapl':
+            target = row['target']
+            consumption = float(row['power'])
+            stats.setdefault(target, []).append(consumption)
 
-        if target not in cgroup_data and not target == 'rapl':
-            cgroup_data[target] = []
+    return {
+        target: {
+            'avg': sum(consumptions) / len(consumptions),
+            'max': max(consumptions),
+            'min': min(consumptions)
+        } for target, consumptions in stats.items()
+    }
 
-        if not target == 'rapl':
-            cgroup_data[target].append(consumption)
 
-    for target, consumptions in cgroup_data.items():
-        avg_consumption = sum(consumptions) / len(consumptions)
-        max_consumption = max(consumptions)
-        min_consumption = min(consumptions)
+def print_statistics(stats, title):
+    """
+    Print statistics (average, max, min) for the given data in a formatted table.
+    """
+    if not stats:
+        return
 
-        if not target == 'global':
-            result.append([target,
-                           f"{avg_consumption:.2f}",
-                           f"{max_consumption:.2f}",
-                           f"{min_consumption:.2f}"])
+    print(f"\n{title}\n")
+    print(f"{'Target':<20} {'Average consumption':<20} {'Maximum consumption':<20} {'Minimum consumption':<20}")
+    print("=" * 80)
+
+    total = {'avg': 0, 'max': 0, 'min': 0}
+    for target, values in stats.items():
+        if target != 'global':
+            print(f"{target:<20} {values['avg']:<20.2f} {values['max']:<20.2f} {values['min']:<20.2f}")
         else:
-            total = [avg_consumption, max_consumption, min_consumption]
+            total = values
 
-    print(f"{'Target':<20} "
-          f"{'Average consumption':<20} "
-          f"{'Maximum consumption':<20} "
-          f"{'Minimum consumption':<20}")
-    print("=" * 80)
+    print("-" * 80)
+    print(f"{'Global':<20} {total['avg']:<20.2f} {total['max']:<20.2f} {total['min']:<20.2f}")
 
-    for row in result[1:]:
-        print(f"{row[0]:<20} {row[1]:<20} {row[2]:<20} {row[3]:<20}")
 
-    print("=" * 80)
-    print(f"{'Global':<20} "
-          f"{total[0]:<20.2f} "
-          f"{total[1]:<20.2f} "
-          f"{total[2]:<20.2f}")
+def start_pretty_print():
+    """
+    Pretty print the CPU and DRAM power consumption statistics from CSV files.
+    """
+    print("The consumptions are given in Watt, note that the precision depends on the configuration file\n")
 
-    print("\nIf you want to get a more precise evaluation, "
-          "we encourage you to read the documentation of PowerAPI "
-          "and adapt the sensor/formula configuration file in consequence \n")
+    data = load_data()
+
+    # Calculate and print CPU statistics
+    cpu_stats = calculate_statistics(data, 'cpu')
+    print_statistics(cpu_stats, "CPU Consumption Statistics :")
+
+    # Calculate and print DRAM statistics
+    dram_stats = calculate_statistics(data, 'dram')
+    print_statistics(dram_stats, "DRAM Consumption Statistics :")
+
+    # Could add the GPU statistics here
+
+    print("\nFor more precise evaluation, consult the PowerAPI documentation to adjust configurations.\n")
 
 
 if __name__ == '__main__':
