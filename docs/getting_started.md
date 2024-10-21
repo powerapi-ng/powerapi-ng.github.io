@@ -76,11 +76,10 @@ quick glimpse
 
 ## Preparation
 
-You can download the archive using :   
-
+Clone the repository and get ready:  
 ```sh 
-wget "https://github.com/powerapi-ng/powerapi-ng.github.io/tree/master/examples/powerapi-stack.zip"
-unzip powerapi-stack.zip && cd powerapi-stack
+git clone https://github.com/powerapi-ng/powerapi-ng.github.io.git
+cd powerapi-ng.github.io/docs/script/getting-started
 ```
 
 From this archive, you will have all the necessary files to get started, let us break down each element.  
@@ -96,6 +95,7 @@ From this archive, you will have all the necessary files to get started, let us 
 |----hwpc-mongodb.json
 |--start.sh
 |--start.py
+|--stop.sh
 |--pretty_print.py
 |--docker-compose.yaml
 |--.env
