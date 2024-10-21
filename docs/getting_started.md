@@ -20,13 +20,11 @@
 ## Define elements to monitor
 
 PowerAPI being a monitoring tool for energy consumption, we will need to define 
-the necessary elements to monitor. An example is also given if you do not already 
-have a process you wish to monitor.  
+the necessary elements to monitor. 
+In the testing archive, we will be able to see the consumption of the docker container by the default.
+But if we want to monitor a specific process, we can use the Linux abstraction of [cGroups](https://www.redhat.com/sysadmin/cgroups-part-one).  
 
 ### Create a cGroup
-
-We need a subset of running processes to be monitored. For this, we use the 
-Linux abstraction of [cGroups](https://www.redhat.com/sysadmin/cgroups-part-one).  
 
 In order to create a cGroup, the following command can be used from CLI :  
 
@@ -87,19 +85,22 @@ wget "https://github.com/powerapi-ng/powerapi-ng.github.io/tree/master/examples/
 unzip powerapi-stack.zip && cd powerapi-stack
 ```
 
-From this archive, you will have all the necessary files to get started, let us break down each elements.  
+From this archive, you will have all the necessary files to get started, let us break down each element.  
 
 ### Archive content
 
 ```sh
-|powerapi-stack/
-|--docker-compose.yaml
-|--configs.d/
-|----hwpc-sensor-config.json
-|----smartwatts-config.json
+|getting_started/
+|--csv/
+|--fomula/
+|----smartwatts-mongodb-csv.json
+|--sensor/
+|----hwpc-mongodb.json
+|--start.sh
 |--start.py
-|--reports.d/
-|----powerreports.csv
+|--pretty_print.py
+|--docker-compose.yaml
+|--.env
 ```
 
 #### HWPC-Sensor Configuration
@@ -112,24 +113,41 @@ An example configuration file for HWPC-Sensor is given below and available in th
 ```json title="powerapi-stack/hwpc-sensor-config.json"
 
 {
-  "verbose": false,
-  "frequency": 1000,
-  "name": "hwpc-sensor",
-  "cgroup_basepath": "/sys/fs/cgroup/perf_event",
-  "system": {
-    "type": "MONITOR_ALL_CPU_PER_SOCKET",
-    "events": ["RAPL_ENERGY_PKG", "RAPL_ENERGY_DRAM"]
-  },
-  "container": {
-    "type": "MONITOR_ALL_CPU_PER_SOCKET",
-    "events": ["RAPL_ENERGY_PKG", "RAPL_ENERGY_DRAM"]
-  },
-  "output": {
-    "type": "mongodb",
-    "uri": "mongodb://mongodb:27017",
-    "db": "powerapi",
-    "collection": "HWPCReports"
-  }
+    "name": "sensor",
+    "verbose": true,
+    "frequency": 1000,
+    "cgroup_basepath": "/sys/fs/cgroup/",
+    "output": {
+        "type": "mongodb",
+        "uri": "mongodb://mongodb:27017",
+        "database": "db_sensor",
+        "collection": "prep"
+    },
+    "system": {
+        "rapl": {
+            "events": [
+                "RAPL_ENERGY_PKG"
+            ],
+            "monitoring_type": "MONITOR_ONE_CPU_PER_SOCKET"
+        },
+        "msr": {
+            "events": [
+                "TSC",
+                "APERF",
+                "MPERF"
+            ]
+        }
+    },
+    "container": {
+        "core": {
+            "events": [
+                "CPU_CLK_THREAD_UNHALTED:REF_P",
+                "CPU_CLK_THREAD_UNHALTED:THREAD_P",
+                "LLC_MISSES",
+                "INSTRUCTIONS_RETIRED"
+            ]
+        }
+    }
 }
 ```
 
@@ -142,29 +160,32 @@ An example configuration file for SmartWatts is given below and available in the
 
 ```json title="powerapi-stack/smartwatts-config.json"
 {
-  "verbose": true,
-  "stream": true,
-  "input": {
-    "puller": {
-      "model": "HWPCReport",
-      "type": "mongodb",
-      "uri": "mongodb://127.0.0.1",
-      "db": "powerapi",
-      "collection": "HWPCReports"
-    }
-  },
-  "output": {
-    "pusher_power": {
-      "type": "csv",
-      "directory": "reports.d",
-      "files": "powerreports.csv"
-    }
-  },
-  "cpu-base-freq": 1900,
-  "cpu-error-threshold": 2.0,
-  "disable-dram-formula": true,
-  "sensor-reports-frequency": 1000
-}
+    "verbose": false,
+    "stream": true,
+    "input": {
+      "puller_mongodb": {
+        "model": "HWPCReport",
+        "type": "mongodb",
+        "name": "puller_mongodb",
+        "uri": "mongodb://mongodb:27017",
+        "db": "db_sensor",
+        "collection": "prep"
+      }
+    },
+    "output": {
+      "pusher_csv": {
+        "model": "PowerReport",
+        "type": "csv",
+        "name": "pusher_csv",
+        "directory": "/tmp/csv"
+      }
+    },
+    "cpu-base-freq": 1900,
+    "cpu-error-threshold": 2.0,
+    "disable-dram-formula": true,
+    "sensor-reports-frequency": 1000
+  }
+
 ```
 
 ## Turn the key 
