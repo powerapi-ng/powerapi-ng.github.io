@@ -4,11 +4,10 @@ In this tutorial, we will guide you through the first steps to get started with 
 The objective is to get a quick view of the capabilities of PowerAPI, by monitoring a process and getting a quick glimpse at the energy consumption.
 A few things are required before we start : 
 
-- A compatible processor, you can see the compatible CPU architecture [here](./reference/sensors/hwpc-sensor.md#) and you can look on the following pages to find your CPU architecture :
-  - For [Intel Processor](https://en.wikipedia.org/wiki/List_of_Intel_processors)
-  - For [Intel Xeon Processor](https://en.wikipedia.org/wiki/List_of_Intel_Xeon_processors)
-  - For [AMD Processor](https://en.wikipedia.org/wiki/Table_of_AMD_processors)
-
+- A compatible processor, you can see the compatible CPU architecture [here](./reference/sensors/hwpc-sensor.md#) and you can look on the following pages to find your CPU architecture :  
+    * For [Intel Processor](https://en.wikipedia.org/wiki/List_of_Intel_processors)  
+    * For [Intel Xeon Processor](https://en.wikipedia.org/wiki/List_of_Intel_Xeon_processors)  
+    * For [AMD Processor](https://en.wikipedia.org/wiki/Table_of_AMD_processors)  
 - A python installation ready
 - Docker & Docker-Compose ready
 - Root access
@@ -122,8 +121,9 @@ python3 start.py
 After the 2 minutes of monitoring, you will be able to see the result inside the **csv** directory.
 If you have trouble understanding the output, you can read the [Power Report documentation](./reference/reports/reports.md#power-Reports).
 
-Only in the context of this testing archive, after the monitoring, you can use the following command to get a pretty print of the result directly inside the terminal.  
+!!! info "Quick results overview"
+    Only in the context of this testing archive, after the monitoring, you can use the following command to get a pretty print of the result directly inside the terminal.  
 
-```sh
-python3 pretty_print.py
-```
+    ```sh
+    python3 pretty_print.py
+    ```
