@@ -68,7 +68,7 @@ Reports
 
 3. An [HWPC-Sensor](./reference/sensors/hwpc-sensor.md) that outputs its 
 [HWPCReports](./reference/reports/report.md#HWPCReport) in a MongoDB Database, 
-within the HWPCReport Collection.  
+within the HWPCReport Collection
 
 4. A [SmartWatts](./reference/formulas/smartwatts.md) that streams the 
 [HWPCReports](./reference/reports/report.md#HWPCReport) from the MongoDB 
@@ -103,90 +103,14 @@ From this archive, you will have all the necessary files to get started, let us 
 |--.env
 ```
 
-#### HWPC-Sensor Configuration
+#### HWPC-Sensor and SmartWatts Configuration
 
-As described in the [HWPC-Sensor Documentation](./reference/sensors/hwpc-sensor.md#global-parameters) 
-several parameters can be set, both globally and for specific Groups monitored. 
-The provided docker-compose.yaml file use configuration files to set those parameters.  
-An example configuration file for HWPC-Sensor is given below and available in the archive presented [above](./getting_started.md#preparation) :  
+As described in the [HWPC-Sensor Documentation](./reference/sensors/hwpc-sensor.md#global-parameters) and in the [SmartWatts Documentation](./reference/formulas/smartwatts.md#global-parameters) 
+several parameters can be set, both globally and for specific Groups monitored for the sensor or the formula.
 
-```json title="powerapi-stack/hwpc-sensor-config.json"
+The provided docker-compose.yaml file use configuration files and the **.env** to set those parameters.
+You can find example of both those configuration files in the archive under the **formula** and **sensor** directories.
 
-{
-    "name": "sensor",
-    "verbose": true,
-    "frequency": 1000,
-    "cgroup_basepath": "/sys/fs/cgroup/",
-    "output": {
-        "type": "mongodb",
-        "uri": "mongodb://mongodb:27017",
-        "database": "db_sensor",
-        "collection": "prep"
-    },
-    "system": {
-        "rapl": {
-            "events": [
-                "RAPL_ENERGY_PKG"
-            ],
-            "monitoring_type": "MONITOR_ONE_CPU_PER_SOCKET"
-        },
-        "msr": {
-            "events": [
-                "TSC",
-                "APERF",
-                "MPERF"
-            ]
-        }
-    },
-    "container": {
-        "core": {
-            "events": [
-                "CPU_CLK_THREAD_UNHALTED:REF_P",
-                "CPU_CLK_THREAD_UNHALTED:THREAD_P",
-                "LLC_MISSES",
-                "INSTRUCTIONS_RETIRED"
-            ]
-        }
-    }
-}
-```
-
-### SmartWatts Configuration
-
-As described in the [SmartWatts Documentation](./reference/formulas/smartwatts.md#global-parameters) 
-several parameters can be set for the Formulas. 
-The provided docker-compose.yaml file use configuration files to set those parameters.  
-An example configuration file for SmartWatts is given below and available in the archive presented [above](./getting_started.md#preparation) :  
-
-```json title="powerapi-stack/smartwatts-config.json"
-{
-    "verbose": false,
-    "stream": true,
-    "input": {
-      "puller_mongodb": {
-        "model": "HWPCReport",
-        "type": "mongodb",
-        "name": "puller_mongodb",
-        "uri": "mongodb://mongodb:27017",
-        "db": "db_sensor",
-        "collection": "prep"
-      }
-    },
-    "output": {
-      "pusher_csv": {
-        "model": "PowerReport",
-        "type": "csv",
-        "name": "pusher_csv",
-        "directory": "/tmp/csv"
-      }
-    },
-    "cpu-base-freq": 1900,
-    "cpu-error-threshold": 2.0,
-    "disable-dram-formula": true,
-    "sensor-reports-frequency": 1000
-  }
-
-```
 
 ## Turn the key 
 
@@ -196,3 +120,11 @@ Once all set, you shall be able to initiate the stack with :
 python3 start.py
 ```
 
+After the 2 minutes of monitoring, you will be able to see the result inside the **csv** directory.
+If you have trouble understanding the output, you can read the [Power Report documentation](./reference/reports/reports.md#power-Reports).
+
+Only in the context of this testing archive, after the monitoring, you can use the following command to get a pretty print of the result directly inside the terminal.  
+
+```sh
+python3 pretty_print.py
+```
