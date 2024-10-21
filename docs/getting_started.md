@@ -1,28 +1,27 @@
 # Getting started
 
-!!! info "Pre-Requisites"
-    
-    **In order to follow this tutorial, you will need several elements ready on
-    the target server:  
-    - A compatible processor  
-    - A python installation ready  
-    - Docker & Docker-Compose ready  
-    - Root access**
+In this tutorial, we will guide you through the first steps to get started with PowerAPI.
+The objective is to get a quick view of the capabilities of PowerAPI, by monitoring a process and getting a quick glimpse at the energy consumption.
+A few things are required before we start : 
 
-!!! warning "Testing purpose tutorial"
-    
-    This quick Getting-Started will guide you to get a quick view of PowerAPI 
-    capabilities.  
-    To do so in a light way, **the final output displayed is not the 
-    intended use of the tools for an everyday deployment**, you'll only get quick & concise 
-    statistics on the tested period.
+- A compatible processor, you can see the compatible CPU architecture [here](./reference/sensors/hwpc-sensor.md#) and you can look on the following pages to find your CPU architecture :
+  - For [Intel Processor](https://en.wikipedia.org/wiki/List_of_Intel_processors)
+  - For [Intel Xeon Processor](https://en.wikipedia.org/wiki/List_of_Intel_Xeon_processors)
+  - For [AMD Processor](https://en.wikipedia.org/wiki/Table_of_AMD_processors)
+
+- A python installation ready
+- Docker & Docker-Compose ready
+- Root access
+
+The first step of the tutorial will be to define the elements to monitor. 
+In the testing archive, we will be able to see the consumption of the docker container by the default.
+So feel free to skip directly to the [preparation part](#preparation) if you don't want to monitor a specific process.
 
 ## Define elements to monitor
 
 PowerAPI being a monitoring tool for energy consumption, we will need to define 
-the necessary elements to monitor. 
-In the testing archive, we will be able to see the consumption of the docker container by the default.
-But if we want to monitor a specific process, we can use the Linux abstraction of [cGroups](https://www.redhat.com/sysadmin/cgroups-part-one).  
+the necessary elements to monitor.
+To do so we can use the Linux abstraction of [cGroups](https://www.redhat.com/sysadmin/cgroups-part-one).  
 
 ### Create a cGroup
 
