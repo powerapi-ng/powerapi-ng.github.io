@@ -18,45 +18,42 @@ So feel free to skip directly to the [preparation part](#preparation) if you don
 
 ## Define elements to monitor
 
-PowerAPI being a monitoring tool for energy consumption, we will need to define 
-the necessary elements to monitor.
+!!! tip "Optionnal abstraction for fine-grain analysis"
+    This part is optionnal, it allows the definition of cgroups which can group chosen processes that make sense to you.  
+    If you skip it, the next steps will work against all current process grouped.
+
+PowerAPI being a monitoring tool for energy consumption, we can define logic grouping of elements to monitor.
 To do so we can use the Linux abstraction of [cGroups](https://www.redhat.com/sysadmin/cgroups-part-one).  
-
-### Create a cGroup
-
-In order to create a cGroup, the following command can be used from CLI :  
-
+Kernel supports 2 versions of cGroups : v1 and v2. 
+To know which one your kernel supports, you can run :
 ```sh
-cgcreate -g perf_event:new_cgroup_name
+mount | grep '^cgroup' | awk '{print $1}' | uniq
 ```
 
-Check [here](./reference/cgroup/cgroup_v1_activation.md) if you have trouble 
-creating the cgroup.  
+*Both versions can be supported at the same time*.
 
-### Add processes to the group
+??? "Create a cGroup"
+    
+    In order to create a cGroup, you can use:  
 
-Once the group created, we need to fill it with processes to be monitored. 
-To do so, you can use the following :  
+    - cgroup v1 : [this doc](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v1/cgroups.html#usage-examples-and-syntax)  
+    - cgroup v2 : [this doc](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html#mounting)  
 
-```sh
-cgclassify -g perf_event:new_cgroup_name PID
-```
+    
+    
+??? "Add processes to the group"
+    
+    Once the cgroup created, we need to fill it with processes to be monitored. 
+    To do so, you can use:  
 
-with `PID`, the pid of the process you want to monitor. If you want to monitor a
-process composed of many processes, replace PID with `$(pidof process_name)`.
-
-### Installing a process to monitor
-
-[stress-ng](https://wiki.ubuntu.com/Kernel/Reference/stress-ng) can be used to 
-generate load on one's system.  
-An example usage, once installed :  
-
-```sh  
-cgcreate -g perf_event:stress-ng-cgroup
-stress-ng --cpu 1 --timeout 5m
-cgclassify -g perf_event:stress-ng-cgroup $!
-```
-
+    - cgroup v1 : [this doc](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v1/cgroups.html#attaching-processes).  
+    - cgroup v2 : [this doc](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v1/cgroups.html#attaching-processes).  
+    
+??? warning "Installing a process to monitor"
+    
+    [stress-ng](https://wiki.ubuntu.com/Kernel/Reference/stress-ng) can be used to 
+    generate load on one's system. **Be carefull** as it can be configured to be quite agressive.
+ 
 ## Which components to get a complete stack  
 
 If you wish to get started as soon as possible, the following archive will allow you to deploy the following elements :  
