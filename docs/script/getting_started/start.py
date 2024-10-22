@@ -28,6 +28,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import os
 import sys
+import signal
 from subprocess import call
 import subprocess
 import json
@@ -40,6 +41,10 @@ list_arch = ["0 - Intel Sandy Bridge, Comet Lake",
              "1 - Intel Skylake, Whiskey Lake, Coffee Lake",
              "2 - AMD Zen 2",
              "3 - AMD Zen 3"]
+
+def signal_handler(sig, frame):
+    print('You sent SIGINT signal, stoping docker compose stack')
+    call("./stop.sh")
 
 
 def start_demo():
@@ -54,7 +59,8 @@ def start_demo():
           "\n" + list_arch[2] +
           "\n" + list_arch[3] +
           "\n")
-
+    
+    signal.signal(signal.SIGINT, signal_handler)
     val = ""
     choice = True
     while choice:

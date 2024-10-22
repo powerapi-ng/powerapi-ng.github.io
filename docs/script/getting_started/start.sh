@@ -8,4 +8,4 @@ docker compose logs formula -f &
 
 sleep 120
 
-docker compose down
+./stop.sh
