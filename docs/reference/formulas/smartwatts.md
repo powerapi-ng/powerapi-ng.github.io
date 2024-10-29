@@ -36,11 +36,11 @@ The different images can be found on the [Docker Hub](https://hub.docker.com/r/p
 ???+ info "Pre-Requisites"
     As SmartWatts is a formula, it needs to consume compatible usage Reports from a [Sensor](../sensors/hwpc-sensor.md). Make sure you have Reports made available in a supported storage option. 
 
-For running the SmartWatts Formula you need:  
+For running the SmartWatts Formula you need:
 
-- a valid configuration  
-- an input storage  
-- a output storage containing compatible `HWPCReports`   
+- a valid configuration
+- an input storage
+- a output storage containing compatible `HWPCReports`
 
 ### Parameters
 
@@ -215,6 +215,7 @@ Table below depicts the different parameters for FileDB type output:
 #### Running the Formula
 
 You will find below different examples in order to run a Formula, depending on your use case:  
+
 - [Command-Line Interface](#running-the-formula-via-cli-parameters)  
 - [Environment variables](#running-the-formula-via-environment-variables)  
 - [Configuration File](#running-the-formula-via-configuration-file)  
