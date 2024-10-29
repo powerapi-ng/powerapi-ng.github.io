@@ -3,27 +3,30 @@
 HardWare Performance Counter (HWPC) Sensor is a tool that monitors the Intel CPU
 performance counter and the power consumption of CPU.
 
-The figure below depicts how Sensor works in general :  
+The figure below depicts how Sensor works in general :   
+
+
 ![HWPC Sensor Overview](../../assets/images/reference/sensors/PowerAPI_HWPCSensorOverview.drawio.svg){ width="1000px"}
 
 HWPC Sensor uses the RAPL (Running Average Power Limit) technology to monitor CPU
 power consumption. The following table gives a glimpse of RAPL support regarding
 most common architectures:  
 
-???+ info "HWPC Sensor PreRequisites"
+!!! tip "CPU architecture"
     `lscpu` will give you the necessary information about your CPU Architecture 
 
 | Architecture | RAPL Supported |
 |--------------|----------------|
-| Intel Tiger Lake | :material-close: Not Supported |
-| Intel Alder Lake | :material-close: Not Supported |
-| Intel Raptor Lake | :material-close: Not Supported |
+| Intel Tiger Lake (11th Gen) | :material-close: Not Supported |
+| Intel Alder Lake (12th Gen) | :material-close: Not Supported |
+| Intel Raptor Lake (13th & 14th Gen) | :material-close: Not Supported |
 | Power / ARM / RISCV | :material-close: Not Supported |
 | AMD Zen (1, 2, 3, 4) | :material-check: Supported |
 | Intel Sandy Bridge and [newer](https://en.wikipedia.org/wiki/List_of_Intel_Core_processors#Core_i_(2nd_gen)) (except for above mentions) | :material-check: Supported |
 
-???+ info "HWPC Sensor PreRequisites"
+!!! note "HWPC Sensor PreRequisites"
     In addition of a supported architecture, there is some pre-requisites:
+
     - Using a Linux distribution exposing the [perf](https://perf.wiki.kernel.org/index.php/Main_Page) api  
     - Using Cgroup version 1 when using version 1.2 or older. See [this section](../cgroup/cgroup_v1_activation.md) about its configuration 
     - Deploying on a physical device as the HWPC Sensor must have access to the real CPU register
@@ -49,82 +52,82 @@ Here is a sample to deploy the latest image version available.
 
 The following tabs gives a complete overview of available parameters, along with their default values and description.
 
-### Global parameters
+??? info "Global Parameters"
 
-The table below shows the different parameters related to the Sensor global configuration, nested objects (system, container, output) are described in dedicated sections below:
+    The table below shows the different parameters related to the Sensor global configuration, nested objects (system, container, output) are described in dedicated sections below:
 
-| Parameter                | Type   | CLI shortcut  | Default Value                                      | Description                             |
-| -------------            | -----  | ------------- | -------------                                      | ------------------------------------    |
-|`verbose`                 | `bool` (flag) | `v`             | `false`                                            | Verbose or quiet mode                   |
-|`frequency`                 | `int` | `f`             | `1000`                                            | The time in milliseconds between two reports                   |
-|`name`                 | `string` | `n`             | -                                            | Name of the sensor                   |
-|`cgroup_basepath`                 | `string` | `p`             | `/sys/fs/cgroup` (`cgroup` V2)       |  The base path for `cgroups`. To use `cgroup` V1 `/sys/fs/cgroup/perf_event` needs to be used as value                   |
-|`system`                 | `dict` | `s`             | -                                            | A system group with a monitoring type and a list of system events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
-|`container`                 | `dict` | `c`          | -                                            | A group with a monitoring type and a list of  events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
-|`output`                 | `dict`| `r`             |  { "type": "csv", "directory": "." } | The [output information](hwpc-sensor.md#output), the Sensor only supports [MongoDB](./hwpc-sensor.md#mongodb-output) (`mongodb`), [CSV](./hwpc-sensor.md#csv-output) (`csv`) and [socket](./hwpc-sensor.md#socket-output) as output.                    |
+    | Parameter                | Type   | CLI shortcut  | Default Value                                      | Description                             |
+    | -------------            | -----  | :-------------: | :-------------:                                      | ------------------------------------    |
+    |`verbose`                 | `bool` (flag) | `v`             | `false`                                            | Verbose or quiet mode                   |
+    |`frequency`                 | `int` | `f`             | `1000`                                            | The time in milliseconds between two reports                   |
+    |`name`                 | `string` | `n`             | -                                            | Name of the sensor                   |
+    |`cgroup_basepath`                 | `string` | `p`             | `/sys/fs/cgroup` (`cgroup` V2)       |  The base path for `cgroups`. To use `cgroup` V1 `/sys/fs/cgroup/perf_event` needs to be used as value                   |
+    |`system`                 | `dict` | `s`             | -                                            | A system group with a monitoring type and a list of system events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
+    |`container`                 | `dict` | `c`          | -                                            | A group with a monitoring type and a list of  events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
+    |`output`                 | `dict`| `r`             |  { "type": "csv", "directory": "." } | The [output information](hwpc-sensor.md#output), the Sensor only supports [MongoDB](./hwpc-sensor.md#mongodb-output) (`mongodb`), [CSV](./hwpc-sensor.md#csv-output) (`csv`) and [socket](./hwpc-sensor.md#socket-output) as output.                    |
 
-### `system` and `container` Groups Parameters
+??? info "Group Parameters (`system` and `container`)"
 
-The table below shows the different parameters related to the Sensor `system` and `container` configuration fields:
+    The table below shows the different parameters related to the Sensor `system` and `container` configuration fields:
 
-| Parameter                | Type   | CLI shortcut  | Default Value                                      | Description                             |
-| -------------            | -----  | ------------- | -------------                                      | ------------------------------------    |
-|`events`     | `string`   | `e`           | -                                             | List of events to be monitored. As CLI parameter, each event is indicated with `e`. The structure of events is given [below](hwpc-sensor.md#events)                    |
-|`monitoring_type`     | `string` ( **one of** `MONITOR_ONE_CPU_PER_SOCKET` **or** `MONITOR_ALL_CPU_PER_SOCKET` )    | `o` (flag)          |  `MONITOR_ALL_CPU_PER_SOCKET`                                             | The monitoring type. If `o` is specified as CLI parameter, `MONITOR_ONE_CPU_PER_SOCKET` is used as type  |
+    | Parameter                | Type   | CLI shortcut  | Default Value                                      | Description                             |
+    | -------------            | -----  | :-------------: | :-------------:                                      | ------------------------------------    |
+    |`events`     | `string`   | `e`           | -                                             | List of events to be monitored. As CLI parameter, each event is indicated with `e`. The structure of events is given [below](hwpc-sensor.md#events)                    |
+    |`monitoring_type`     | `string` ( **one of** `MONITOR_ONE_CPU_PER_SOCKET` **or** `MONITOR_ALL_CPU_PER_SOCKET` )    | `o` (flag)          |  `MONITOR_ALL_CPU_PER_SOCKET`                                             | The monitoring type. If `o` is specified as CLI parameter, `MONITOR_ONE_CPU_PER_SOCKET` is used as type  |
 
-### Events
+??? info "Group Events"
 
-Table below depicts the different group events for compatible Intel and AMD architectures.
+    Table below depicts the different group events for compatible Intel and AMD architectures.
 
-| Architectures                | Group   | Events        |
-| -------------               | -----   | ------------- |
-|Intel Sandy Bridge and newer, AMD Zen 2  | `rapl`  | `RAPL_ENERGY_PKG`, `RAPL_ENERGY_DRAM`|
-|Intel Sandy Bridge and newer, AMD Zen 2  | `msr`  | `TSC`, `APERF`, `MPERF`|
-|Intel Skylake, Whiskey Lake, Coffee Lake| `core` | `CPU_CLK_THREAD_UNHALTED:REF_P`, `CPU_CLK_THREAD_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
-|Intel Sandy Bridge, Comet Lake | `core` | `CPU_CLK_UNHALTED:REF_P`, `CPU_CLK_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
-|AMD Zen 2 | `core`| `CYCLES_NOT_IN_HALT`, `RETIRED_INSTRUCTIONS` , `RETIRED_UOPS`|
-|AMD Zen 3 | `core`| `CYCLES_NOT_IN_HALT`, `RETIRED_INSTRUCTIONS` , `RETIRED_OPS`|
+    | Architectures                | Group   | Events        |
+    | -------------               | -----   | ------------- |
+    |Intel Sandy Bridge and newer, AMD Zen 2  | `rapl`  | `RAPL_ENERGY_PKG`, `RAPL_ENERGY_DRAM`|
+    |Intel Sandy Bridge and newer, AMD Zen 2  | `msr`  | `TSC`, `APERF`, `MPERF`|
+    |Intel Skylake, Whiskey Lake, Coffee Lake| `core` | `CPU_CLK_THREAD_UNHALTED:REF_P`, `CPU_CLK_THREAD_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
+    |Intel Sandy Bridge, Comet Lake | `core` | `CPU_CLK_UNHALTED:REF_P`, `CPU_CLK_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
+    |AMD Zen 2 | `core`| `CYCLES_NOT_IN_HALT`, `RETIRED_INSTRUCTIONS` , `RETIRED_UOPS`|
+    |AMD Zen 3 | `core`| `CYCLES_NOT_IN_HALT`, `RETIRED_INSTRUCTIONS` , `RETIRED_OPS`|
 
 ### Output
 
-As precised, two kinds of outputs are supported, MongoDB and CSV files.
+As precised, three kinds of outputs are supported: Socket, MongoDB and CSV files.
 
-#### MongoDB Output
+??? info "MongoDB Output"
 
-Table below depicts the different parameters for MongoDB type output with HWPC Sensor:  
+    Table below depicts the different parameters for MongoDB type output with HWPC Sensor:  
 
-| Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             Description                             |
-| ------------- | -----  | ------------- | ------------- | ----------                                              | ------------------------------------    |
-| `uri`          | string | `U`           | - | Yes                                                       | The IP address of your MongoDB instance |
-| `database`          | string | `D`            | - | Yes                                                       | The name of your database               |
-| `collection`   | string | `C`          | - | Yes                                                       | The name of the collection inside `db`  |
+    | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             Description                             |
+    | ------------- | -----  | :-------------: | :-------------: | :----------:                                              | ------------------------------------    |
+    | `uri`          | string | `U`           | - | Yes                                                       | The IP address of your MongoDB instance |
+    | `database`          | string | `D`            | - | Yes                                                       | The name of your database               |
+    | `collection`   | string | `C`          | - | Yes                                                       | The name of the collection inside `db`  |
 
-#### CSV Output
+??? info "CSV Output"
 
-Table below depicts the different parameters for CSV type output:  
+    Table below depicts the different parameters for CSV type output:  
 
-| Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
-| ------------- | -----   | ------------- | ------------- | ----------| ------------------------------------                                          |
-| `directory` | string         | `U`           | "." (Current directory)           | No |The directory where output CSV files will be written          |
+    | Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
+    | ------------- | -----   | :-------------: | :-------------: | :----------:| ------------------------------------                                          |
+    | `directory` | string         | `U`           | "." (Current directory)           | No |The directory where output CSV files will be written          |
 
-#### Socket Output
+??? info "Socket Output"
 
-Table below depicts the different parameters for Socket type output:  
+    Table below depicts the different parameters for Socket type output:  
 
-| Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
-| ------------- | -----   | ------------- | ------------- | ----------| ------------------------------------                                          |
-| `uri` | string         | `U`           | -           | Yes | The IP address of the machine running the socket         |
-| `port` | int         | `P`           | -           | Yes | The port of communication        |
+    | Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | DQuoteescription                                                                   |
+    | ------------- | -----   | :-------------: | :-------------: | :----------:| ------------------------------------                                          |
+    | `uri` | string         | `U`           | -           | Yes | The IP address of the machine running the socket         |
+    | `port` | int         | `P`           | -           | Yes | The port of communication        |
 
 ### Running the Sensor with a Configuration File
 
 The following snippets describe the configuration file of an HWPC Sensor instance, two examples are provided for both possible outputs:
 
-???+ example "Examples using a Configuration File"
+!!! example "Examples using a Configuration File"
     
     === "MongoDB Output"
         
-        ```json hl_lines="7 8 9 10" title="config_file.json"
+        ```json hl_lines="5-10" title="config_file.json"
         {
           "name": "sensor",
           "verbose": true,
@@ -159,7 +162,7 @@ The following snippets describe the configuration file of an HWPC Sensor instanc
     
     === "CSV Output"
         
-        ```json hl_lines="6 7" title="config_file.json"
+        ```json hl_lines="5-8" title="config_file.json"
         {
           "name": "sensor",
           "verbose": true,
@@ -194,24 +197,24 @@ The following CLI command shows how to use this configuration file in the deploy
 
 === "Docker"
 
-    ```sh hl_lines="9 10"
+    ```sh 
     docker run --rm  \
-    --net=host \
-    --privileged \
-    --pid=host \
-    -v /sys:/sys \
-    -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
-    -v /tmp/powerapi-sensor-reporting:/reporting \
-    -v $(pwd):/srv \
-    -v $(pwd)/config_file.json:/config_file.json \
-    powerapi/hwpc-sensor --config-file /config_file.json
+      --net=host \
+      --privileged \
+      --pid=host \
+      -v /sys:/sys \
+      -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
+      -v /tmp/powerapi-sensor-reporting:/reporting \
+      -v $(pwd):/srv \
+      -v $(pwd)/config_file.json:/config_file.json \
+      powerapi/hwpc-sensor --config-file /config_file.json
     ```
 
 ### Running the Sensor via CLI parameters
 
 The following CLI command shows how to launch an instance of HWPC Sensor with the same configuration as [above](hwpc-sensor.md#running-the-sensor-with-a-configuration-file), again two example are provided for both possible output: 
 
-???+ example "Examples using a CLI Parameters"
+!!! example "Examples using a CLI Parameters"
     
     === "CLI with MongoDB Output"
         
@@ -251,9 +254,8 @@ The following CLI command shows how to launch an instance of HWPC Sensor with th
           -c "core" -e "CPU_CLK_THREAD_UNHALTED:REF_P" -e "CPU_CLK_THREAD_UNHALTED:THREAD_P" -e "LLC_MISSES" -e "INSTRUCTIONS_RETIRED"
         ```
 
-
-???+ info "Reports' Storage"
+!!! note "Reports' Storage"
     Your [`HWPCReports`](../reports/reports.md#hwpc-reports) will be stored on MongoDB or in the `hwpc_reports.d`directory regarding the output type selected.
 
-???+ tip "CLI parameters' names"
+!!! tip "CLI parameters' names"
     You can only use shortcuts.
