@@ -26,6 +26,9 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+import re
+
+import csv
 import os
 import sys
 import signal
@@ -37,14 +40,69 @@ import json
 # If an arch is added, the case statement in the
 # start_demo function should be updated accordingly with the proper core events
 # https://powerapi.org/reference/sensors/hwpc-sensor/
-list_arch = ["0 - Intel Sandy Bridge, Comet Lake",
-             "1 - Intel Skylake, Whiskey Lake, Coffee Lake",
-             "2 - AMD Zen 2",
-             "3 - AMD Zen 3"]
+arch_tab = [["Sandy bridge", "Ivy bridge", "Haswell", "Broadwell", "Comet lake"],
+            ["Skylake", "Cascade lake", "Kaby Lake R", "Kaby Lake", "Coffee Lake", "Amber Lake", "Rocket lake", "Whiskey lake"],
+            ["Zen", "Zen+", "Zen 2"],
+            ["Zen 3", "Zen 4"]]
+
 
 def signal_handler(sig, frame):
     print('You sent SIGINT signal, stoping docker compose stack')
     call("./stop.sh")
+
+
+def load_data():
+    """
+    Load CSV files from the specified directory and return the data as a list of dictionaries.
+    """
+    data = []
+    with open("./cpu.csv", mode='r', newline='', encoding='UTF-8') as f:
+        data.extend(csv.DictReader(f))
+    return data
+
+
+def find_cpu(data):
+    """
+    Find the cpu in the list of compatible cpu
+    """
+    option = []
+    line = "cat /proc/cpuinfo | grep 'model name'"
+    result = subprocess.check_output(line, shell=True, text=True).split("\n")
+    print(result[0])
+    parse = parse_processor_name(result[0])
+    print(parse)
+    for row in data :
+        if parse[0] in row["Name"]:
+            option.append(row)
+
+    if len(option) == 0:
+        print("It looks like you cpu is not supported by power API")
+        sys.exit()
+    elif len(option) == 1:
+        print("Your cpu is supported by power API")
+        cpu = option[0]
+    else:
+        print("Please select your cpu from this list")
+        for i in range(len(option)):
+            print(str(i) + " - " + option[i]["Name"])
+        choice = int(input())
+        print("You have selected : " + option[choice]["Name"])
+        cpu = option[choice]
+    return cpu
+
+
+def parse_processor_name(name):
+    if "Intel" in name:
+        brand = "Intel"
+    elif "AMD" in name:
+        brand = "AMD"
+    else :
+        brand = "Unknown"
+    id_pattern = r"\b\d{3,4}[A-Z0-9]*\b"
+
+    id_res = re.search(id_pattern, name)
+
+    return id_res.group(), brand
 
 
 def start_demo():
@@ -52,60 +110,35 @@ def start_demo():
     Start the demo by selecting the processor architecture
     this will update the sensor configuration file
     """
-    print("Enter the number associated with your processor architecture, "
-          "please note that the sensor isn't available "
-          "for Intel Tiger Lake and newer: \n" + list_arch[0] +
-          "\n" + list_arch[1] +
-          "\n" + list_arch[2] +
-          "\n" + list_arch[3] +
-          "\n")
-    
-    signal.signal(signal.SIGINT, signal_handler)
-    val = ""
-    choice = True
-    while choice:
-        try:
-            val = input()
-            val = int(val)
-            if val < 0 or val >= len(list_arch):
-                print("Invalid input, please enter a valid number or exit")
-            else:
-                choice = False
-        except ValueError:
-            if val == "exit":
-                print("Exiting...")
-                sys.exit()
-            else:
-                print("Invalid input, please enter a valid number or exit")
-
-    print("You have selected: " + list_arch[val] + "\n")
+    cpu = find_cpu(load_data())
+    print(cpu)
 
     # Update core events in the sensor configuration
     # file based on the selected processor architecture
     with open('sensor/hwpc-mongodb.json', encoding='UTF-8') as f:
         data = json.load(f)
 
-    if val == 0:
+    if cpu["Family"] in arch_tab[0]:
         data['container']['core']['events'] = [
             "CPU_CLK_UNHALTED:REF_P",
             "CPU_CLK_UNHALTED:THREAD_P",
             "LLC_MISSES",
             "INSTRUCTIONS_RETIRED"
         ]
-    elif val == 1:
+    elif cpu["Family"] in arch_tab[1]:
         data['container']['core']['events'] = [
             "CPU_CLK_THREAD_UNHALTED:REF_P",
             "CPU_CLK_THREAD_UNHALTED:THREAD_P",
             "LLC_MISSES",
             "INSTRUCTIONS_RETIRED"
         ]
-    elif val == 2:
+    elif cpu["Family"] in arch_tab[2]:
         data['container']['core']['events'] = [
             "CYCLES_NOT_IN_HALT",
             "RETIRED_INSTRUCTIONS",
             "RETIRED_UOPS"
         ]
-    elif val == 3:
+    elif cpu["Family"] in arch_tab[3]:
         data['container']['core']['events'] = [
             "CYCLES_NOT_IN_HALT",
             "RETIRED_INSTRUCTIONS",
@@ -128,6 +161,19 @@ def start_demo():
 
     with open('sensor/hwpc-mongodb.json', 'w', encoding='UTF-8') as f:
         json.dump(data, f, indent=4)
+
+    # Update parameters in the formula configuration
+    with open('formula/smartwatts-mongodb-csv.json', encoding='UTF-8') as f:
+        formula_config = json.load(f)
+
+    if cpu["Base frequency"] != '':
+        formula_config["cpu-base-freq"] = int(float(cpu["Base frequency"])*1000)
+
+    if cpu["TDP"] != '':
+        formula_config["cpu-tdp"] = int(cpu["TDP"][:-1])
+
+    with open('formula/smartwatts-mongodb-csv.json', 'w', encoding='UTF-8') as f:
+        json.dump(formula_config, f, indent=4)
 
     print("Starting the demo...")
     print("The demo will run for approximately 2 minutes\n")
