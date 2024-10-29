@@ -26,8 +26,8 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-import re
 
+import re
 import csv
 import os
 import sys
@@ -51,6 +51,20 @@ def signal_handler(sig, frame):
     call("./stop.sh")
 
 
+def docker_start(time):
+    os.system("docker-compose up -d")
+    os.system("docker compose logs sensor -f &")
+    os.system("docker compose logs formula -f &")
+    os.system("sleep " + str(time))
+    docker_stop()
+
+
+def docker_stop():
+    os.system("set -ueo pipefail")
+    os.system("set +x")
+    os.system("docker-compose down")
+
+
 def load_data():
     """
     Load CSV files from the specified directory and return the data as a list of dictionaries.
@@ -68,21 +82,20 @@ def find_cpu(data):
     option = []
     line = "cat /proc/cpuinfo | grep 'model name'"
     result = subprocess.check_output(line, shell=True, text=True).split("\n")
-    print(result[0])
+    print("The CPU found is" + result[0].split(":")[1] )
     parse = parse_processor_name(result[0])
-    print(parse)
     for row in data :
-        if parse[0] in row["Name"]:
+        if parse[0] in row["Name"] and row["Manufacturer"] == parse[1]:
             option.append(row)
 
     if len(option) == 0:
-        print("It looks like you cpu is not supported by power API")
+        print("It looks like you cpu is not supported by PowerAPI")
         sys.exit()
     elif len(option) == 1:
-        print("Your cpu is supported by power API")
+        print("Your CPU should be supported by PowerAPI")
         cpu = option[0]
     else:
-        print("Please select your cpu from this list")
+        print("Please select your CPU from this list")
         for i in range(len(option)):
             print(str(i) + " - " + option[i]["Name"])
         choice = int(input())
@@ -96,7 +109,7 @@ def parse_processor_name(name):
         brand = "Intel"
     elif "AMD" in name:
         brand = "AMD"
-    else :
+    else:
         brand = "Unknown"
     id_pattern = r"\b\d{3,4}[A-Z0-9]*\b"
 
@@ -110,9 +123,12 @@ def start_demo():
     Start the demo by selecting the processor architecture
     this will update the sensor configuration file
     """
+    print("PowerAPI demo")
+    print("=" * 80)
     cpu = find_cpu(load_data())
-    print(cpu)
 
+    print("\nSetting up configuration files...")
+    print("-" * 80)
     # Update core events in the sensor configuration
     # file based on the selected processor architecture
     with open('sensor/hwpc-mongodb.json', encoding='UTF-8') as f:
@@ -151,7 +167,6 @@ def start_demo():
     # the sensor configuration file accordingly
     cgroup = subprocess.run(["stat", "-fc", "%T", "/sys/fs/cgroup/"],
                             text=True, capture_output=True, check=True)
-    print(cgroup.stdout)
     if cgroup.stdout == "cgroup2fs\n":
         data["cgroup_basepath"] = "/sys/fs/cgroup/"
     else:
@@ -168,17 +183,37 @@ def start_demo():
 
     if cpu["Base frequency"] != '':
         formula_config["cpu-base-freq"] = int(float(cpu["Base frequency"])*1000)
+    print("Base frequency updated")
 
     if cpu["TDP"] != '':
         formula_config["cpu-tdp"] = int(cpu["TDP"][:-1])
+    print("TDP updated\n")
 
     with open('formula/smartwatts-mongodb-csv.json', 'w', encoding='UTF-8') as f:
         json.dump(formula_config, f, indent=4)
 
-    print("Starting the demo...")
-    print("The demo will run for approximately 2 minutes\n")
+    print("Please enter the number of second you want the demo to run for (minimum 30) or exit to quit:")
+    waiting = True
+    while waiting:
+        try:
+            val = input()
+            val = int(val)
+            if val < 30:
+                print("Invalid input, please enter a valid number or exit to quit")
+            else:
+                waiting = False
+        except ValueError:
+            if val == "exit":
+                print("Exiting...")
+                sys.exit()
+            else:
+                print("Invalid input, please enter a valid number or exit to quit")
 
-    call("./start.sh")
+    print("\nStarting the demo...")
+    print("-" * 80)
+    print("The demo will run for " + val + "\n")
+
+    docker_start(val)
 
     verification = 0
 
