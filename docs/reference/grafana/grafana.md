@@ -10,7 +10,7 @@ alt="viz_by_process" width="1000px"-->
 
 This screenshot shows the visualisation of power consumption of a `Firefox` web browser and tools used for monitoring (MongoDB, InfluxDB, Sensor, Formula)
 
-In this tutorial, we describe how to connect a Formula to a Grafana instance by using InfluxDB 2.X as output for PowerReport.  
+In this tutorial, we describe how to connect a Formula to a Grafana instance by using InfluxDB 2.X as output for Power Report.  
 Then, we will see how to configure Grafana to visualize the power estimation computed by the Formula.  
 
 This tutorial assumes that you know how launch a Formula and a Sensor to compute power estimation and that you have an InfluxDB 2.X running on your local machine.  
