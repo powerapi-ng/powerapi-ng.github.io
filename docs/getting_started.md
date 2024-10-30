@@ -11,7 +11,7 @@ A few things are required before we start:
 - A python installation ready
 - Docker & Docker-Compose ready (refer to [this official documentation](https://docs.docker.com/engine/install/) and the [post-install steps](https://docs.docker.com/engine/install/linux-postinstall/) if needed !)
 - Root access
-- Optional : [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) to proceed by clonning the repository
+- Optional : [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) to proceed by cloning the repository
 
 ## Which components to get a complete stack  
 
@@ -52,7 +52,7 @@ At this stage, you will have all the essential files to begin. Let's go through 
 ```sh
 getting_started/
  |--csv/
- |--fomula/
+ |--formula/
  |----smartwatts-mongodb-csv.json
  |--sensor/
  |----hwpc-mongodb.json
