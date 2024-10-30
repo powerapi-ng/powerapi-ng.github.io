@@ -9,9 +9,9 @@ A few things are required before we start :
     * For [Intel Xeon Processor](https://en.wikipedia.org/wiki/List_of_Intel_Xeon_processors)  
     * For [AMD Processor](https://en.wikipedia.org/wiki/Table_of_AMD_processors)  
 - A python installation ready
-- Docker & Docker-Compose ready
+- Docker & Docker-Compose ready (refer to [this official documentation](https://docs.docker.com/engine/install/) and the [post-install steps](https://docs.docker.com/engine/install/linux-postinstall/) if needed !)
 - Root access
-- Optionnal : Git to proceed by clonning the repository
+- Optionnal : [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) to proceed by clonning the repository
 
 ## Which components to get a complete stack  
 
