@@ -11,49 +11,8 @@ A few things are required before we start :
 - A python installation ready
 - Docker & Docker-Compose ready
 - Root access
+- Optionnal : Git to proceed by clonning the repository
 
-The first step of the tutorial will be to define the elements to monitor. 
-In the testing archive, we will be able to see the consumption of the docker container by the default.
-So feel free to skip directly to the [preparation part](#preparation) if you don't want to monitor a specific process.
-
-## Define elements to monitor
-
-!!! tip "Optionnal abstraction for fine-grain analysis"
-    This part is optionnal, it allows the definition of cgroups which can group chosen processes that make sense to you.  
-    If you skip it, the next steps will work against all current process grouped.
-
-PowerAPI being a monitoring tool for energy consumption, we can define logic grouping of elements to monitor.
-To do so we can use the Linux abstraction of [cGroups](https://www.redhat.com/sysadmin/cgroups-part-one).  
-Kernel supports 2 versions of cGroups : v1 and v2. 
-To know which one your kernel supports, you can run :
-```sh
-mount | grep '^cgroup' | awk '{print $1}' | uniq
-```
-
-*Both versions can be supported at the same time*.
-
-??? "Create a cGroup"
-    
-    In order to create a cGroup, you can use:  
-
-    - cgroup v1 : [this doc](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v1/cgroups.html#usage-examples-and-syntax)  
-    - cgroup v2 : [this doc](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html#mounting)  
-
-    
-    
-??? "Add processes to the group"
-    
-    Once the cgroup created, we need to fill it with processes to be monitored. 
-    To do so, you can use:  
-
-    - cgroup v1 : [this doc](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v1/cgroups.html#attaching-processes).  
-    - cgroup v2 : [this doc](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v1/cgroups.html#attaching-processes).  
-    
-??? warning "Installing a process to monitor"
-    
-    [stress-ng](https://wiki.ubuntu.com/Kernel/Reference/stress-ng) can be used to 
-    generate load on one's system. **Be carefull** as it can be configured to be quite agressive.
- 
 ## Which components to get a complete stack  
 
 If you wish to get started as soon as possible, the following archive will allow you to deploy the following elements :  
@@ -73,10 +32,17 @@ quick glimpse
 
 ## Preparation
 
-Clone the repository and get ready:  
+
+1. Clone the repository:  
 ```sh 
 git clone https://github.com/powerapi-ng/powerapi-ng.github.io.git
 cd powerapi-ng.github.io/docs/script/getting-started
+```
+
+2. Download the archive:
+```
+wget -c https://raw.githubusercontent.com/powerapi-ng/powerapi-ng.github.io/refs/heads/master/docs/script/getting_started.tar.gz -O - | tar -xz
+cd getting_started
 ```
 
 From this archive, you will have all the necessary files to get started, let us break down each element.  
