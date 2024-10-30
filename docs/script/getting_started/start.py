@@ -131,6 +131,7 @@ def start_demo():
 
     print("Starting the demo...")
     print("The demo will run for approximately 2 minutes\n")
+    print("If you wish to stop it, Ctrl-C will do so and stop the docker compose stack\n")
 
     call("./start.sh")
 
