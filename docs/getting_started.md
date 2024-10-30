@@ -21,13 +21,13 @@ If you wish to get started as soon as possible, the following archive will allow
 Reports
 
 3. An [HWPC-Sensor](./reference/sensors/hwpc-sensor.md) that outputs its 
-[HWPCReports](./reference/reports/report.md#HWPCReport) in a MongoDB Database, 
+[HWPCReports](./reference/reports/reports.md#hwpc-reports) in a MongoDB Database, 
 within the HWPCReport Collection
 
 4. A [SmartWatts](./reference/formulas/smartwatts.md) that streams the 
-[HWPCReports](./reference/reports/report.md#HWPCReport) from the MongoDB 
+[HWPCReports](./reference/reports/reports.md#hwpc-reports) from the MongoDB 
 Database Collection, processes it and outputs its 
-[PowerReports](./reference/reports/report.md#PowerReports) as CSV files for a 
+[PowerReports](./reference/reports/reports.md#power-reports) as CSV files for a 
 quick glimpse 
 
 ## Preparation
@@ -82,7 +82,7 @@ python3 start.py
 ```
 
 After the 2 minutes of monitoring, you will be able to see the result inside the **csv** directory.
-If you have trouble understanding the output, you can read the [Power Report documentation](./reference/reports/reports.md#power-Reports).
+If you have trouble understanding the output, you can read the [Power Report documentation](./reference/reports/reports.md#power-reports).
 
 !!! info "Quick results overview"
     Only in the context of this testing archive, after the monitoring, you can use the following command to get a pretty print of the result directly inside the terminal.  
