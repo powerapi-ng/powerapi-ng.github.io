@@ -52,7 +52,10 @@ def signal_handler(sig, frame):
 
 
 def docker_start(time):
-    os.system("docker-compose up -d")
+    id1 = os.popen("id -u").read()
+    id2 = os.popen("id -g").read()
+    print("UID=" + id1[:-1] + " GUID=" + id2[:-1] + " docker compose up -d")
+    os.system("UID=" + id1[:-1] + " GUID=" + id2[:-1] + " docker compose up -d")
     os.system("docker compose logs sensor -f &")
     os.system("docker compose logs formula -f &")
     os.system("sleep " + str(time))
@@ -62,7 +65,7 @@ def docker_start(time):
 def docker_stop():
     os.system("set -ueo pipefail")
     os.system("set +x")
-    os.system("docker-compose down")
+    os.system("docker compose down")
 
 
 def load_data():
@@ -74,6 +77,82 @@ def load_data():
         data.extend(csv.DictReader(f))
     return data
 
+
+def load_result(directory='./csv'):
+    """
+    Load CSV files from the specified directory and return the data as a list of dictionaries.
+    """
+    data = []
+    for root, _, files in os.walk(directory):
+        for filename in files:
+            if filename.endswith('.csv'):
+                file_path = os.path.join(root, filename)
+                with open(file_path, mode='r', newline='', encoding='UTF-8') as f:
+                    data.extend(csv.DictReader(f))
+    return data
+
+
+def calculate_statistics(data, scope):
+    """
+    Calculate average, maximum, and minimum consumption for the given scope (cpu or dram).
+    """
+    stats = {}
+    for row in data:
+        if row['scope'] == scope and row['target'] != 'rapl':
+            target = row['target']
+            consumption = float(row['power'])
+            stats.setdefault(target, []).append(consumption)
+
+    return {
+        target: {
+            'avg': sum(consumptions) / len(consumptions),
+            'max': max(consumptions),
+            'min': min(consumptions)
+        } for target, consumptions in stats.items()
+    }
+
+
+def print_statistics(stats, title):
+    """
+    Print statistics (average, max, min) for the given data in a formatted table.
+    """
+    if not stats:
+        return
+
+    print(f"\n{title}\n")
+    print(f"{'Target':<20} {'Average consumption':<20} {'Maximum consumption':<20} {'Minimum consumption':<20}")
+    print("=" * 80)
+
+    total = {'avg': 0, 'max': 0, 'min': 0}
+    for target, values in stats.items():
+        if target != 'global':
+            print(f"{target:<20} {values['avg']:<20.2f} {values['max']:<20.2f} {values['min']:<20.2f}")
+        else:
+            total = values
+
+    print("-" * 80)
+    print(f"{'Global':<20} {total['avg']:<20.2f} {total['max']:<20.2f} {total['min']:<20.2f}")
+
+
+def start_pretty_print():
+    """
+    Pretty print the CPU and DRAM power consumption statistics from CSV files.
+    """
+    print("The consumptions are given in Watt, note that the precision depends on the configuration file\n")
+
+    data = load_result()
+
+    # Calculate and print CPU statistics
+    cpu_stats = calculate_statistics(data, 'cpu')
+    print_statistics(cpu_stats, "CPU Consumption Statistics :")
+
+    # Calculate and print DRAM statistics
+    dram_stats = calculate_statistics(data, 'dram')
+    print_statistics(dram_stats, "DRAM Consumption Statistics :")
+
+    # Could add the GPU statistics here
+
+    print("\nFor more precise evaluation, consult the PowerAPI documentation to adjust configurations.\n")
 
 def find_cpu(data):
     """
@@ -211,7 +290,8 @@ def start_demo():
 
     print("\nStarting the demo...")
     print("-" * 80)
-    print("The demo will run for " + val + "\n")
+    print("The demo will run for " + str(val) + " seconds\n")
+    print("If you wish to stop it, Ctrl-C will do so and stop the docker compose stack\n")
 
     docker_start(val)
 
@@ -233,9 +313,9 @@ def start_demo():
     else:
         print("\nThe demo has ended, "
               "you can see the result under the /csv directory"
-              " or use 'python3 pretty_print.py' "
-              "to get a quick summary of the result in the terminal\n")
+              " here is a quick summary\n")
 
+    start_pretty_print()
 
 if __name__ == '__main__':
     start_demo()

@@ -11,15 +11,6 @@ services:
     profiles:
       - mongodb
 
-  # CSV (Default is a dummy image, can be used to add treatments on CSV files)
-  csv:
-    container_name: csv
-    image: ${CSV_IMAGE}
-    volumes:
-      - ${PWD}/csv:/tmp/csv
-    profiles:
-      - csv
-
 
   ############################################
   #                POWERAPI                  #
@@ -51,6 +42,7 @@ services:
     
   # PowerAPI Formula
   formula:
+    user: $UID:$GUID
     container_name: formula
     image: ${FORMULA_IMAGE}
     command:

@@ -1,12 +1,13 @@
 {
     "name": "sensor",
     "verbose": true,
-    "frequency": 500,
+    "frequency": 1000,
+    "cgroup_basepath": "/sys/fs/cgroup/",
     "output": {
         "type": "mongodb",
-        "uri": "mongodb://127.0.0.1",
+        "uri": "mongodb://mongodb:27017",
         "database": "db_sensor",
-        "collection": "report_0"
+        "collection": "prep"
     },
     "system": {
         "rapl": {
@@ -32,6 +33,5 @@
                 "INSTRUCTIONS_RETIRED"
             ]
         }
-    },
-    "cgroup_basepath": "/sys/fs/cgroup/"
+    }
 }
