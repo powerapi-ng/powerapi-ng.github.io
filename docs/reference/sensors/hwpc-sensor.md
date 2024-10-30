@@ -9,7 +9,7 @@ The figure below depicts how Sensor works in general :
 ![HWPC Sensor Overview](../../assets/images/reference/sensors/PowerAPI_HWPCSensorOverview.drawio.svg){ width="1000px"}
 
 HWPC Sensor uses the RAPL (Running Average Power Limit) technology to monitor CPU
-power consumption. Have in mind that this sensor is mainly developped for "server" architectures.
+power consumption. Keep in mind that this sensor is mainly developed for "server" architectures.
 The following table gives a glimpse of RAPL support regarding
 most common architectures:  
 
