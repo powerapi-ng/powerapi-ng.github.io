@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker compose up -d
+UID="$(id -u)" GUID="$(id -g) " docker compose up -d
 
 docker compose logs sensor -f &
 
