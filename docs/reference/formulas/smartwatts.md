@@ -5,7 +5,7 @@ SmartWatts needs to receive several metrics available in Sensor's Reports, [HWPC
 
 - The Running Average Power Limit (`RAPL`)
 - `msr` events (`TSC`, `APERF`, `MPERF`)
-- `core` events which depend on the Processor Architucture
+- `core` events which depend on the Processor Architecture
 
 These raw metrics are then used as inputs for a power model that estimates the power consumption of each process. These estimations are recorded in [Power Reports](../reports/reports.md#power-reports)
 
