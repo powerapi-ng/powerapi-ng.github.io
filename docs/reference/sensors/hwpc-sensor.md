@@ -9,7 +9,8 @@ The figure below depicts how Sensor works in general :
 ![HWPC Sensor Overview](../../assets/images/reference/sensors/PowerAPI_HWPCSensorOverview.drawio.svg){ width="1000px"}
 
 HWPC Sensor uses the RAPL (Running Average Power Limit) technology to monitor CPU
-power consumption. The following table gives a glimpse of RAPL support regarding
+power consumption. Have in mind that this sensor is mainly developped for "server" architectures.
+The following table gives a glimpse of RAPL support regarding
 most common architectures:  
 
 !!! tip "CPU architecture"
@@ -17,14 +18,14 @@ most common architectures:
 
 | Architecture | RAPL Supported |
 |--------------|----------------|
+| AMD Zen (1, 2, 3, 4) | :material-check: Supported |
+| Intel Sandy Bridge and [newer](https://en.wikipedia.org/wiki/List_of_Intel_Core_processors#Core_i_(2nd_gen)) (except for below mentions) | :material-check: Supported |
 | Intel Tiger Lake (11th Gen) | :material-close: Not Supported |
 | Intel Alder Lake (12th Gen) | :material-close: Not Supported |
 | Intel Raptor Lake (13th & 14th Gen) | :material-close: Not Supported |
 | Power / ARM / RISCV | :material-close: Not Supported |
-| AMD Zen (1, 2, 3, 4) | :material-check: Supported |
-| Intel Sandy Bridge and [newer](https://en.wikipedia.org/wiki/List_of_Intel_Core_processors#Core_i_(2nd_gen)) (except for above mentions) | :material-check: Supported |
 
-!!! note "HWPC Sensor PreRequisites"
+!!! note "HWPC Sensor pre-requisites"
     In addition of a supported architecture, there is some pre-requisites:
 
     - Using a Linux distribution exposing the [perf](https://perf.wiki.kernel.org/index.php/Main_Page) api  
@@ -121,9 +122,9 @@ As precised, three kinds of outputs are supported: Socket, MongoDB and CSV files
 
 ### Running the Sensor with a Configuration File
 
-The following snippets describe the configuration file of an HWPC Sensor instance, two examples are provided for both possible outputs:
+The following snippets describe the configuration file of an HWPC Sensor instance, two examples are provided for possible outputs:
 
-!!! example "Examples using a Configuration File"
+!!! example "Examples for an Intel Processor, using a Configuration File"
     
     === "MongoDB Output"
         
@@ -170,6 +171,40 @@ The following snippets describe the configuration file of an HWPC Sensor instanc
           "output": {
             "type": "csv",
             "directory": "hwpc_reports"
+          },
+          "system": {
+            "rapl": {
+              "events": ["RAPL_ENERGY_PKG"],
+              "monitoring_type": "MONITOR_ONE_CPU_PER_SOCKET"
+            },
+            "msr": {
+              "events": ["TSC", "APERF", "MPERF"]
+            }
+          },
+          "container": {
+            "core": {
+              "events": [
+                "CPU_CLK_THREAD_UNHALTED:REF_P",
+                "CPU_CLK_THREAD_UNHALTED:THREAD_P",
+                "LLC_MISSES",
+                "INSTRUCTIONS_RETIRED"
+              ]
+            }
+          }
+        }
+        ```
+    
+    === "Socket Output"
+        
+        ```json hl_lines="5-9" title="config_file.json"
+        {
+          "name": "sensor",
+          "verbose": true,
+          "frequency": 500,
+          "output": {
+            "type": "socket",
+            "uri": "http://127.0.0.1",
+            "port": "9876"
           },
           "system": {
             "rapl": {
@@ -253,9 +288,6 @@ The following CLI command shows how to launch an instance of HWPC Sensor with th
           -s "msr" -e "TSC" -e "APERF" -e "MPERF" \
           -c "core" -e "CPU_CLK_THREAD_UNHALTED:REF_P" -e "CPU_CLK_THREAD_UNHALTED:THREAD_P" -e "LLC_MISSES" -e "INSTRUCTIONS_RETIRED"
         ```
-
-!!! note "Reports' Storage"
-    Your [`HWPCReports`](../reports/reports.md#hwpc-reports) will be stored on MongoDB or in the `hwpc_reports.d`directory regarding the output type selected.
 
 !!! tip "CLI parameters' names"
     You can only use shortcuts.
