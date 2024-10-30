@@ -31,7 +31,7 @@ In the following sections we specify the `$report_specific_fields` for each type
 
 ## HWPC Reports
 
-A `HWPCReport` is used to report performance counters and RAPL.
+A `HWPC Report` is used to report performance counters and RAPL.
 Its specific fields are the following:
 
 - `groups`: a list of subreport that can be of three kind, `rapl`, `core` and
@@ -51,7 +51,7 @@ Its specific fields are the following:
   }
 ```
 
-Below you can find an example of `HWPCReport`:
+Below you can find an example of `HWPC Report`:
 
 ```json
 {
@@ -120,12 +120,12 @@ Below you can find an example of `HWPCReport`:
 
 ## Power Reports
 
-A `PowerReport` is used to transfer information about power consumption estimations.
+A `Power Report` is used to transfer information about power consumption estimations.
 Its specific fields are the following:
 
 - `power`: a power value in Watts.
 
-Below you find an exemple of `PowerReport`:
+Below you find an exemple of `Power Report`:
 
 ```json
 {

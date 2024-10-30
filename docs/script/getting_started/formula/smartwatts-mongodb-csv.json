@@ -3,7 +3,7 @@
     "stream": true,
     "input": {
       "puller_mongodb": {
-        "model": "HWPCReport",
+        "model": "HWPC Report",
         "type": "mongodb",
         "name": "puller_mongodb",
         "uri": "mongodb://mongodb:27017",
@@ -13,7 +13,7 @@
     },
     "output": {
       "pusher_csv": {
-        "model": "PowerReport",
+        "model": "Power Report",
         "type": "csv",
         "name": "pusher_csv",
         "directory": "/tmp/csv"

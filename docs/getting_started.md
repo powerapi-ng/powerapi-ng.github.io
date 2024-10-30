@@ -21,13 +21,13 @@ If you wish to get started as soon as possible, the following archive will allow
 Reports
 
 3. An [HWPC-Sensor](./reference/sensors/hwpc-sensor.md) that outputs its 
-[HWPCReports](./reference/reports/reports.md#hwpc-reports) in a MongoDB Database, 
-within the HWPCReport Collection
+[HWPC Reports](./reference/reports/reports.md#hwpc-reports) in a MongoDB Database, 
+within the HWPC Report Collection
 
 4. A [SmartWatts](./reference/formulas/smartwatts.md) that streams the 
-[HWPCReports](./reference/reports/reports.md#hwpc-reports) from the MongoDB 
+[HWPC Reports](./reference/reports/reports.md#hwpc-reports) from the MongoDB 
 Database Collection, processes it and outputs its 
-[PowerReports](./reference/reports/reports.md#power-reports) as CSV files for a 
+[Power Reports](./reference/reports/reports.md#power-reports) as CSV files for a 
 quick glimpse 
 
 ## Preparation
