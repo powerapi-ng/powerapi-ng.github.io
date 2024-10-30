@@ -84,7 +84,7 @@ nav:
   - Formulas:
     #- RAPL: reference/formulas/rapl.md
     - SmartWatts: reference/formulas/smartwatts.md
-    - Configuration Files: reference/formulas/configuration_files.md
+    #- Configuration Files: reference/formulas/configuration_files.md
 # - Sources/Destinations:
 # - Description: reference/database/sources_destinations.md
   - Processors:
