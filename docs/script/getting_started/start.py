@@ -36,6 +36,7 @@ from subprocess import call
 import subprocess
 import json
 
+
 # List of available processor architectures Template: "n - Arch name"
 # If an arch is added, the case statement in the
 # start_demo function should be updated accordingly with the proper core events
@@ -54,8 +55,14 @@ def signal_handler(sig, frame):
 def docker_start(time):
     id1 = os.popen("id -u").read()
     id2 = os.popen("id -g").read()
-    print("UID=" + id1[:-1] + " GUID=" + id2[:-1] + " docker compose up -d")
-    os.system("UID=" + id1[:-1] + " GUID=" + id2[:-1] + " docker compose up -d")
+    with open('env_template', 'r') as firstfile, open('.env', 'a') as secondfile:
+        for line in firstfile:
+            secondfile.write(line)
+        secondfile.write("UID=" + id1)
+        secondfile.write("GUID=" + id2)
+
+    print("docker compose up -d")
+    os.system("docker compose up -d")
     os.system("docker compose logs sensor -f &")
     os.system("docker compose logs formula -f &")
     os.system("sleep " + str(time))
@@ -66,6 +73,7 @@ def docker_stop():
     os.system("set -ueo pipefail")
     os.system("set +x")
     os.system("docker compose down")
+    open('.env', 'w').close()
 
 
 def load_data():
@@ -153,6 +161,7 @@ def start_pretty_print():
     # Could add the GPU statistics here
 
     print("\nFor more precise evaluation, consult the PowerAPI documentation to adjust configurations.\n")
+
 
 def find_cpu(data):
     """
@@ -312,10 +321,11 @@ def start_demo():
               "processor architecture\n")
     else:
         print("\nThe demo has ended, "
-              "you can see the result under the /csv directory"
+              "you can see the result under the /csv directory, but"
               " here is a quick summary\n")
 
     start_pretty_print()
+
 
 if __name__ == '__main__':
     start_demo()

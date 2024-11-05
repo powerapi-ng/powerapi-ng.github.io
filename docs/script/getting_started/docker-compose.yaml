@@ -42,7 +42,7 @@ services:
     
   # PowerAPI Formula
   formula:
-    user: $UID:$GUID
+    user: ${UID}:${GUID}
     container_name: formula
     image: ${FORMULA_IMAGE}
     command:
