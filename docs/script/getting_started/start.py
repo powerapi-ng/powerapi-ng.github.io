@@ -31,8 +31,6 @@ import re
 import csv
 import os
 import sys
-import signal
-from subprocess import call
 import subprocess
 import json
 
@@ -47,21 +45,18 @@ arch_tab = [["Sandy bridge", "Ivy bridge", "Haswell", "Broadwell", "Comet lake"]
             ["Zen 3", "Zen 4"]]
 
 
-def signal_handler(sig, frame):
-    print('You sent SIGINT signal, stoping docker compose stack')
-    call("./stop.sh")
-
-
 def docker_start(time):
+    """
+    Start the docker compose stack and the logs
+    :param time: The duration of the demo
+    """
     id1 = os.popen("id -u").read()
     id2 = os.popen("id -g").read()
-    with open('env_template', 'r') as firstfile, open('.env', 'a') as secondfile:
+    with open('env_template', 'r', encoding='UTF-8') as firstfile, open('.env', 'a', encoding='UTF-8') as secondfile:
         for line in firstfile:
             secondfile.write(line)
         secondfile.write("UID=" + id1)
         secondfile.write("GUID=" + id2)
-
-    print("docker compose up -d")
     os.system("docker compose up -d")
     os.system("docker compose logs sensor -f &")
     os.system("docker compose logs formula -f &")
@@ -70,10 +65,13 @@ def docker_start(time):
 
 
 def docker_stop():
+    """
+    Stop the docker compose stack and clean the environment
+    """
     os.system("set -ueo pipefail")
     os.system("set +x")
     os.system("docker compose down")
-    open('.env', 'w').close()
+    open('.env', 'w', encoding='UTF-8').close()
 
 
 def load_data():
@@ -170,9 +168,9 @@ def find_cpu(data):
     option = []
     line = "cat /proc/cpuinfo | grep 'model name'"
     result = subprocess.check_output(line, shell=True, text=True).split("\n")
-    print("The CPU found is" + result[0].split(":")[1] )
+    print("The CPU found is" + result[0].split(":")[1])
     parse = parse_processor_name(result[0])
-    for row in data :
+    for row in data:
         if parse[0] in row["Name"] and row["Manufacturer"] == parse[1]:
             option.append(row)
 
@@ -193,6 +191,11 @@ def find_cpu(data):
 
 
 def parse_processor_name(name):
+    """
+    Parse the processor name to extract the id and the brand
+    :param name: Name of the processor, extracted from /proc/cpuinfo
+    :return: id adn brand of the processor
+    """
     if "Intel" in name:
         brand = "Intel"
     elif "AMD" in name:
