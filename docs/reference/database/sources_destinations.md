@@ -1,23 +1,19 @@
-# Storage Options
+# Sources and Destinations
 
-Different storage options are available to serve different purpose both for [Sensors](../overview.md#Sensor) and [Formulas](../overview.md#Formula).  
+A PowerAPI Formula uses Sources and Destinations in order to retrieve metrics and store estimations.
 
-Storage is needed to save reports produced by each components.  
-- Sensors store their usage reports  
-- Formulas retrieve usage reports and store energy consumption reports  
-- Visualization tools or individuals need to access reports for analysis  
+For each Source/Destination the parameters to specify are different. For each one of them,
+its parameters are specified in following sections.
 
 ## Summary
-
-The following table defines the existing storage options for Sensors usage reports :  
-
-| Name      | CLI `ouput` parameter value  | JSON `type` tag parameter value|
-| ------------ | --------------------------------------| -------------------------------------------|
-| MongoDB | mongodb | mongodb |
-| CSV |  csv | csv |
-| Socket | socket | socket    |
-| File Database | filedb | filedb |
-
+| Name     | Source   | Destination  | CLI `input`/`ouput` parameter value                                      | JSON `type` tag parameter value                             |
+| ------------- | -----  | ------------- | -------------                                      | ------------------------------------    |
+| MongoDB | Yes  | Yes | mongodb                                      | mongodb    |
+| InfluxDB2 | No  | Yes | influxdb2                                      | influxdb2    |
+| CSV | Yes  | Yes | csv                                      | csv    |
+| Socket | Yes  | No | socket                                      | socket    |
+| File Database | Yes  | Yes | filedb                                      | filedb    |
+| Prometheus | No  | Yes | prometheus                                      | prometheus    |
 
 ## MongoDB
 
@@ -34,7 +30,7 @@ The list of accepted parameters are:
 |`db` (`database` for `HWPCSensor`)           | string | `d` (`D` for `HWPCSensor`)            | N/A | Yes                                                       | The name of your database               |
 |`collection`   | string | `c` (`C` for `HWPCSensor`)          | N/A | Yes                                                       | The name of the collection inside `db`  |
 |`name`         | string | `n`           | `"puller_mongodb"` (Source), `pusher_mongodb` (Destination)| No | The related puller/pusher name. This parameter is not used by `HWPCSensor`                 |
-|`model`        | string | `m`           | `"HWPC Report"` (Source), `Power Report` (Destination) | No         | The Report type stored by the database  |
+|`model`        | string | `m`           | `"HWPCReport"` (Source), `PowerReport` (Destination) | No         | The Report type stored by the database  |
 
 ### JSON File Excerpt
 
@@ -68,7 +64,7 @@ The list of accepted parameters are:
 |`org`          | string | `g`           | N/A           | Yes | The name of the organization associated to the bucket               |
 |`tags`         | string | `t`           | N/A           | No | List of metadata keys of the report separated by `,` that will be kept. `sensor` and `target` are always kept as report metadata                           |
 |`name`         | string | `n`           | `"pusher_influxdb2"` | No                                    | The related pusher name                 |
-|`model`        | string | `m`           | `"Power Report"`  | No | The Report type stored by the database  |
+|`model`        | string | `m`           | `"PowerReport"`  | No | The Report type stored by the database  |
 
 
 InfluxDB2 can only be used as a Destination.
@@ -79,7 +75,7 @@ Below you find an example of configuration excerpt for this kind of Destination.
 
 ```json
 {
-  "model": "Power Report",
+  "model": "PowerReport",
   "type": "influxdb2",
   "uri": "http://127.0.0.1",
   "port": 8086,
@@ -104,7 +100,7 @@ The list of accepted parameters are:
 |`files`(Source)| string  | `f`           | Empty list           | No | The list of input CSV files with the format file1,file2,file3...              |
 |`directory` (Destination and `HWPCSensor`)| string         |`d` (`U` for `HWPCSensor`)          | Current directory           | No |The directory where output CSV files will be written          |
 |`name`         | string | `n`           | `"puller_csv"` (Source), `"pusher_csv"` (Destination)| No | The related puller/pusher name. This parameter is not used by `HWPCSensor`                 |
-|`model`        | string | `m`           | `"HWPC Report"` (Source), `"Power Report"` (Destination)   | No | The Report type stored in CSV files. This parameter is not used by `HWPCSensor`     |
+|`model`        | string | `m`           | `"HWPCReport"` (Source), `"PowerReport"` (Destination)   | No | The Report type stored in CSV files. This parameter is not used by `HWPCSensor`     |
 
 ### JSON File Excerpt
 
@@ -132,7 +128,7 @@ The list of accepted parameters are:
 |`port`         | int    | `P`           | N/A | Yes                                               | The port of communication               |
 |`uri`/ `host`         | int    | `U`           | N/A | Yes                                               | The IP address of the machine running the socket               |
 |`name`         | string | `n`           | `"puller_socket"`| No | The related puller name  |
-|`model`        | string | `m`           | `"HWPC Report"` | No | The Report type managed by the socket |
+|`model`        | string | `m`           | `"HWPCReport"` | No | The Report type managed by the socket |
 
 
 ### JSON File Excerpt
@@ -162,7 +158,7 @@ The list of accepted parameters are:
 | ------------- | -----  | ------------- | -------------| ----------                                        | ------------------------------------    |
 |`filename`     | int    | `f`           | N/A                                                | Yes | The name of the file                    |
 |`name`         | string | `n`           | `"pusher_filedb"` | No | The related pusher name |
-|`model`        | string | `m`           | `"HWPC Report"` (Source) `"Power Report"` (Destination)| No  | The Report type stored in the file      |
+|`model`        | string | `m`           | `"HWPCReport"` (Source) `"PowerReport"` (Destination)| No  | The Report type stored in the file      |
 
 ### JSON File Excerpt
 
@@ -192,7 +188,7 @@ The list of accepted parameters are:
 |`metric-name`  | string | `M`           | N/A | Yes                                              | The exposed metric name                    |
 |`metric-description`  | string | `d`    | `"energy consumption"` | No                             | The exposed metric description                    |
 |`name`         | string | `n`           | `"pusher_prom"` | No | The related pusher name                 |
-|`model`        | string | `m`           | `"Power Report"` | No | The Report type exposed by Prometheus       |
+|`model`        | string | `m`           | `"PowerReport"` | No | The Report type exposed by Prometheus       |
 
 
 Prometheus can only be used as a Destination that monitors reports but they will be not stored by this service.

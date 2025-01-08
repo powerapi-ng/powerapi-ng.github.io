@@ -2,36 +2,39 @@
 
 PowerAPI toolkit is modular, which means any sensor can be plugged to any monitoring
 tool as long as the needed information is provided.
-We fixed the way of encoding the information. Those encoding are called `Reports`.  
+We fixed the way of encoding the information. Those encoding are called reports.
 
 A report type specify the `json` fields that has to be provided to pass information of
 a certain kind. All reports types have a common basis:
 
 
-- `timestamp`: at the [format](https://en.wikipedia.org/wiki/ISO_8601) "YYYY-MM-DDThh\:mm\:ss\.sss". The timestamp indicates when the data was collected, not when it was processed.  
+- `timestamp`: at the format "year-month-dayThour:minutes:seconds". The
+  timestamp reflects the time at which the information correspond, not the
+  time the information was computed.
+  For example if a power consumption of a CPU is measured at time `t` and used to
+  determine the power consumption of a `cgroup` in a `PowerReport`, this report
+  has timestamp `t`.
 
-- `target`: The target refers to the entity being measured. For example, if a report contains data related to a specific program, domain, or other entity, the target identifies that subject. In this context, it corresponds to the cgroup name.
+- `target`: the target is the subject of the measure. For example if
+    you produce a report that contain information relative to a program, domain,
+    etc., the target refers to it. It corresponds to the `cgroup` name.
 
 - `sensor`: it's a name field that is used to identify the reports produced by or computed thanks to a sensor.  
 
-Therefore, a report shall match the following description: 
+  Therefore, a report have the following format:
 
-```json
-{  
+  ```json
   "timestamp":$timestamp,
   "target":$target,
   "sensor":$sensor,
   $report_specific_fields
-}
-```
 
-A valid JSON-Schema to can be found [here](https://raw.githubusercontent.com/powerapi-ng/powerapi-ng.github.io/refs/heads/master/docs/reference/reports/basis-reports.schema.json).
-
+  ```
 In the following sections we specify the `$report_specific_fields` for each type of report.
 
 ## HWPC Reports
 
-A `HWPC Report` is used to report performance counters and RAPL.
+A `HWPCReport` is used to report performance counters and RAPL.
 Its specific fields are the following:
 
 - `groups`: a list of subreport that can be of three kind, `rapl`, `core` and
@@ -39,19 +42,19 @@ Its specific fields are the following:
 
   Each group is represented in the same way:
 
-```json
+  ```json
   {
     $type: {
       $core_number : {
         $socket_number : {
-          Each counter name and their measured value for the type/core_number/socket_number considered triplet
+          List of counter and their value
         }
       }
     }
   }
-```
+  ```
 
-Below you can find an example of `HWPC Report`:
+Below you can find an example of `HWPCReport`:
 
 ```json
 {
@@ -120,12 +123,12 @@ Below you can find an example of `HWPC Report`:
 
 ## Power Reports
 
-A `Power Report` is used to transfer information about power consumption estimations.
+A `PowerReport` is used to transfer information about power consumption estimations.
 Its specific fields are the following:
 
 - `power`: a power value in Watts.
 
-Below you find an exemple of `Power Report`:
+Below you find an exemple of `PowerReport`:
 
 ```json
 {

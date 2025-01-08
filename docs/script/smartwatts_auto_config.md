@@ -17,7 +17,7 @@ echo "
   "stream": true,
   "input": {
     "puller": {
-      "model": "HWPC Report",
+      "model": "HWPCReport",
       "type": "socket",
       "uri": "127.0.0.1",
       "port": 8080,

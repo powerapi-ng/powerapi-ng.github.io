@@ -7,7 +7,7 @@ The RAPL Formula is designed to mesure power consumption of domains (CPU or RAM)
 in real time.
 
 The RAPL Formula takes HWPC Report with RAPL event for each domains. It then
-returns the mesured power in a Power Report for each domain.
+returns the mesured power in a PowerReport for each domain.
 This Formula does not perform any other computation as its goal is only to track
 global power consumption in a more readable way than raw RAPL.
 
@@ -29,7 +29,7 @@ You can use [the following script](../script/rapl_install.sh) to install RAPL Fo
 
 ## Usage
 
-For running the RAPL Formula you need: a Source and a Destination, a Sensor that provides `HWPC Reports` and a configuration.
+For running the RAPL Formula you need: a Source and a Destination, a Sensor that provides `HWPCReports` and a configuration.
 
 ### Source and Destination
 
@@ -42,7 +42,7 @@ docker run -d --name mongo_source_destination -p 27017:27017 mongo
 ```
 
 ### Sensor
-[HWPC Sensor](../sensors/hwpc-sensor.md) is used in order to get `HWPC Reports`. Start by installing the HWPC Sensor (see
+[HWPC Sensor](../sensors/hwpc-sensor.md) is used in order to get `HWPCReports`. Start by installing the HWPC Sensor (see
 [here](../sensors/hwpc-sensor.md#installation)) and start it (see
 [here](../sensors/hwpc-sensor.md#usage)).
 
@@ -69,7 +69,7 @@ Below an example is provided by using MongoDB as Source and Destination.
   "stream": true,
   "input": {
     "puller": {
-      "model": "HWPC Report",
+      "model": "HWPCReport",
       "type": "mongodb",
       "uri": "mongodb://127.0.0.1",
       "db": "test",
@@ -79,7 +79,7 @@ Below an example is provided by using MongoDB as Source and Destination.
   "output": {
     "pusher_power": {
       "type": "mongodb",
-      "model": "Power Report",
+      "model": "PowerReport",
       "type": "mongodb",
       "uri": "mongodb://127.0.0.1",
       "db": "test",
@@ -124,8 +124,8 @@ the installation you use:
      docker run -t \
      --net=host \
      powerapi/powerapi --verbose \
-     --input mongodb --model HWPC Report --uri mongodb://127.0.0.1 --db test --collection prep \
-     --output mongodb --model Power Report --uri mongodb://127.0.0.1 --db test --collection results \
+     --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
+     --output mongodb --model PowerReport --uri mongodb://127.0.0.1 --db test --collection results \
      --disable-dram-formula \
      --sensor-report-sampling-interval 500
      ```
@@ -134,14 +134,14 @@ the installation you use:
 
     ```sh
     python -m powerapi --verbose \
-    --input mongodb --model HWPC Report --uri mongodb://127.0.0.1 --db test --collection prep \
-    --output mongodb --model Power Report --uri mongodb://127.0.0.1 --db test --collection results \
+    --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
+    --output mongodb --model PowerReport --uri mongodb://127.0.0.1 --db test --collection results \
     --disable-dram-formula \
     --sensor-report-sampling-interval 500
     ```
 
 ???+ info "Estimations' Storage"
-    Your `Power Reports` will be stored on MongoDB.
+    Your `PowerReports` will be stored on MongoDB.
 
 ???+ tip "Using shortcuts for parameters' names"
     You use `-` instead of `--`.
