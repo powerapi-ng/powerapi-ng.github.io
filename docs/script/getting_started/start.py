@@ -33,6 +33,7 @@ import os
 import sys
 import subprocess
 import json
+import shutil
 
 
 # List of available processor architectures Template: "n - Arch name"
@@ -50,13 +51,16 @@ def docker_start(time):
     Start the docker compose stack and the logs
     :param time: The duration of the demo
     """
-    id1 = os.popen("id -u").read()
-    id2 = os.popen("id -g").read()
+    csv_directory_path = "csv"
     with open('env_template', 'r', encoding='UTF-8') as firstfile, open('.env', 'a', encoding='UTF-8') as secondfile:
         for line in firstfile:
             secondfile.write(line)
-        secondfile.write("UID=" + id1)
-        secondfile.write("GUID=" + id2)
+
+    if os.path.exists(csv_directory_path):
+        shutil.rmtree(csv_directory_path)
+
+    os.makedirs(csv_directory_path, exist_ok=True)
+
     os.system("docker compose up -d")
     os.system("docker compose logs sensor -f &")
     os.system("docker compose logs formula -f &")
