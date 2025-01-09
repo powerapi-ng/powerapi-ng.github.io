@@ -66,9 +66,12 @@ def start_docker_compose(time):
     if os.path.exists(csv_directory_path):
         shutil.rmtree(csv_directory_path)
 
+
     previous_umask = os.umask(0)
-    os.makedirs(csv_directory_path, exist_ok=True)
-    os.umask(previous_umask)
+    try:
+        os.makedirs(csv_directory_path, exist_ok=True)
+    finally:
+        os.umask(previous_umask)
 
     os.system("bash -c 'docker compose up -d'")
     os.system("bash -c 'docker compose logs sensor -f &'")
