@@ -40,21 +40,24 @@ import shutil
 # If an arch is added, the case statement in the
 # start_demo function should be updated accordingly with the proper core events
 # https://powerapi.org/reference/sensors/hwpc-sensor/
-arch_tab = [["Sandy bridge", "Ivy bridge", "Haswell", "Broadwell", "Comet lake"],
-            ["Skylake", "Cascade lake", "Kaby Lake R", "Kaby Lake", "Coffee Lake", "Amber Lake", "Rocket lake", "Whiskey lake"],
-            ["Zen", "Zen+", "Zen 2"],
-            ["Zen 3", "Zen 4"]]
+architectures_table = [["Sandy bridge", "Ivy bridge", "Haswell", "Broadwell", "Comet lake"],
+                       ["Skylake", "Cascade lake", "Kaby Lake R", "Kaby Lake", "Coffee Lake", "Amber Lake", "Rocket lake", "Whiskey lake"],
+                       ["Zen", "Zen+", "Zen 2"],
+                       ["Zen 3", "Zen 4"]]
+
+csv_directory_path = "csv"
 
 
-def docker_start(time):
+def start_docker_compose(time):
     """
     Start the docker compose stack and the logs
     :param time: The duration of the demo
     """
-    csv_directory_path = "csv"
-    with open('env_template', 'r', encoding='UTF-8') as firstfile, open('.env', 'a', encoding='UTF-8') as secondfile:
-        for line in firstfile:
-            secondfile.write(line)
+
+    with open('env_template', 'r', encoding='UTF-8') as env_template_file, open('.env', 'a', encoding='UTF-8') \
+            as env_file:
+        for current_file_line in env_template_file:
+            env_file.write(current_file_line)
 
     if os.path.exists(csv_directory_path):
         shutil.rmtree(csv_directory_path)
@@ -65,10 +68,10 @@ def docker_start(time):
     os.system("docker compose logs sensor -f &")
     os.system("docker compose logs formula -f &")
     os.system("sleep " + str(time))
-    docker_stop()
+    stop_docker_compose()
 
 
-def docker_stop():
+def stop_docker_compose():
     """
     Stop the docker compose stack and clean the environment
     """
@@ -78,39 +81,42 @@ def docker_stop():
     open('.env', 'w', encoding='UTF-8').close()
 
 
-def load_data():
+def load_cpus_information():
+    """
+    Load CPUs information from a CSV file and return the data as a list of dictionaries.
+    """
+    cpus_information = []
+    with open("./cpu.csv", mode='r', newline='', encoding='UTF-8') as cpu_csv_file:
+        cpus_information.extend(csv.DictReader(cpu_csv_file))
+    return cpus_information
+
+
+def load_csv_files_from_directory(directory=csv_directory_path):
     """
     Load CSV files from the specified directory and return the data as a list of dictionaries.
+    :param directory: The directory that contains the csv files
     """
     data = []
-    with open("./cpu.csv", mode='r', newline='', encoding='UTF-8') as f:
-        data.extend(csv.DictReader(f))
+    for root_directory, _, files in os.walk(directory):
+        for current_file_name in files:
+            if current_file_name.endswith('.csv'):
+                current_file_path = os.path.join(root_directory, current_file_name)
+                with open(current_file_path, mode='r', newline='', encoding='UTF-8') as current_file:
+                    data.extend(csv.DictReader(current_file))
     return data
 
 
-def load_result(directory='./csv'):
+def compute_statistics(data, scope):
     """
-    Load CSV files from the specified directory and return the data as a list of dictionaries.
-    """
-    data = []
-    for root, _, files in os.walk(directory):
-        for filename in files:
-            if filename.endswith('.csv'):
-                file_path = os.path.join(root, filename)
-                with open(file_path, mode='r', newline='', encoding='UTF-8') as f:
-                    data.extend(csv.DictReader(f))
-    return data
-
-
-def calculate_statistics(data, scope):
-    """
-    Calculate average, maximum, and minimum consumption for the given scope (cpu or dram).
+    Compute average, maximum, and minimum consumption for the given scope (CPU or DRAM) by using a given data.
+    :param data: Data to compute statistics
+    :param scope: CPU or DRAM
     """
     stats = {}
-    for row in data:
-        if row['scope'] == scope and row['target'] != 'rapl':
-            target = row['target']
-            consumption = float(row['power'])
+    for current_row in data:
+        if current_row['scope'] == scope and current_row['target'] != 'rapl':
+            target = current_row['target']
+            consumption = float(current_row['power'])
             stats.setdefault(target, []).append(consumption)
 
     return {
@@ -125,6 +131,8 @@ def calculate_statistics(data, scope):
 def print_statistics(stats, title):
     """
     Print statistics (average, max, min) for the given data in a formatted table.
+    :param stats: Statistics to be printed
+    :param title: Title used for the provided statistics
     """
     if not stats:
         return
@@ -150,14 +158,14 @@ def start_pretty_print():
     """
     print("The consumptions are given in Watt, note that the precision depends on the configuration file\n")
 
-    data = load_result()
+    data = load_csv_files_from_directory()
 
     # Calculate and print CPU statistics
-    cpu_stats = calculate_statistics(data, 'cpu')
+    cpu_stats = compute_statistics(data, 'cpu')
     print_statistics(cpu_stats, "CPU Consumption Statistics :")
 
     # Calculate and print DRAM statistics
-    dram_stats = calculate_statistics(data, 'dram')
+    dram_stats = compute_statistics(data, 'dram')
     print_statistics(dram_stats, "DRAM Consumption Statistics :")
 
     # Could add the GPU statistics here
@@ -220,37 +228,37 @@ def start_demo():
     """
     print("PowerAPI demo")
     print("=" * 80)
-    cpu = find_cpu(load_data())
+    cpu = find_cpu(load_cpus_information())
 
     print("\nSetting up configuration files...")
     print("-" * 80)
     # Update core events in the sensor configuration
     # file based on the selected processor architecture
-    with open('sensor/hwpc-mongodb.json', encoding='UTF-8') as f:
-        data = json.load(f)
+    with open('sensor/hwpc-mongodb.json', encoding='UTF-8') as hwpc_sensor_configuration_file:
+        sensor_configuration = json.load(hwpc_sensor_configuration_file)
 
-    if cpu["Family"] in arch_tab[0]:
-        data['container']['core']['events'] = [
+    if cpu["Family"] in architectures_table[0]:
+        sensor_configuration['container']['core']['events'] = [
             "CPU_CLK_UNHALTED:REF_P",
             "CPU_CLK_UNHALTED:THREAD_P",
             "LLC_MISSES",
             "INSTRUCTIONS_RETIRED"
         ]
-    elif cpu["Family"] in arch_tab[1]:
-        data['container']['core']['events'] = [
+    elif cpu["Family"] in architectures_table[1]:
+        sensor_configuration['container']['core']['events'] = [
             "CPU_CLK_THREAD_UNHALTED:REF_P",
             "CPU_CLK_THREAD_UNHALTED:THREAD_P",
             "LLC_MISSES",
             "INSTRUCTIONS_RETIRED"
         ]
-    elif cpu["Family"] in arch_tab[2]:
-        data['container']['core']['events'] = [
+    elif cpu["Family"] in architectures_table[2]:
+        sensor_configuration['container']['core']['events'] = [
             "CYCLES_NOT_IN_HALT",
             "RETIRED_INSTRUCTIONS",
             "RETIRED_UOPS"
         ]
-    elif cpu["Family"] in arch_tab[3]:
-        data['container']['core']['events'] = [
+    elif cpu["Family"] in architectures_table[3]:
+        sensor_configuration['container']['core']['events'] = [
             "CYCLES_NOT_IN_HALT",
             "RETIRED_INSTRUCTIONS",
             "RETIRED_OPS"
@@ -263,18 +271,18 @@ def start_demo():
     cgroup = subprocess.run(["stat", "-fc", "%T", "/sys/fs/cgroup/"],
                             text=True, capture_output=True, check=True)
     if cgroup.stdout == "cgroup2fs\n":
-        data["cgroup_basepath"] = "/sys/fs/cgroup/"
+        sensor_configuration["cgroup_basepath"] = "/sys/fs/cgroup/"
     else:
-        data["cgroup_basepath"] = "/sys/fs/cgroup/perf_event"
+        sensor_configuration["cgroup_basepath"] = "/sys/fs/cgroup/perf_event"
 
-    print("Cgroup version updated")
+    print("cgroup version updated")
 
-    with open('sensor/hwpc-mongodb.json', 'w', encoding='UTF-8') as f:
-        json.dump(data, f, indent=4)
+    with open('sensor/hwpc-mongodb.json', 'w', encoding='UTF-8') as hwpc_sensor_configuration_file:
+        json.dump(sensor_configuration, hwpc_sensor_configuration_file, indent=4)
 
     # Update parameters in the formula configuration
-    with open('formula/smartwatts-mongodb-csv.json', encoding='UTF-8') as f:
-        formula_config = json.load(f)
+    with open('formula/smartwatts-mongodb-csv.json', encoding='UTF-8') as smartwatts_configuration_file:
+        formula_config = json.load(smartwatts_configuration_file)
 
     if cpu["Base frequency"] != '':
         formula_config["cpu-base-freq"] = int(float(cpu["Base frequency"])*1000)
@@ -284,21 +292,21 @@ def start_demo():
         formula_config["cpu-tdp"] = int(cpu["TDP"][:-1])
     print("TDP updated\n")
 
-    with open('formula/smartwatts-mongodb-csv.json', 'w', encoding='UTF-8') as f:
-        json.dump(formula_config, f, indent=4)
+    with open('formula/smartwatts-mongodb-csv.json', 'w', encoding='UTF-8') as smartwatts_configuration_file:
+        json.dump(formula_config, smartwatts_configuration_file, indent=4)
 
     print("Please enter the number of second you want the demo to run for (minimum 30) or exit to quit:")
-    waiting = True
-    while waiting:
+    waiting_for_execution_time = True
+    while waiting_for_execution_time:
         try:
-            val = input()
-            val = int(val)
-            if val < 30:
+            execution_time = input()
+            execution_time = int(execution_time)
+            if execution_time < 30:
                 print("Invalid input, please enter a valid number or exit to quit")
             else:
-                waiting = False
+                waiting_for_execution_time = False
         except ValueError:
-            if val == "exit":
+            if execution_time == "exit":
                 print("Exiting...")
                 sys.exit()
             else:
@@ -306,15 +314,15 @@ def start_demo():
 
     print("\nStarting the demo...")
     print("-" * 80)
-    print("The demo will run for " + str(val) + " seconds\n")
+    print("The demo will run for " + str(execution_time) + " seconds\n")
     print("If you wish to stop it, Ctrl-C will do so and stop the docker compose stack\n")
 
-    docker_start(val)
+    start_docker_compose(execution_time)
 
     verification = 0
 
     # Get all the csv power report in the csv directory
-    for root, _, files in os.walk('./csv'):
+    for root, _, files in os.walk(csv_directory_path):
         for filename in files:
             if filename.endswith('.csv'):
                 verification += 1
