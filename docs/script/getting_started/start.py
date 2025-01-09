@@ -207,6 +207,9 @@ def find_cpu(data):
             print(str(i) + " - " + option[i]["Name"])
         choice = int(input())
         print("You have selected : " + option[choice]["Name"])
+        if choice < 0 or choice >= len(option):
+            print("Invalid choice, exiting...")
+            sys.exit()
         cpu = option[choice]
     return cpu
 
