@@ -35,17 +35,21 @@ import subprocess
 import json
 import shutil
 
-
 # List of available processor architectures Template: "n - Arch name"
 # If an arch is added, the case statement in the
 # start_demo function should be updated accordingly with the proper core events
 # https://powerapi.org/reference/sensors/hwpc-sensor/
 architectures_table = [["Sandy bridge", "Ivy bridge", "Haswell", "Broadwell", "Comet lake"],
-                       ["Skylake", "Cascade lake", "Kaby Lake R", "Kaby Lake", "Coffee Lake", "Amber Lake", "Rocket lake", "Whiskey lake"],
+                       ["Skylake", "Cascade lake", "Kaby Lake R", "Kaby Lake", "Coffee Lake", "Amber Lake",
+                        "Rocket lake", "Whiskey lake"],
                        ["Zen", "Zen+", "Zen 2"],
                        ["Zen 3", "Zen 4"]]
 
+# The csv directory path
 csv_directory_path = "csv"
+
+# The default execution time for the demo
+minimum_execution_time = 30
 
 
 def start_docker_compose(time):
@@ -67,7 +71,7 @@ def start_docker_compose(time):
     os.system("bash -c 'docker compose up -d'")
     os.system("bash -c 'docker compose logs sensor -f &'")
     os.system("bash -c 'docker compose logs formula -f &'")
-    os.system("bash -c 'sleep " + str(time)+"'")
+    os.system("bash -c 'sleep " + str(time) + "'")
     stop_docker_compose()
 
 
@@ -285,7 +289,7 @@ def start_demo():
         formula_config = json.load(smartwatts_configuration_file)
 
     if cpu["Base frequency"] != '':
-        formula_config["cpu-base-freq"] = int(float(cpu["Base frequency"])*1000)
+        formula_config["cpu-base-freq"] = int(float(cpu["Base frequency"]) * 1000)
     print("Base frequency updated")
 
     if cpu["TDP"] != '':
@@ -295,13 +299,14 @@ def start_demo():
     with open('formula/smartwatts-mongodb-csv.json', 'w', encoding='UTF-8') as smartwatts_configuration_file:
         json.dump(formula_config, smartwatts_configuration_file, indent=4)
 
-    print("Please enter the number of second you want the demo to run for (minimum 30) or exit to quit:")
+    print(f'Please enter the number of second you want the demo to run for (minimum {minimum_execution_time}) or exit '
+          f'to quit:')
     waiting_for_execution_time = True
     while waiting_for_execution_time:
         try:
             execution_time = input()
             execution_time = int(execution_time)
-            if execution_time < 30:
+            if execution_time < minimum_execution_time:
                 print("Invalid input, please enter a valid number or exit to quit")
             else:
                 waiting_for_execution_time = False
@@ -314,7 +319,7 @@ def start_demo():
 
     print("\nStarting the demo...")
     print("-" * 80)
-    print("The demo will run for " + str(execution_time) + " seconds\n")
+    print(f'The demo will run for {execution_time} seconds\n')
     print("If you wish to stop it, Ctrl-C will do so and stop the docker compose stack\n")
 
     start_docker_compose(execution_time)
@@ -327,7 +332,7 @@ def start_demo():
             if filename.endswith('.csv'):
                 verification += 1
                 file_path = os.path.join(root, filename)
-                print("\nThe power report is available at: " + file_path)
+                print(f'\nThe power report is available at: {file_path}')
 
     if verification == 0:
         print("\nNo power report available, "
