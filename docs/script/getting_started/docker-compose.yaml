@@ -1,0 +1,84 @@
+services:
+  ############################################
+  #          SOURCES & DESTINATIONS          #
+  ############################################
+  # MongoDB
+  mongodb:
+    container_name: mongodb
+    image: ${MONGO_IMAGE}
+    networks:
+      - powerapi-network
+    profiles:
+      - mongodb
+
+
+  ############################################
+  #                POWERAPI                  #
+  ############################################
+  # PowerAPI Sensor
+  sensor:
+    container_name: sensor
+    image: ${SENSOR_IMAGE}
+    privileged: true
+    command:
+      - "--config-file"
+      - "/etc/sensor.json"
+    volumes:
+      - ${PWD}/sensor/hwpc-${POWERAPI_SOURCE}.json:/etc/sensor.json
+      - type: bind
+        source: /proc
+        target: /proc
+      - type: bind
+        source: /sys
+        target: /sys
+      - type: bind
+        source: /var/lib/docker/containers
+        target: /var/lib/docker/containers
+    depends_on:
+      - ${POWERAPI_SOURCE}
+    networks:
+      - powerapi-network
+    restart: unless-stopped
+    
+  # PowerAPI Formula
+  formula:
+    container_name: formula
+    image: ${FORMULA_IMAGE}
+    command:
+      - "--config-file"
+      - "/etc/formula.json"
+    volumes:
+      - ${PWD}/formula/smartwatts-${POWERAPI_SOURCE}-${POWERAPI_DESTINATION}.json:/etc/formula.json
+      - ${PWD}/csv:/tmp/csv
+    networks:
+      - powerapi-network     
+    restart: unless-stopped
+
+
+  
+  ############################################
+  #                  TOOLS                   #
+  ############################################
+  
+  # Mongo Express
+  mongo-express:
+    container_name: mongo-express
+    image: ${MONGOEXPRESS_IMAGE}
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_URL: mongodb://mongodb:27017
+    depends_on:
+      - mongodb
+    ports: 
+      - "8081:8081"
+    networks:
+      - powerapi-network
+    profiles:
+      - mongodb
+
+############################################
+#                  DOCKER                  #
+############################################
+
+networks:
+  powerapi-network:

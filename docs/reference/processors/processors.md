@@ -3,8 +3,8 @@
 Processors enable customized filtering and/or modifications of `Reports`.
 There are two kinds of processors:
 
-- `PreProcessors`: They are located between the `Puller` and the `Dispatcher`. They are supposed to pre-process the `HWPCReports` before computing estimations.
-- `PostProcessors`: They are located between, the `Formula` and the `Pusher`. They process `PowerReports` before storing them on the `Destination`.
+- `PreProcessors`: They are located between the `Puller` and the `Dispatcher`. They are supposed to pre-process the `HWPC Reports` before computing estimations.
+- `PostProcessors`: They are located between, the `Formula` and the `Pusher`. They process `Power Reports` before storing them on the output storage option.
 
 Figure below depicts where are they introduced in the architecture of a Software `PowerMeters`.
 
@@ -60,8 +60,8 @@ As notice, a `PreProcessor` is defined inside the `pre-processor` group. In this
      docker run -t \
      --net=host \
      powerapi/smartwatts-formula --verbose \
-     --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
-     --output influxdb --model PowerReport --uri 127.0.0.1 --port 8086 --db test_result \
+     --input mongodb --model HWPC Report --uri mongodb://127.0.0.1 --db test --collection prep \
+     --output influxdb --model Power Report --uri 127.0.0.1 --port 8086 --db test_result \
      {==--pre-processor k8s --name p1 --api-mode local --puller puller==} \
      --cpu-base-freq 1900 \
      --cpu-error-threshold 2.0 \
@@ -74,8 +74,8 @@ As notice, a `PreProcessor` is defined inside the `pre-processor` group. In this
     ```sh
     python -m smartwatts \
     --verbose \
-    --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
-    --output influxdb --model PowerReport --uri 127.0.0.1 --port 8086 --db test_result \
+    --input mongodb --model HWPC Report --uri mongodb://127.0.0.1 --db test --collection prep \
+    --output influxdb --model Power Report --uri 127.0.0.1 --port 8086 --db test_result \
     {==--pre-processor k8s --name p1 --api-mode local --puller puller==} \
     --cpu-base-freq 1900 \
     --cpu-error-threshold 2.0 \
@@ -96,12 +96,12 @@ As notice, a `PreProcessor` is defined inside the `pre-processor` group. In this
     -e POWERAPI_CPU_ERROR_THRESHOLD=2.0 \
     -e POWERAPI_DISABLE_DRAM_FORMULA=true \
     -e POWERAPI_SENSOR_REPORTS_FREQUENCY=1000 \
-    -e POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
+    -e POWERAPI_INPUT_PULLER_MODEL=HWPC Report \
     -e POWERAPI_INPUT_PULLER_TYPE=mongodb \
     -e POWERAPI_INPUT_PULLER_URI=mongodb://127.0.0.1 \
     -e POWERAPI_INPUT_PULLER_DB=test \
     -e POWERAPI_INPUT_PULLER_COLLECTION=prep \
-    -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport \
+    -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=Power Report \
     -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb \
     -e POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1 \
     -e POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086 \
@@ -121,12 +121,12 @@ As notice, a `PreProcessor` is defined inside the `pre-processor` group. In this
     export POWERAPI_CPU_ERROR_THRESHOLD=2.0
     export POWERAPI_DISABLE_DRAM_FORMULA=true
     export POWERAPI_SENSOR_REPORTS_FREQUENCY=1000
-    export POWERAPI_INPUT_PULLER_MODEL=HWPCReport
+    export POWERAPI_INPUT_PULLER_MODEL=HWPC Report
     export POWERAPI_INPUT_PULLER_TYPE=mongodb
     export POWERAPI_INPUT_PULLER_URI=mongodb://127.0.0.1
     export POWERAPI_INPUT_PULLER_DB=test
     export POWERAPI_INPUT_PULLER_COLLECTION=prep
-    export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport
+    export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=Power Report
     export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb
     export POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1
     export POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086
@@ -140,7 +140,7 @@ As notice, a `PreProcessor` is defined inside the `pre-processor` group. In this
 
 ### Example of Usage with SmartWatts Formula via a Configuration File
 
-Below an example is provided by using MongoDB as Source and InfluxDB as Destination.
+Below an example is provided by using MongoDB as input and InfluxDB as output.
 
 ```json
 {
@@ -148,7 +148,7 @@ Below an example is provided by using MongoDB as Source and InfluxDB as Destinat
   "stream": true,
   "input": {
     "puller": {
-      "model": "HWPCReport",
+      "model": "HWPC Report",
       "type": "mongodb",
       "uri": "mongodb://127.0.0.1",
       "db": "test",
