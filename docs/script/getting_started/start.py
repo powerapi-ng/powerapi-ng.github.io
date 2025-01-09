@@ -64,10 +64,10 @@ def start_docker_compose(time):
 
     os.makedirs(csv_directory_path, exist_ok=True)
 
-    os.system("bash -c docker compose up -d")
-    os.system("bash -c docker compose logs sensor -f &")
-    os.system("bash -c docker compose logs formula -f &")
-    os.system("bash -c sleep " + str(time))
+    os.system("bash -c 'docker compose up -d'")
+    os.system("bash -c 'docker compose logs sensor -f &'")
+    os.system("bash -c 'docker compose logs formula -f &'")
+    os.system("bash -c 'sleep " + str(time)+"'")
     stop_docker_compose()
 
 
@@ -75,9 +75,9 @@ def stop_docker_compose():
     """
     Stop the docker compose stack and clean the environment
     """
-    os.system("bash -c set -ueo pipefail")
-    os.system("bash -c set +x")
-    os.system("bash -c docker compose down")
+    os.system("bash -c 'set -ueo pipefail'")
+    os.system("bash -c 'set +x'")
+    os.system("bash -c 'docker compose down'")
     open('.env', 'w', encoding='UTF-8').close()
 
 
