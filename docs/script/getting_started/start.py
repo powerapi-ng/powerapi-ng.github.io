@@ -327,7 +327,7 @@ def start_demo():
             if filename.endswith('.csv'):
                 verification += 1
                 file_path = os.path.join(root, filename)
-                print("The power report is available at: " + file_path)
+                print("\nThe power report is available at: " + file_path)
 
     if verification == 0:
         print("\nNo power report available, "
