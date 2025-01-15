@@ -1,10 +1,13 @@
 site_name: "PowerAPI"
 site_description: "PowerAPI"
 repo_url: https://github.com/powerapi-ng/powerapi
-copyright: Copyright &copy; 2024 Inria, University of Lille
+copyright: >-
+  Copyright &copy; 2025 <a href="https://inria.fr">Inria</a> and the <a href="https://www.univ-lille.fr">University of Lille</a>.</br>
+  The content of the <a href="https://powerapi.org">powerapi.org</a> website is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</br>
+  Logos of sponsors displayed on this website are protected under trademark law and remain the property of their respective owners.
+
 extra_css:
   - stylesheets/extra.css
-
 extra_javascript:
   - javascripts/extra.js
 
