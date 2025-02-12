@@ -114,8 +114,7 @@ Table below depicts the different parameters for CSV type input:
     
     | Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
     | ------------- | -----   | ------------- | ------------- | ----------| ------------------------------------                                          |
-    | `files` | string         | `f`           |  ""           | No | The list of input CSV files with the format "file1,file2,file3..."        |
-    | `directory` | string         | `d`           | "." (Current directory)           | No |The directory where output CSV files will be written          |
+    | `files` | string         | `f`           |  ""           | No | The list of input CSV files with the format "file1,file2,file3..."        |    | `directory` | string         | `d`           | "." (Current directory)           | No |The directory where output CSV files will be written          |
     | `name`   | string | `n`          | puller_csv | No                                                       | The related puller name |
     | `model`   | string | `m`          | HWPC Report | No                                                       | The Report type stored by the database |
     
@@ -262,8 +261,9 @@ In order to run the Formula, you can execute one of the following command lines,
         ```sh hl_lines="4 5"
         docker run -t \
           --net=host \
+          --volume /tmp/powerapi-sensor-reporting:/data \
           powerapi/smartwatts-formula --verbose \
-          --input csv --model HWPCReport --directory hwcp\_reports.d --files "hwpc\_report\_1, hwpc\_report\_2" \
+          --input csv --model HWPCReport --files "/data/rapl.csv,/data/msr.csv,/data/core.csv" \
           --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
           --cpu-base-freq 1900 \
           --cpu-error-threshold 2.0 \
@@ -275,9 +275,10 @@ In order to run the Formula, you can execute one of the following command lines,
     
         ```sh hl_lines="4 5"
         docker run -t \
-          --net=host \
+          --volume /tmp/powerapi-sensor-reporting:/data \
+          --volume $(pwd)/power_reports.d:/home/powerapi/power_reports.d
           powerapi/smartwatts-formula --verbose \
-          --input csv --model HWPCReport --directory hwcp\_reports.d --files "hwpc\_report\_1, hwpc\_report\_2" \
+          --input csv --model HWPCReport --files "/data/rapl.csv,/data/msr.csv,/data/core.csv" \
           --output csv --directory power_reports.d \
           --cpu-base-freq 1900 \
           --cpu-error-threshold 2.0 \
@@ -293,7 +294,7 @@ In order to run the Formula, you can execute one of the following command lines,
         python -m smartwatts \
         --verbose \
         --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
-        --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken\
+        --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
         --cpu-base-freq 1900 \
         --cpu-error-threshold 2.0 \
         --disable-dram-formula \
@@ -305,8 +306,8 @@ In order to run the Formula, you can execute one of the following command lines,
         ```sh hl_lines="3 4"
         python -m smartwatts \
         --verbose \
-        --input csv --model HWPCReport --directory hwcp\_reports.d --name puller\_csv --files "hwpc\_report\_1.json, hwpc\_report\_2.json" \
-        --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken\
+        --input csv --model HWPCReport --name puller_csv --files "rapl.csv,msr.csv,core.csv" \
+        --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
         --cpu-base-freq 1900 \
         --cpu-error-threshold 2.0 \
         --disable-dram-formula \
@@ -314,12 +315,13 @@ In order to run the Formula, you can execute one of the following command lines,
         ```
    
     === "Pip with CSV/CSV"
-    
+    === `power_reports.d` should be accessible by the user defined in the dockerfile
+    === You can change permissions with `chmod`
         ```sh hl_lines="3 4"
         python -m smartwatts \
         --verbose \
-        --input csv --model HWPCReport --directory hwcp\_reports.d --name puller\_csv --files "hwpc\_report\_1.json, hwpc\_report\_2.json" \
-        --output csv --directory power_reports.d\
+        --input csv --model HWPCReport --name puller_csv --files "rapl.csv,msr.csv,core.csv" \
+        --output csv --directory power_reports.d \
         --cpu-base-freq 1900 \
         --cpu-error-threshold 2.0 \
         --disable-dram-formula \
