@@ -5,7 +5,7 @@ performance counter and the power consumption of CPU.
 
 HWPC Sensor uses the RAPL (Running Average Power Limit) technology to monitor CPU
 power consumption. This technology is only available on **Intel Sandy Bridge**
-architecture or **newer**. However, Intel Core **Tiger Lake**, **Alder Lake** and **Raptor Lake** families for **desktop** and **mobile** **are not supported**. The sensor is also available on **AMD Zen (1,2,34)**. **Power/ARM/RISCV are not supported** architectures.
+architecture or **newer**. However, Intel Core **Tiger Lake**, **Alder Lake** and **Raptor Lake** families for **desktop** and **mobile** **are not supported**. The sensor is also available on **AMD Zen (1,2,3)**. **Power/ARM/RISCV are not supported** architectures.
 
 In particular, it exploits the `perf` API of the **Linux kernel**. It is only available on Linux
 and need to have **root access** to be used. If you are using version **1.2 or older**, the sensor requires **cgroup V1**.
@@ -66,8 +66,9 @@ Table below depicts the different group events for compatible Intel and AMD arch
 
 | Architectures                | Group   | Events        |
 | -------------               | -----   | ------------- |
-|Intel Sandy Bridge and newer, AMD Zen 2  | `rapl`  | `RAPL_ENERGY_PKG`, `RAPL_ENERGY_DRAM`|
-|Intel Sandy Bridge and newer, AMD Zen 2  | `msr`  | `TSC`, `APERF`, `MPERF`|
+|Intel Sandy Bridge and newer | `rapl`  | `RAPL_ENERGY_PKG`, `RAPL_ENERGY_DRAM`|
+|AMD Zen 2 and 3 | `rapl`  | `RAPL_ENERGY_PKG`|
+|Intel Sandy Bridge and newer, AMD Zen 2 and 3  | `msr`  | `TSC`, `APERF`, `MPERF`|
 |Intel Skylake, Whiskey Lake, Coffe Lake| `core` | `CPU_CLK_THREAD_UNHALTED:REF_P`, `CPU_CLK_THREAD_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
 |Intel Sandy Bridge, Comet Lake | `core` | `CPU_CLK_UNHALTED:REF_P`, `CPU_CLK_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
 |AMD Zen 2 | `core`| `CYCLES_NOT_IN_HALT`, `RETIRED_INSTRUCTIONS` , `RETIRED_UOPS`|
