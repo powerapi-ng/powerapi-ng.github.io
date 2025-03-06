@@ -20,7 +20,7 @@ The sensor provides raw values of performance counters as well as `RAPL` raw val
 === "Docker"
 
     ```bash
-    docker pull powerapi/hwpc-sensor
+    docker pull ghcr.io/powerapi-ng/hwpc-sensor
     ```
 
 ## Usage

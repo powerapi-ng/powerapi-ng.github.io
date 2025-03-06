@@ -24,7 +24,7 @@ You can use the following command to install SmartWatts:
 
 === "Docker"
     ```
-    docker pull powerapi/smartwatts-formula
+    docker pull ghcr.io/powerapi-ng/smartwatts-formula
     ```
 === "Pypi"
 
