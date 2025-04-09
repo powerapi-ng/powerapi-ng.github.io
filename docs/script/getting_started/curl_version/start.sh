@@ -39,16 +39,18 @@ then
     if [ "$CPUF" = "sandybridge" ] || [ "$CPUF" = "ivybridge" ] || [ "$CPUF" = "haswell" ] || [ "$CPUF" = "broadwell" ] || [ "$CPUF" = "cometlake" ]
     then
         echo "Intel1"
-        curl -sSL http://localhost:8000/docker-compose-intel1.yaml -o docker-compose-intel1.yaml
-        sed -i "/sensor:/,/^[^ ]/s/^\(\s*- \"-o\"\)/\1\n      - \"-p\"\n      - \"${cgroup_path}\"/" docker-compose-intel1.yaml
+        curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/docker-compose-intel1.yaml -o docker-compose-intel1.yaml
+        sed -i "/- \"-o\"/a\      - \"-p\"\n      - \"${cgroup_path}\"" docker-compose-intel1.yaml
         docker compose -f docker-compose-intel1.yaml up
+        sed -i '/- "-p"/,+1d' docker-compose-intel1.yaml
     fi
     if [ "$CPUF" = "skylake" ] || [ "$CPUF" = "cascadelake" ] || [ "$CPUF" = "kabylaker" ] || [ "$CPUF" = "kabylake" ] || [ "$CPUF" = "coffeelake" ] || [ "$CPUF" = "amberlake" ] || [ "$CPUF" = "rocketlake" ] || [ "$CPUF" = "whiskeylake" ]
     then
         echo "Intel2"
-        curl -sSL http://localhost:8000/docker-compose-intel2.yaml -o docker-compose-intel2.yaml
+        curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/docker-compose-intel2.yaml -o docker-compose-intel2.yaml
         sed -i "/- \"-o\"/a\      - \"-p\"\n      - \"${cgroup_path}\"" docker-compose-intel2.yaml
         docker compose -f docker-compose-intel2.yaml up
+        sed -i '/- "-p"/,+1d' docker-compose-intel2.yaml
     fi
 fi
 
@@ -63,18 +65,20 @@ then
     then
         echo "AMD1"
         echo "$CPUF"
-        curl -sSL http://localhost:8000/docker-compose-amd1.yaml -o docker-compose-amd1.yaml
-        sed -i "/sensor:/,/^[^ ]/s/^\(\s*- \"-o\"\)/\1\n      - \"-p\"\n      - \"${cgroup_path}\"/" docker-compose-amd1.yaml
+        curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/docker-compose-amd1.yaml -o docker-compose-amd1.yaml
+        sed -i "/- \"-o\"/a\      - \"-p\"\n      - \"${cgroup_path}\"" docker-compose-amd1.yaml
         docker compose -f docker-compose-amd1.yaml up 
+        sed -i '/- "-p"/,+1d' docker-compose-amd1.yaml
     fi
 
     if [ "$CPUF" = "2" ]
     then
         echo "AMD2"
         echo "$CPUF"
-        curl -sSL http://localhost:8000/docker-compose-amd2.yaml -o docker-compose-amd2.yaml
-        sed -i "/sensor:/,/^[^ ]/s/^\(\s*- \"-o\"\)/\1\n      - \"-p\"\n      - \"${cgroup_path}\"/" docker-compose-amd2.yaml
+        curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/docker-compose-amd2.yaml -o docker-compose-amd2.yaml
+        sed -i "/- \"-o\"/a\      - \"-p\"\n      - \"${cgroup_path}\"" docker-compose-amd2.yaml
         docker compose -f docker-compose-amd2.yaml up 
+        sed -i '/- "-p"/,+1d' docker-compose-amd2.yaml
     fi
 
     echo "$CPUF"
