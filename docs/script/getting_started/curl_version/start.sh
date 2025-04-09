@@ -53,6 +53,20 @@ else
     log_warn "'formula/smartwatts-mongodb-mongodb.json' file already existing."
 fi
 
+if [ ! -d "sensor" ]; then
+    mkdir -p sensor
+    log_info "'sensor' directory created."
+else
+    log_warn "'sensor' directory already existing."
+fi
+
+if [ ! -f "sensor/hwpc-mongodb.json" ]; then
+    touch sensor/hwpc-mongodb.json
+    log_info "'sensor/hwpc-mongodb.json' file created."
+else
+    log_warn "'sensor/hwpc-mongodb.json' file already existing."
+fi
+
 log_info "Detecting cgroup..."
 
 cgroup=$(stat -fc %T /sys/fs/cgroup/)
