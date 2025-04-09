@@ -114,8 +114,7 @@ Table below depicts the different parameters for CSV type input:
     
     | Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
     | ------------- | -----   | ------------- | ------------- | ----------| ------------------------------------                                          |
-    | `files` | string         | `f`           |  ""           | No | The list of input CSV files with the format "file1,file2,file3..."        |
-    | `directory` | string         | `d`           | "." (Current directory)           | No |The directory where output CSV files will be written          |
+    | `files` | string         | `f`           |  ""           | No | The list of input CSV files with the format "file1,file2,file3..."        |    | `directory` | string         | `d`           | "." (Current directory)           | No |The directory where output CSV files will be written          |
     | `name`   | string | `n`          | puller_csv | No                                                       | The related puller name |
     | `model`   | string | `m`          | HWPC Report | No                                                       | The Report type stored by the database |
     
@@ -249,8 +248,8 @@ In order to run the Formula, you can execute one of the following command lines,
         docker run -t \
           --net=host \
           powerapi/smartwatts-formula --verbose \
-          --input mongodb --model HWPC Report --uri mongodb://127.0.0.1 --db test --collection prep \
-          --output influxdb2 --model Power Report --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
+          --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
+          --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
           --cpu-base-freq 1900 \
           --cpu-error-threshold 2.0 \
           --disable-dram-formula \
@@ -262,9 +261,10 @@ In order to run the Formula, you can execute one of the following command lines,
         ```sh hl_lines="4 5"
         docker run -t \
           --net=host \
+          --volume /tmp/powerapi-sensor-reporting:/data \
           powerapi/smartwatts-formula --verbose \
-          --input csv --model HWPC Report --directory hwcp\_reports.d --files "hwpc\_report\_1, hwpc\_report\_2" \
-          --output influxdb2 --model Power Report --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
+          --input csv --model HWPCReport --files "/data/rapl.csv,/data/msr.csv,/data/core.csv" \
+          --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
           --cpu-base-freq 1900 \
           --cpu-error-threshold 2.0 \
           --disable-dram-formula \
@@ -275,9 +275,10 @@ In order to run the Formula, you can execute one of the following command lines,
     
         ```sh hl_lines="4 5"
         docker run -t \
-          --net=host \
+          --volume /tmp/powerapi-sensor-reporting:/data \
+          --volume $(pwd)/power_reports.d:/home/powerapi/power_reports.d
           powerapi/smartwatts-formula --verbose \
-          --input csv --model HWPC Report --directory hwcp\_reports.d --files "hwpc\_report\_1, hwpc\_report\_2" \
+          --input csv --model HWPCReport --files "/data/rapl.csv,/data/msr.csv,/data/core.csv" \
           --output csv --directory power_reports.d \
           --cpu-base-freq 1900 \
           --cpu-error-threshold 2.0 \
@@ -292,8 +293,8 @@ In order to run the Formula, you can execute one of the following command lines,
         ```sh hl_lines="3 4"
         python -m smartwatts \
         --verbose \
-        --input mongodb --model HWPC Report --uri mongodb://127.0.0.1 --db test --collection prep \
-        --output influxdb2 --model Power Report --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken\
+        --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
+        --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
         --cpu-base-freq 1900 \
         --cpu-error-threshold 2.0 \
         --disable-dram-formula \
@@ -305,8 +306,8 @@ In order to run the Formula, you can execute one of the following command lines,
         ```sh hl_lines="3 4"
         python -m smartwatts \
         --verbose \
-        --input csv --model HWPC Report --directory hwcp\_reports.d --name puller\_csv --files "hwpc\_report\_1.json, hwpc\_report\_2.json" \
-        --output influxdb2 --model Power Report --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken\
+        --input csv --model HWPCReport --name puller_csv --files "rapl.csv,msr.csv,core.csv" \
+        --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
         --cpu-base-freq 1900 \
         --cpu-error-threshold 2.0 \
         --disable-dram-formula \
@@ -314,12 +315,13 @@ In order to run the Formula, you can execute one of the following command lines,
         ```
    
     === "Pip with CSV/CSV"
-    
+    === `power_reports.d` should be accessible by the user defined in the dockerfile
+    === You can change permissions with `chmod`
         ```sh hl_lines="3 4"
         python -m smartwatts \
         --verbose \
-        --input csv --model HWPC Report --directory hwcp\_reports.d --name puller\_csv --files "hwpc\_report\_1.json, hwpc\_report\_2.json" \
-        --output csv --directory power_reports.d\
+        --input csv --model HWPCReport --name puller_csv --files "rapl.csv,msr.csv,core.csv" \
+        --output csv --directory power_reports.d \
         --cpu-base-freq 1900 \
         --cpu-error-threshold 2.0 \
         --disable-dram-formula \
@@ -356,12 +358,12 @@ Below you find an example for running the Formula with Docker and Pip:
         -e POWERAPI_CPU_ERROR_THRESHOLD=2.0 \
         -e POWERAPI_DISABLE_DRAM_FORMULA=true \
         -e POWERAPI_SENSOR_REPORTS_FREQUENCY=1000 \
-        -e POWERAPI_INPUT_PULLER_MODEL=HWPC Report \
+        -e POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
         -e POWERAPI_INPUT_PULLER_TYPE=mongodb \
         -e POWERAPI_INPUT_PULLER_URI=mongodb://127.0.0.1 \
         -e POWERAPI_INPUT_PULLER_DB=test \
         -e POWERAPI_INPUT_PULLER_COLLECTION=prep \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=Power Report \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport \
         -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb2 \
         -e POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1 \
         -e POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086 \
@@ -382,11 +384,11 @@ Below you find an example for running the Formula with Docker and Pip:
         -e POWERAPI_CPU_ERROR_THRESHOLD=2.0 \
         -e POWERAPI_DISABLE_DRAM_FORMULA=true \
         -e POWERAPI_SENSOR_REPORTS_FREQUENCY=1000 \
-        -e POWERAPI_INPUT_PULLER_MODEL=HWPC Report \
+        -e POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
         -e POWERAPI_INPUT_PULLER_TYPE=csv \
         -e POWERAPI_INPUT_PULLER_DIRECTORY=hwpc_reports.d \
         -e POWERAPI_INPUT_PULLER_files="hwpc_report_1.json, hwpc_report_2.json" \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=Power Report \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport \
         -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb2 \
         -e POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1 \
         -e POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086 \
@@ -407,11 +409,11 @@ Below you find an example for running the Formula with Docker and Pip:
         -e POWERAPI_CPU_ERROR_THRESHOLD=2.0 \
         -e POWERAPI_DISABLE_DRAM_FORMULA=true \
         -e POWERAPI_SENSOR_REPORTS_FREQUENCY=1000 \
-        -e POWERAPI_INPUT_PULLER_MODEL=HWPC Report \
+        -e POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
         -e POWERAPI_INPUT_PULLER_TYPE=csv \
         -e POWERAPI_INPUT_PULLER_DIRECTORY=hwpc_reports.d \
         -e POWERAPI_INPUT_PULLER_files="hwpc_report_1.json, hwpc_report_2.json" \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=Power Report \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport \
         -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=csv \
         -e POWERAPI_OUTPUT_PUSHER_POWER_DIRECTORY=power_reports.d \
         powerapi/smartwatts-formula
@@ -429,12 +431,12 @@ Below you find an example for running the Formula with Docker and Pip:
         export POWERAPI_CPU_ERROR_THRESHOLD=2.0
         export POWERAPI_DISABLE_DRAM_FORMULA=true
         export POWERAPI_SENSOR_REPORTS_FREQUENCY=1000
-        export POWERAPI_INPUT_PULLER_MODEL=HWPC Report
+        export POWERAPI_INPUT_PULLER_MODEL=HWPCReport
         export POWERAPI_INPUT_PULLER_TYPE=mongodb
         export POWERAPI_INPUT_PULLER_URI=mongodb://127.0.0.1
         export POWERAPI_INPUT_PULLER_DB=test
         export POWERAPI_INPUT_PULLER_COLLECTION=prep
-        export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=Power Report
+        export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport
         export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb2
         export POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1
         export POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086
@@ -453,11 +455,11 @@ Below you find an example for running the Formula with Docker and Pip:
         export POWERAPI_CPU_ERROR_THRESHOLD=2.0
         export POWERAPI_DISABLE_DRAM_FORMULA=true
         export POWERAPI_SENSOR_REPORTS_FREQUENCY=1000
-        export POWERAPI_INPUT_PULLER_MODEL=HWPC Report \
+        export POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
         export POWERAPI_INPUT_PULLER_TYPE=csv \
         export POWERAPI_INPUT_PULLER_DIRECTORY=hwpc_reports.d \
         export POWERAPI_INPUT_PULLER_files="hwpc_report_1.json, hwpc_report_2.json" \
-        export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=Power Report
+        export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport
         export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb2
         export POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1
         export POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086
@@ -476,11 +478,11 @@ Below you find an example for running the Formula with Docker and Pip:
         export POWERAPI_CPU_ERROR_THRESHOLD=2.0
         export POWERAPI_DISABLE_DRAM_FORMULA=true
         export POWERAPI_SENSOR_REPORTS_FREQUENCY=1000
-        export POWERAPI_INPUT_PULLER_MODEL=HWPC Report \
+        export POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
         export POWERAPI_INPUT_PULLER_TYPE=csv \
         export POWERAPI_INPUT_PULLER_DIRECTORY=hwpc_reports.d \
         export POWERAPI_INPUT_PULLER_files="hwpc_report_1.json, hwpc_report_2.json" \
-        export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=Power Report
+        export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport
         export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=csv
         export POWERAPI_OUTPUT_PUSHER_POWER_DIRECTORY=power_reports.d
         python -m smartwatts
@@ -499,7 +501,7 @@ Below you find example Configuration Files to use different input/output and how
           "stream": true,
           "input": {
             "puller": {
-              "model": "HWPC Report",
+              "model": "HWPCReport",
               "type": "mongodb",
               "uri": "mongodb://127.0.0.1",
               "db": "test",
@@ -530,7 +532,7 @@ Below you find example Configuration Files to use different input/output and how
           "stream": true,
           "input": {
             "puller": {
-              "model": "HWPC Report",
+              "model": "HWPCReport",
               "type": "csv",
               "directory": "hwpc_reports.d",
               "files": "hwpc_report_1.json, hwpc_report_2.json",
@@ -560,7 +562,7 @@ Below you find example Configuration Files to use different input/output and how
           "stream": true,
           "input": {
             "puller": {
-              "model": "HWPC Report",
+              "model": "HWPCReport",
               "type": "csv",
               "directory": "hwpc_reports.d",
               "files": "hwpc_report_1.json, hwpc_report_2.json",
@@ -590,7 +592,7 @@ Below you find example Configuration Files to use different input/output and how
           "stream": true,
           "input": {
             "puller": {
-              "model": "HWPC Report",
+              "model": "HWPCReport",
               "type": "csv",
               "directory": "hwpc_reports.d",
               "files": "hwpc_report_1.json, hwpc_report_2.json",
