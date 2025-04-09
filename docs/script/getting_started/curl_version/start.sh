@@ -55,7 +55,6 @@ if [ "$CPU" = "Int" ]; then
         curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/docker-compose-intel2.yaml -o docker-compose-intel2.yaml
         sed -i "/- \"-o\"/a\      - \"-p\"\n      - \"${cgroup_path}\"" docker-compose-intel2.yaml
         docker compose -f docker-compose-intel2.yaml up
-        sed -i '/- "-p"/,+1d' docker-compose-intel2.yaml
     else
         log_error "CPU not supported"
         exit 1
