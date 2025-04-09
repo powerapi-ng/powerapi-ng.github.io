@@ -80,8 +80,6 @@ then
     echo "$CPUF"
 fi
 
-docker compose logs sensor -f &
-docker compose logs formula -f &
 sleep 180
 
 set -ueo pipefail
