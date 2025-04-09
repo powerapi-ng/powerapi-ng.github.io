@@ -34,8 +34,6 @@ services:
       - "-s"
       - "rapl"
       - "-o"
-      - "-p"
-      - "/sys/fs/cgroup/"
       - "-e"
       - "RAPL_ENERGY_PKG"
       - "-s"
