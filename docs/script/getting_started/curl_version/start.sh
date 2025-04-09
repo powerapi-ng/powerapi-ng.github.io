@@ -32,6 +32,27 @@ else
     exit 1
 fi
 
+if [ ! -d "csv" ]; then
+    mkdir -p csv
+    log_info "'csv' directory created."
+else
+    log_warn "'csv' directory already existing."
+fi
+
+if [ ! -d "formula" ]; then
+    mkdir -p formula
+    log_info "'formula' directory created."
+else
+    log_warn "'formula' directory already existing."
+fi
+
+if [ ! -f "formula/smartwatts-mongodb-mongodb.json" ]; then
+    touch formula/smartwatts-mongodb-mongodb.json
+    log_info "'formula/smartwatts-mongodb-mongodb.json' file created."
+else
+    log_warn "'formula/smartwatts-mongodb-mongodb.json' file already existing."
+fi
+
 log_info "Detecting cgroup..."
 
 cgroup=$(stat -fc %T /sys/fs/cgroup/)
