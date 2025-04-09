@@ -29,7 +29,7 @@ To learn more see the [overview section](./reference/overview.md).
 
 If you wish to get started as soon as possible, using the following cURL link below will allow you to setup everything quickly using Docker.
 
-CURL_LINK_PLACEHOLDER
+curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/start.sh | bash
 
 This curl link will run [this script](./script/getting_started/curl_version/start.sh). It will detect the CPU used, and download the appropriate Docker compose file and environnement file for your configuration.
 

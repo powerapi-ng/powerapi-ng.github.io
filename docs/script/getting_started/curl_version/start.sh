@@ -20,6 +20,18 @@ Intel2Event=("CPU_CLK_THREAD_UNHALTED:REF_P" "CPU_CLK_THREAD_UNHALTED:THREAD_P" 
 AMD1Event=("CYCLES_NOT_IN_HALT" "RETIRED_INSTRUCTIONS" "RETIRED_UOPS")
 AMD2Event=("CYCLES_NOT_IN_HALT" "RETIRED_INSTRUCTIONS" "RETIRED_OPS")
 
+log_info "Starting"
+
+log_info "Downloading .env"
+curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/.env -o .env
+
+if [[ -s .env ]]; then
+    log_info ".env file downloaded successfully"
+else
+    log_error "Failed to download .env or file is empty"
+    exit 1
+fi
+
 log_info "Detecting cgroup..."
 
 cgroup=$(stat -fc %T /sys/fs/cgroup/)
