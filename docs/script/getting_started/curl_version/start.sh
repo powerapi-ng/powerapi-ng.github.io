@@ -136,10 +136,9 @@ else
     exit 1
 fi
 
-bash -c 'docker compose logs sensor -f &'
-bash -c 'docker compose logs formula -f &'
-
-log_info "Waiting 180s before cleanup..."
+timeout 180 docker compose logs sensor -f &
+timeout 180 docker compose logs formula -f &
+log_info "Running 180s before cleanup..."
 sleep 180
 
 set -ueo pipefail
