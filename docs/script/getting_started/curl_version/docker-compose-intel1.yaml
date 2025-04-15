@@ -22,7 +22,7 @@ services:
     privileged: true
     command:
       - "-n"
-      - "$(hostname -f)"
+      - "sensor"
       - "-r"
       - "mongodb"
       - "-U"
@@ -30,7 +30,7 @@ services:
       - "-D"
       - "db_sensor"
       - "-C"
-      - "report_0"
+      - "prep"
       - "-s"
       - "rapl"
       - "-o"

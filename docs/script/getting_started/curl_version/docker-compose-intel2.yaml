@@ -22,7 +22,7 @@ services:
     privileged: true
     command:
       - "-n"
-      - "$(hostname -f)"
+      - "sensor"
       - "-r"
       - "mongodb"
       - "-U"

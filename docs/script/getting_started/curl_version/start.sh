@@ -127,7 +127,6 @@ elif [ "$CPU" = "AMD" ]; then
         log_error "CPU not supported"
         exit 1
     fi
-
 else
     log_error "Unrecognized CPU architecture: $CPU"
     exit 1
