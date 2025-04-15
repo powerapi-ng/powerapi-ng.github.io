@@ -86,6 +86,8 @@ CPU=${CPU:13:3}
 
 log_info "CPU string detected: $CPU"
 
+dockerfile=""
+
 if [ "$CPU" = "Int" ]; then
     log_info "Intel CPU Detected"
     CPUF=$(cat /sys/devices/cpu/caps/pmu_name)
@@ -96,11 +98,13 @@ if [ "$CPU" = "Int" ]; then
         curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/docker-compose-intel1.yaml -o docker-compose-intel1.yaml
         sed -i "/- \"-o\"/a\      - \"-p\"\n      - \"${cgroup_path}\"" docker-compose-intel1.yaml
         docker compose -f docker-compose-intel1.yaml up -d
+        dockerfile="docker-compose-intel1.yaml"
     elif [ "$CPUF" = "skylake" ] || [ "$CPUF" = "cascadelake" ] || [ "$CPUF" = "kabylaker" ] || [ "$CPUF" = "kabylake" ] || [ "$CPUF" = "coffeelake" ] || [ "$CPUF" = "amberlake" ] || [ "$CPUF" = "rocketlake" ] || [ "$CPUF" = "whiskeylake" ]; then
         log_info "Intel CPU compatible"
         curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/docker-compose-intel2.yaml -o docker-compose-intel2.yaml
         sed -i "/- \"-o\"/a\      - \"-p\"\n      - \"${cgroup_path}\"" docker-compose-intel2.yaml
         docker compose -f docker-compose-intel2.yaml up -d
+        dockerfile="docker-compose-intel2.yaml"
     else
         log_error "CPU not supported"
         exit 1
@@ -118,11 +122,13 @@ elif [ "$CPU" = "AMD" ]; then
         curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/docker-compose-amd1.yaml -o docker-compose-amd1.yaml
         sed -i "/- \"-o\"/a\      - \"-p\"\n      - \"${cgroup_path}\"" docker-compose-amd1.yaml
         docker compose -f docker-compose-amd1.yaml up -d
+        dockerfile="docker-compose-amd1.yaml"
     elif [ "$CPUF" = "2" ]; then
         log_info "AMD CPU Compatible"
         curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/docker-compose-amd2.yaml -o docker-compose-amd2.yaml
         sed -i "/- \"-o\"/a\      - \"-p\"\n      - \"${cgroup_path}\"" docker-compose-amd2.yaml
         docker compose -f docker-compose-amd2.yaml up -d
+        dockerfile="docker-compose-amd2.yaml"
     else
         log_error "CPU not supported"
         exit 1
@@ -139,7 +145,7 @@ sleep 180
 set -ueo pipefail
 set +x
 log_info "Shutting down containers..."
-docker compose down
+docker compose -f $dockerfile down
 
 log_info "Removing .env and docker-compose files..."
 
