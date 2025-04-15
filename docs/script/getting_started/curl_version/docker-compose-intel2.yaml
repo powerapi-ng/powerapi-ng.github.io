@@ -30,7 +30,7 @@ services:
       - "-D"
       - "db_sensor"
       - "-C"
-      - "report_0"
+      - "prep"
       - "-s"
       - "rapl"
       - "-o"
