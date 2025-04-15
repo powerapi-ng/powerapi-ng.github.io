@@ -138,7 +138,8 @@ fi
 
 timeout 180 docker compose logs sensor -f &
 timeout 180 docker compose logs formula -f &
-log_info "Running 180s before cleanup..."
+log_info "Running
+ 180s before cleanup..."
 sleep 180
 
 set -ueo pipefail
