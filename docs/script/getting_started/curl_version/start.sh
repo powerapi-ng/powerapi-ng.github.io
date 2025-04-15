@@ -165,5 +165,11 @@ for file in docker-compose-*.yaml; do
     fi
 done
 
+rm -rf formula
+log_info "Removed formula directory"
+
+rm -rf sensor
+log_info "Removed sensor directory"
+
 log_info "Cleanup complete"
 log_info "Script completed successfully, result can be found under the csv directory"
