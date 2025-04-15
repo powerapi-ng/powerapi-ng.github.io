@@ -18,7 +18,7 @@ most common architectures:
 
 | Architecture | RAPL Supported |
 |--------------|----------------|
-| AMD Zen (1, 2, 3, 4) | :material-check: Supported |
+| AMD Zen (2, 3) | :material-check: Supported |
 | Intel Sandy Bridge and [newer](https://en.wikipedia.org/wiki/List_of_Intel_Core_processors#Core_i_(2nd_gen)) (except for below mentions) | :material-check: Supported |
 | Intel Tiger Lake (11th Gen) | :material-close: Not Supported |
 | Intel Alder Lake (12th Gen) | :material-close: Not Supported |
