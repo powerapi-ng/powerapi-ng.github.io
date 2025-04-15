@@ -72,10 +72,10 @@ log_info "Detecting cgroup..."
 cgroup=$(stat -fc %T /sys/fs/cgroup/)
 
 if [ "$cgroup" = "cgroup2fs" ]; then
-    log_info " Cgroup v2 detected"
+    log_info "Cgroup v2 detected"
     cgroup_path="/sys/fs/cgroup/"
 else
-    log_info " Cgroup v1 detected"
+    log_info "Cgroup v1 detected"
     cgroup_path="/sys/fs/cgroup/perf_event"
 fi
 
@@ -95,13 +95,12 @@ if [ "$CPU" = "Int" ]; then
         log_info "Intel CPU compatible"
         curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/docker-compose-intel1.yaml -o docker-compose-intel1.yaml
         sed -i "/- \"-o\"/a\      - \"-p\"\n      - \"${cgroup_path}\"" docker-compose-intel1.yaml
-        docker compose -f docker-compose-intel1.yaml up -d
-        sed -i '/- "-p"/,+1d' docker-compose-intel1.yaml
+        docker compose -f docker-compose-intel1.yaml up
     elif [ "$CPUF" = "skylake" ] || [ "$CPUF" = "cascadelake" ] || [ "$CPUF" = "kabylaker" ] || [ "$CPUF" = "kabylake" ] || [ "$CPUF" = "coffeelake" ] || [ "$CPUF" = "amberlake" ] || [ "$CPUF" = "rocketlake" ] || [ "$CPUF" = "whiskeylake" ]; then
         log_info "Intel CPU compatible"
         curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/docker-compose-intel2.yaml -o docker-compose-intel2.yaml
         sed -i "/- \"-o\"/a\      - \"-p\"\n      - \"${cgroup_path}\"" docker-compose-intel2.yaml
-        docker compose -f docker-compose-intel2.yaml up -d
+        docker compose -f docker-compose-intel2.yaml up
     else
         log_error "CPU not supported"
         exit 1
@@ -118,14 +117,12 @@ elif [ "$CPU" = "AMD" ]; then
         log_info "AMD CPU Compatible"
         curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/docker-compose-amd1.yaml -o docker-compose-amd1.yaml
         sed -i "/- \"-o\"/a\      - \"-p\"\n      - \"${cgroup_path}\"" docker-compose-amd1.yaml
-        docker compose -f docker-compose-amd1.yaml up -d
-        sed -i '/- "-p"/,+1d' docker-compose-amd1.yaml
+        docker compose -f docker-compose-amd1.yaml up 
     elif [ "$CPUF" = "2" ]; then
         log_info "AMD CPU Compatible"
         curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/docker-compose-amd2.yaml -o docker-compose-amd2.yaml
         sed -i "/- \"-o\"/a\      - \"-p\"\n      - \"${cgroup_path}\"" docker-compose-amd2.yaml
-        docker compose -f docker-compose-amd2.yaml up -d
-        sed -i '/- "-p"/,+1d' docker-compose-amd2.yaml
+        docker compose -f docker-compose-amd2.yaml up 
     else
         log_error "CPU not supported"
         exit 1
@@ -136,10 +133,6 @@ else
     exit 1
 fi
 
-timeout 180 docker compose logs sensor -f &
-timeout 180 docker compose logs formula -f &
-log_info "Running
- 180s before cleanup..."
 sleep 180
 
 set -ueo pipefail
