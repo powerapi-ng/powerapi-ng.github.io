@@ -22,6 +22,13 @@ AMD2Event=("CYCLES_NOT_IN_HALT" "RETIRED_INSTRUCTIONS" "RETIRED_OPS")
 
 log_info "Starting"
 
+log_info "Checking for RAPL availability..."
+if [ ! -d "/sys/class/powercap/intel-rapl" ]; then
+    log_error "RAPL not available, please check that you CPU supports RAPL"
+    exit 1
+fi
+log_info "RAPL available under /sys/class/powercap/intel-rapl"
+
 log_info "Downloading .env"
 curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/.env -o .env
 
