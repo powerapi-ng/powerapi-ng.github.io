@@ -10,16 +10,6 @@ log_error() {
     echo -e "\033[1;31m[ERROR]\033[0m $1"
 }
 
-Intel1=("Sandy bridge" "Ivy bridge" "Haswell" "Broadwell" "Comet lake")
-Intel2=("Skylake" "Cascade lake" "Kaby Lake R" "Kaby Lake" "Coffee Lake" "Amber Lake" "Rocket lake" "Whiskey lake")
-AMD1=("Zen" "Zen+" "Zen 2")
-AMD2=("Zen 3" "Zen 4")
-
-Intel1Event=("CPU_CLK_UNHALTED:REF_P" "CPU_CLK_UNHALTED:THREAD_P" "LLC_MISSES" "INSTRUCTIONS_RETIRED")
-Intel2Event=("CPU_CLK_THREAD_UNHALTED:REF_P" "CPU_CLK_THREAD_UNHALTED:THREAD_P" "LLC_MISSES" "INSTRUCTIONS_RETIRED")
-AMD1Event=("CYCLES_NOT_IN_HALT" "RETIRED_INSTRUCTIONS" "RETIRED_UOPS")
-AMD2Event=("CYCLES_NOT_IN_HALT" "RETIRED_INSTRUCTIONS" "RETIRED_OPS")
-
 log_info "Starting"
 
 log_info "Checking for RAPL availability..."

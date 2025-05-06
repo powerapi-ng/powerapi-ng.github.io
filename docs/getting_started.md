@@ -18,7 +18,7 @@ The complete stack of PowerAPI is composed of :
 
 - The Sensor and the Formula, these are the two main parts of PowerAPI, the Sensor retrieve power consumption related metrics and the Formula compute an estimation of the power consumption.
 
-- The Sensor and the Formula both need an *output*, the supported *output* are listed [here](./reference/database/sources_destinations.md). The forumla will also use the Sensor *output* as his *input*
+- The Sensor and the Formula both need an *output*, the supported *output* are listed [here](./reference/database/sources_destinations.md). The formula will also use the Sensor *output* as his *input*
 
 - Finally, they will both need configuration files, as described in the [HWPC-Sensor Documentation](./reference/sensors/hwpc-sensor.md#global-parameters) and in the [SmartWatts Documentation](./reference/formulas/smartwatts.md#global-parameters), several parameters can be set, both globally and for specific Groups monitored. These parameters can also be set using CLI parameters.
 
@@ -35,7 +35,7 @@ This curl link will run [this script](./script/getting_started/curl_version/star
 
 It will then execute the Docker compose file, deploying the following elements for 3 minutes: 
 
-1. A MongoDB instance to store the [Sensor](./reference/sensors/hwpc-sensor.md) and the [Formula](./reference/formulas/smartwatts.md) reports
+1. A MongoDB instance to store the [Sensor](./reference/sensors/hwpc-sensor.md) reports.
 
 2. An [HWPC-Sensor](./reference/sensors/hwpc-sensor.md) that outputs its 
 [HWPC Reports](./reference/reports/reports.md#hwpc-reports) in a MongoDB Database, 
@@ -44,15 +44,10 @@ within the HWPC Report Collection
 3. A [SmartWatts](./reference/formulas/smartwatts.md) that streams the 
 [HWPC Reports](./reference/reports/reports.md#hwpc-reports) from the MongoDB 
 Database Collection, processes it and outputs its 
-[Power Reports](./reference/reports/reports.md#power-reports) in another MongoDB Database
+[Power Reports](./reference/reports/reports.md#power-reports) into CSV.
 
 In this specific case, we don't use configuration file for the Sensor or the Formula and directly use the CLI parameters in the Docker compose file. 
 
-After he result will be visible under the *power* collection within the *power_consumption* database.
+After he result will be visible under the *csv* directory.
 
-TODO : 
-- How to watch the result
-- Fix all Links
-- Overview ?
-- Output input
 
