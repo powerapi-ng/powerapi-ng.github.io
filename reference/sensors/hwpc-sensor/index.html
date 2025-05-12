@@ -1,0 +1,1780 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="PowerAPI">
+      
+      
+      
+      
+        <link rel="prev" href="../../overview/">
+      
+      
+        <link rel="next" href="../../formulas/smartwatts/">
+      
+      
+      <link rel="icon" href="../../../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.13">
+    
+    
+      
+        <title>HWPC Sensor - PowerAPI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#hwpc-sensor" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="PowerAPI" class="md-header__button md-logo" aria-label="PowerAPI" data-md-component="logo">
+      
+  <img src="../../../assets/images/PowerAPI-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PowerAPI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              HWPC Sensor
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="green"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="green"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/powerapi-ng/powerapi" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+    <a ref="#" id="export-button" class="md-header__button md-icon" title="Export Citation">
+
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M448 296c0 66.3-53.7 120-120 120h-8c-17.7 0-32-14.3-32-32s14.3-32 32-32h8c30.9 0 56-25.1 56-56v-8H320c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32 32 72zm-256 0c0 66.3-53.7 120-120 120H64c-17.7 0-32-14.3-32-32s14.3-32 32-32h8c30.9 0 56-25.1 56-56v-8H64c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32 32 72z"/></svg>
+    </a>
+  </nav>
+  <dialog id="citation-dialog">
+
+    <header>
+        <h1 class="dialog-header">Export Citation</h1>
+          <div align="right">
+            <button id="close-citation-dialog-button" class="close-button md-icon" autofocus>&#x2716</button>
+          </div>
+    </header>
+    <div class="md-typeset highlight">
+      <pre>
+        <code id= "citation">
+          
+@article{fieni-2024,
+TITLE = {{PowerAPI: A Python framework for building software-defined power meters}},
+AUTHOR = {Fieni, Guillaume and Acero, Daniel Romero and Rust, Pierre and Rouvoy, Romain},
+URL = {https://hal.science/hal-04601379},
+JOURNAL = {{Journal of Open Source Software}},
+PUBLISHER = {{Open Journals}},
+VOLUME = {9},
+NUMBER = {98},
+PAGES = {6670},
+YEAR = {2024},
+MONTH = Jun,
+DOI = {10.21105/joss.06670},
+KEYWORDS = {Power ; Energy ; Toolkit ; Measurement ; Framework},
+PDF = {https://hal.science/hal-04601379/file/10.21105.joss.06670-3.pdf},
+HAL_ID = {hal-04601379},
+HAL_VERSION = {v1},
+}
+          
+          </code>
+              <!--button class="md-clipboard md-icon" title="Copy to clipboard" data-clipboard-target="#citation > code"></button-->
+      </pre>
+    </div>
+      <a ref="#" id="copy-citation-dialog-button" title="Copy citation" class="md-clipboard md-icon">
+      </a>
+
+
+</dialog>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../getting_started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../overview/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../publications/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Publications
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../credits_licence/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Credits and Licence
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PowerAPI" class="md-nav__button md-logo" aria-label="PowerAPI" data-md-component="logo">
+      
+  <img src="../../../assets/images/PowerAPI-logo.png" alt="logo">
+
+    </a>
+    PowerAPI
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/powerapi-ng/powerapi" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sensors
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Sensors
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    HWPC Sensor
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    HWPC Sensor
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#root-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Root Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-and-container-groups-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      system and container Groups Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-the-sensor-with-a-configuration-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running the Sensor with a Configuration File
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-the-sensor-via-cli-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running the Sensor via CLI parameters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Formulas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Formulas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../formulas/smartwatts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SmartWatts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../formulas/configuration_files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration Files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sources/Destinations
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Sources/Destinations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../database/sources_destinations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Description
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Processors
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            Processors
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../processors/processors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Description
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reports
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            Reports
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reports/reports/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Description
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Grafana
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            Grafana
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../grafana/grafana/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Description
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    cgroups V1
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            cgroups V1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cgroup/cgroup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Creation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cgroup/cgroup_v1_activation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Activation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contributing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Publications
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../credits_licence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Credits and Licence
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#root-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Root Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-and-container-groups-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      system and container Groups Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-the-sensor-with-a-configuration-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running the Sensor with a Configuration File
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-the-sensor-via-cli-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running the Sensor via CLI parameters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="hwpc-sensor">HWPC Sensor</h1>
+<p>HardWare Performance Counter (HWPC) Sensor is a tool that monitors the Intel CPU
+performance counter and the power consumption of CPU.</p>
+<p>HWPC Sensor uses the RAPL (Running Average Power Limit) technology to monitor CPU
+power consumption. This technology is only available on <strong>Intel Sandy Bridge</strong>
+architecture or <strong>newer</strong>. However, Intel Core <strong>Tiger Lake</strong>, <strong>Alder Lake</strong> and <strong>Raptor Lake</strong> families for <strong>desktop</strong> and <strong>mobile</strong> <strong>are not supported</strong>. The sensor is also available on <strong>AMD Zen 2 and Zen 3</strong>. <strong>Power/ARM/RISCV are not supported</strong> architectures.</p>
+<p>In particular, it exploits the <code>perf</code> API of the <strong>Linux kernel</strong>. It is only available on Linux
+and need to have <strong>root access</strong> to be used. If you are using version <strong>1.2 or older</strong>, the sensor requires <strong>cgroup V1</strong>.</p>
+<p><strong>The sensor can not be used in a virtual machine</strong>, it must have access (via Linux
+kernel API) to the real CPU register to read performance counter values.</p>
+<p>The sensor provides raw values of performance counters as well as <code>RAPL</code> raw values in microjoules.   </p>
+<h2 id="installation">Installation</h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Docker</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/powerapi-ng/hwpc-sensor
+</code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="usage">Usage</h2>
+<p>For running the sensor, a Source and a configuration defined via a file or CLI parameters are required.</p>
+<h3 id="source">Source</h3>
+<p>For running HWPC Sensor we are using MongoDB as Source as a docker container.</p>
+<p>To start a MongoDB instance via the command line</p>
+<div class="highlight"><pre><span></span><code>docker run -d --name mongo_destination -p 27017:27017 mongo
+</code></pre></div>
+<h3 id="root-parameters">Root Parameters</h3>
+<p>The table below shows the different parameters related to the Sensor Configuration:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>CLI shortcut</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>verbose</code></td>
+<td><code>bool</code> (flag)</td>
+<td><code>v</code></td>
+<td><code>false</code></td>
+<td>Verbose or quiet mode</td>
+</tr>
+<tr>
+<td><code>frequency</code></td>
+<td><code>int</code></td>
+<td><code>f</code></td>
+<td><code>1000</code></td>
+<td>The time in milliseconds between two reports</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td><code>n</code></td>
+<td>-</td>
+<td>Name of the sensor</td>
+</tr>
+<tr>
+<td><code>cgroup_basepath</code></td>
+<td><code>string</code></td>
+<td><code>p</code></td>
+<td><code>/sys/fs/cgroup</code> (<code>cgroup</code> V2)</td>
+<td>The base path for <code>cgroups</code>. To use <code>cgroup</code> V1 <code>/sys/fs/cgroup/perf_event</code> needs to be used as value</td>
+</tr>
+<tr>
+<td><code>system</code></td>
+<td><code>dict</code></td>
+<td><code>s</code></td>
+<td>-</td>
+<td>A system group with a monitoring type and a list of system events (cf. <a href="./#system-and-container-groups-parameters"><code>system</code> Group Parameters</a>)</td>
+</tr>
+<tr>
+<td><code>container</code></td>
+<td><code>dict</code></td>
+<td><code>c</code></td>
+<td>-</td>
+<td>A group with a monitoring type and a list of  events (cf. <a href="./#system-and-container-groups-parameters"><code>system</code> Group Parameters</a>)</td>
+</tr>
+<tr>
+<td><code>output</code></td>
+<td>Destination</td>
+<td><code>r</code></td>
+<td><code>csv</code></td>
+<td>The Destination used as output. The Sensor only supports <a href="../../database/sources_destinations/#mongodb">MongoDB</a> (<code>mongodb</code>) and <a href="../../database/sources_destinations/#csv">CSV</a> (<code>csv</code>) as Destination.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="system-and-container-groups-parameters"><code>system</code> and <code>container</code> Groups Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>CLI shortcut</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>events</code></td>
+<td><code>string</code></td>
+<td><code>e</code></td>
+<td>-</td>
+<td>List of events to be monitored. As CLI parameter, each event is indicated with <code>e</code></td>
+</tr>
+<tr>
+<td><code>monitoring_type</code></td>
+<td><code>string</code> (<code>MONITOR_ONE_CPU_PER_SOCKET</code>, <code>MONITOR_ALL_CPU_PER_SOCKET</code> )</td>
+<td><code>o</code> (flag)</td>
+<td><code>MONITOR_ALL_CPU_PER_SOCKET</code></td>
+<td>The monitoring type. If <code>o</code> is specified as CLI parameter, <code>MONITOR_ONE_CPU_PER_SOCKET</code> is used as type</td>
+</tr>
+</tbody>
+</table>
+<h3 id="events">Events</h3>
+<p>Table below depicts the different group events for compatible Intel and AMD architectures.</p>
+<table>
+<thead>
+<tr>
+<th>Architectures</th>
+<th>Group</th>
+<th>Events</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Intel Sandy Bridge and newer</td>
+<td><code>rapl</code></td>
+<td><code>RAPL_ENERGY_PKG</code>, <code>RAPL_ENERGY_DRAM</code></td>
+</tr>
+<tr>
+<td>AMD Zen 2 and 3</td>
+<td><code>rapl</code></td>
+<td><code>RAPL_ENERGY_PKG</code></td>
+</tr>
+<tr>
+<td>Intel Sandy Bridge and newer, AMD Zen 2 and 3</td>
+<td><code>msr</code></td>
+<td><code>TSC</code>, <code>APERF</code>, <code>MPERF</code></td>
+</tr>
+<tr>
+<td>Intel Skylake, Whiskey Lake, Coffe Lake</td>
+<td><code>core</code></td>
+<td><code>CPU_CLK_THREAD_UNHALTED:REF_P</code>, <code>CPU_CLK_THREAD_UNHALTED:THREAD_P</code>, <code>LLC_MISSES</code>,<code>INSTRUCTIONS_RETIRED</code></td>
+</tr>
+<tr>
+<td>Intel Sandy Bridge, Comet Lake</td>
+<td><code>core</code></td>
+<td><code>CPU_CLK_UNHALTED:REF_P</code>, <code>CPU_CLK_UNHALTED:THREAD_P</code>, <code>LLC_MISSES</code>,<code>INSTRUCTIONS_RETIRED</code></td>
+</tr>
+<tr>
+<td>AMD Zen 2</td>
+<td><code>core</code></td>
+<td><code>CYCLES_NOT_IN_HALT</code>, <code>RETIRED_INSTRUCTIONS</code> , <code>RETIRED_UOPS</code></td>
+</tr>
+<tr>
+<td>AMD Zen 3</td>
+<td><code>core</code></td>
+<td><code>CYCLES_NOT_IN_HALT</code>, <code>RETIRED_INSTRUCTIONS</code> , <code>RETIRED_OPS</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="running-the-sensor-with-a-configuration-file">Running the Sensor with a Configuration File</h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sensor&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;verbose&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;frequency&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mongodb&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;uri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mongodb://127.0.0.1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;database&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;db_sensor&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;collection&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;report_0&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;system&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;rapl&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;events&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;RAPL_ENERGY_PKG&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;monitoring_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MONITOR_ONE_CPU_PER_SOCKET&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;msr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;events&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;TSC&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;APERF&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;MPERF&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;container&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;core&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;events&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;CPU_CLK_THREAD_UNHALTED:REF_P&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;CPU_CLK_THREAD_UNHALTED:THREAD_P&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;LLC_MISSES&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;INSTRUCTIONS_RETIRED&quot;</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Once you have your configuration file, run HWPC Sensor using one of the following command lines, depending on the installation you use:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Docker</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w">  </span><span class="se">\</span>
+--net<span class="o">=</span>host<span class="w"> </span><span class="se">\</span>
+--privileged<span class="w"> </span><span class="se">\</span>
+--pid<span class="o">=</span>host<span class="w"> </span><span class="se">\</span>
+-v<span class="w"> </span>/sys:/sys<span class="w"> </span><span class="se">\</span>
+-v<span class="w"> </span>/var/lib/docker/containers:/var/lib/docker/containers:ro<span class="w"> </span><span class="se">\</span>
+-v<span class="w"> </span>/tmp/powerapi-sensor-reporting:/reporting<span class="w"> </span><span class="se">\</span>
+-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/srv<span class="w"> </span><span class="se">\</span>
+-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/config_file.json:/config_file.json<span class="w"> </span><span class="se">\</span>
+powerapi/hwpc-sensor<span class="w"> </span>--config-file<span class="w"> </span>/config_file.json
+</code></pre></div>
+</div>
+</div>
+</div>
+<h3 id="running-the-sensor-via-cli-parameters">Running the Sensor via CLI parameters</h3>
+<p>In order to run the Sensor without a configuration file, run HWPC Sensor using one of the following command lines, depending on the installation you use:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Docker</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+--net<span class="o">=</span>host<span class="w"> </span><span class="se">\</span>
+--privileged<span class="w"> </span><span class="se">\</span>
+--pid<span class="o">=</span>host<span class="w"> </span><span class="se">\</span>
+-v<span class="w"> </span>/sys:/sys<span class="w"> </span><span class="se">\</span>
+-v<span class="w"> </span>/var/lib/docker/containers:/var/lib/docker/containers:ro<span class="w"> </span><span class="se">\</span>
+-v<span class="w"> </span>/tmp/powerapi-sensor-reporting:/reporting<span class="w"> </span><span class="se">\</span>
+-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/srv<span class="w"> </span><span class="se">\</span>
+powerapi/hwpc-sensor<span class="w"> </span><span class="se">\</span>
+-n<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>hostname<span class="w"> </span>-f<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+-r<span class="w"> </span><span class="s2">&quot;mongodb&quot;</span><span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;mongodb://127.0.0.1&quot;</span><span class="w"> </span>-D<span class="w"> </span><span class="s2">&quot;db_sensor&quot;</span><span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;report_0&quot;</span><span class="w"> </span><span class="se">\</span>
+-s<span class="w"> </span><span class="s2">&quot;rapl&quot;</span><span class="w"> </span>-o<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;RAPL_ENERGY_PKG&quot;</span><span class="w"> </span><span class="se">\</span>
+-s<span class="w"> </span><span class="s2">&quot;msr&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;TSC&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;APERF&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;MPERF&quot;</span><span class="w"> </span><span class="se">\</span>
+-c<span class="w"> </span><span class="s2">&quot;core&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;CPU_CLK_THREAD_UNHALTED:REF_P&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;CPU_CLK_THREAD_UNHALTED:THREAD_P&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;LLC_MISSES&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;INSTRUCTIONS_RETIRED&quot;</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<details class="info" open="open">
+<summary>Reports' Storage</summary>
+<p>Your <a href="../../reports/reports/#hwpc-reports"><code>HWPCReports</code></a> will be stored on MongoDB.</p>
+</details>
+<details class="tip" open="open">
+<summary>CLI parameters' names</summary>
+<p>You can only use shortcuts.</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 <a href="https://inria.fr">Inria</a> and the <a href="https://www.univ-lille.fr">University of Lille</a>.</br> The content of the <a href="https://powerapi.org">powerapi.org</a> website is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</br> Logos of sponsors displayed on this website are protected under trademark law and remain the property of their respective owners.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/powerapi-ng/powerapi" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="mailto:powerapi-staff@inria.fr" target="_blank" rel="noopener" title="" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480v-83.6c0-4 1.5-7.8 4.2-10.8l167.6-182.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8l-88.3-44.2C7.1 311.3.3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.path", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "navigation.sections", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>
