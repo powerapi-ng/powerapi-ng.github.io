@@ -29,7 +29,8 @@ most common architectures:
     In addition of a supported architecture, there is some pre-requisites:
 
     - Using a Linux distribution exposing the [`perf`](https://perf.wiki.kernel.org/index.php/Main_Page) api  
-    - Using Cgroup version 1 when using version 1.2 or older. See [this section](../cgroup/cgroup_v1_activation.md) about its configuration
+    - Using cgroup version 1 when using version `1.2` or older. See [this section](../cgroup/cgroup_v1_activation.md) about its configuration
+    - Using an AMD Zen 1 processor requires version `1.4` or older.
     - Deploying on a physical server as the HWPC Sensor must have access to the real CPU register
 
 
@@ -82,12 +83,12 @@ The following tabs gives a complete overview of available parameters, along with
 
     | Architectures                | Group   | Events        |
     | -------------               | -----   | ------------- |
-    |Intel Sandy Bridge and newer, AMD Zen 2  | `rapl`  | `RAPL_ENERGY_PKG`, `RAPL_ENERGY_DRAM`|
-    |Intel Sandy Bridge and newer, AMD Zen 2  | `msr`  | `TSC`, `APERF`, `MPERF`|
+    |Intel Sandy Bridge and newer, AMD Zen 2, 3, 4, 5  | `rapl`  | `RAPL_ENERGY_PKG`, `RAPL_ENERGY_DRAM`|
+    |Intel Sandy Bridge and newer, AMD Zen 2, 3, 4, 5  | `msr`  | `TSC`, `APERF`, `MPERF`|
     |Intel Skylake, Whiskey Lake, Coffee Lake| `core` | `CPU_CLK_THREAD_UNHALTED:REF_P`, `CPU_CLK_THREAD_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
     |Intel Sandy Bridge, Comet Lake | `core` | `CPU_CLK_UNHALTED:REF_P`, `CPU_CLK_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
     |AMD Zen 2 | `core`| `CYCLES_NOT_IN_HALT`, `RETIRED_INSTRUCTIONS` , `RETIRED_UOPS`|
-    |AMD Zen 3 | `core`| `CYCLES_NOT_IN_HALT`, `RETIRED_INSTRUCTIONS` , `RETIRED_OPS`|
+    |AMD Zen 3, 4, 5 | `core`| `CYCLES_NOT_IN_HALT`, `RETIRED_INSTRUCTIONS` , `RETIRED_OPS`|
 
 ### Output
 
