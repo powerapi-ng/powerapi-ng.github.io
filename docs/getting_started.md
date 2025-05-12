@@ -19,9 +19,9 @@ The complete stack of PowerAPI is composed of:
 
 - A Sensor and a Formula that enable us to define a Software Power Meter. The Sensor retrieves power consumption related metrics and the Formula compute an estimation of the power consumption. Currently, PowerAPI provides [HWPC-Sensor](reference/sensors/hwpc-sensor.md) and [SmartWatts Formula](reference/formulas/smartwatts.md)
 
-- The Sensor and the Formula need an *output*. The supported *output* are listed [here](reference/database/inputs_outputs.md). The Formula will also use the Sensor *output* as its *input*.
+- The Sensor and the Formula need an *output*. The supported *output* are listed [here](reference/sensors/hwpc-sensor.md/#output). The Formula will also use the Sensor *output* as its *input*.
 
-- Finally, they need a configuration as described in the [HWPC-Sensor](./reference/sensors/hwpc-sensor.md#global-parameters) and [SmartWatts](reference/formulas/smartwatts.md#global-parameters) documentation. The configuration parameters can be defined via a configuration file or via the CLI.
+- Finally, they need a configuration as described in the [HWPC-Sensor](reference/sensors/hwpc-sensor.md#global-parameters) and [SmartWatts](reference/formulas/smartwatts.md#global-parameters) documentation. The configuration parameters can be defined via a configuration file or via the CLI.
 
 To learn more see the [overview section](./reference/overview.md).
 
