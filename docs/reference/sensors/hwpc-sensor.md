@@ -1,9 +1,9 @@
 # HWPC Sensor
 
-HardWare Performance Counter (HWPC) Sensor is a tool that monitors the Intel CPU
-performance counter and the power consumption of CPU.
+HardWare Performance Counter (HWPC) Sensor is a tool that monitors the CPU
+performance counters and its power consumption.
 
-The figure below depicts how Sensor works in general :   
+The figure below depicts how Sensor works in general:   
 
 
 ![HWPC Sensor Overview](../../assets/images/reference/sensors/PowerAPI_HWPCSensorOverview.drawio.svg){ width="1000px"}
@@ -14,7 +14,7 @@ The following table gives a glimpse of RAPL support regarding
 most common architectures:  
 
 !!! tip "CPU architecture"
-    `lscpu` will give you the necessary information about your CPU Architecture 
+    `lscpu` will give you the necessary information about your CPU Architecture
 
 | Architecture | RAPL Supported |
 |--------------|----------------|
@@ -28,21 +28,20 @@ most common architectures:
 !!! note "HWPC Sensor pre-requisites"
     In addition of a supported architecture, there is some pre-requisites:
 
-    - Using a Linux distribution exposing the [perf](https://perf.wiki.kernel.org/index.php/Main_Page) api  
-    - Using Cgroup version 1 when using version 1.2 or older. See [this section](../cgroup/cgroup_v1_activation.md) about its configuration 
-    - Deploying on a physical device as the HWPC Sensor must have access to the real CPU register
+    - Using a Linux distribution exposing the [`perf`](https://perf.wiki.kernel.org/index.php/Main_Page) api  
+    - Using Cgroup version 1 when using version 1.2 or older. See [this section](../cgroup/cgroup_v1_activation.md) about its configuration
+    - Deploying on a physical server as the HWPC Sensor must have access to the real CPU register
 
 
 ## Sensor outputs
 
-The sensor provides raw values of performance counters as well as `RAPL` raw values in microjoules.   
+The sensor provides raw values of performance counters and `RAPL` raw values in micro-joules.   
 
 ## Installation
 
-The default installation is done through a Docker container.  
-The different images can be found on the [Docker Hub](https://hub.docker.com/r/powerapi/hwpc-sensor/tags)
+The default installation is done through a Docker container. The different images can be found on [Docker Hub](https://hub.docker.com/r/powerapi/hwpc-sensor/tags).
 
-Here is a sample to deploy the latest image version available.
+Here is the command to deploy the latest image version available.
 === "Docker"
 
     ```sh
@@ -55,7 +54,7 @@ The following tabs gives a complete overview of available parameters, along with
 
 ??? info "Global Parameters"
 
-    The table below shows the different parameters related to the Sensor global configuration, nested objects (system, container, output) are described in dedicated sections below:
+    The table below shows the different parameters related to the Sensor global configuration:
 
     | Parameter                | Type   | CLI shortcut  | Default Value                                      | Description                             |
     | -------------            | -----  | :-------------: | :-------------:                                      | ------------------------------------    |
@@ -65,8 +64,9 @@ The following tabs gives a complete overview of available parameters, along with
     |`cgroup_basepath`                 | `string` | `p`             | `/sys/fs/cgroup` (`cgroup` V2)       |  The base path for `cgroups`. To use `cgroup` V1 `/sys/fs/cgroup/perf_event` needs to be used as value                   |
     |`system`                 | `dict` | `s`             | -                                            | A system group with a monitoring type and a list of system events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
     |`container`                 | `dict` | `c`          | -                                            | A group with a monitoring type and a list of  events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
-    |`output`                 | `dict`| `r`             |  { "type": "csv", "directory": "." } | The [output information](hwpc-sensor.md#output), the Sensor only supports [MongoDB](./hwpc-sensor.md#mongodb-output) (`mongodb`), [CSV](./hwpc-sensor.md#csv-output) (`csv`) and [socket](./hwpc-sensor.md#socket-output) as output.                    |
+    |`output`                 | `dict`| `r`             |  { "type": "csv", "directory": "." } | The [output information](hwpc-sensor.md#output), the Sensor only supports [MongoDB](hwpc-sensor.md#output "MongoDB Output") (`mongodb`), [CSV](hwpc-sensor.md#output) (`csv`) and [Socket](hwpc-sensor.md#output) (`socket`) as output.                    |
 
+    Nested parameters (system, container, output) are described in dedicated sections below.
 ??? info "Group Parameters (`system` and `container`)"
 
     The table below shows the different parameters related to the Sensor `system` and `container` configuration fields:
@@ -91,7 +91,7 @@ The following tabs gives a complete overview of available parameters, along with
 
 ### Output
 
-As precised, three kinds of outputs are supported: Socket, MongoDB and CSV files.
+Three kinds of outputs are supported: Socket, MongoDB and CSV files.
 
 ??? info "MongoDB Output"
 
@@ -122,12 +122,12 @@ As precised, three kinds of outputs are supported: Socket, MongoDB and CSV files
 
 ### Running the Sensor with a Configuration File
 
-The following snippets describe the configuration file of an HWPC Sensor instance, two examples are provided for possible outputs:
+The following snippets describe the configuration file of an HWPC Sensor instance. One example is provided for each possible output:
 
 !!! example "Examples for an Intel Processor, using a Configuration File"
-    
+
     === "MongoDB Output"
-        
+
         ```json hl_lines="5-10" title="config_file.json"
         {
           "name": "sensor",
@@ -160,9 +160,9 @@ The following snippets describe the configuration file of an HWPC Sensor instanc
           }
         }
         ```
-    
+
     === "CSV Output"
-        
+
         ```json hl_lines="5-8" title="config_file.json"
         {
           "name": "sensor",
@@ -193,9 +193,8 @@ The following snippets describe the configuration file of an HWPC Sensor instanc
           }
         }
         ```
-    
     === "Socket Output"
-        
+
         ```json hl_lines="5-9" title="config_file.json"
         {
           "name": "sensor",
@@ -228,11 +227,13 @@ The following snippets describe the configuration file of an HWPC Sensor instanc
         }
         ```
 
-The following CLI command shows how to use this configuration file in the deployment of an HWPC Sensor instance as a Docker container :  
+      Please notice that you may need to adapt `core` values according to your processor architecture.
+
+The following CLI command shows how to use this configuration file (named `config_file.json`) in the deployment of an HWPC Sensor instance as a Docker container :  
 
 === "Docker"
 
-    ```sh 
+    ```sh
     docker run --rm  \
       --net=host \
       --privileged \
@@ -247,12 +248,12 @@ The following CLI command shows how to use this configuration file in the deploy
 
 ### Running the Sensor via CLI parameters
 
-The following CLI command shows how to launch an instance of HWPC Sensor with the same configuration as [above](hwpc-sensor.md#running-the-sensor-with-a-configuration-file), again two example are provided for both possible output: 
+The following CLI command shows how to launch an instance of HWPC Sensor with the same configuration as [above](hwpc-sensor.md#running-the-sensor-with-a-configuration-file). One example is provided for each possible output:
 
 !!! example "Examples using a CLI Parameters"
-    
+
     === "CLI with MongoDB Output"
-        
+
         ```sh
         docker run --rm \
           --net=host \
@@ -269,9 +270,9 @@ The following CLI command shows how to launch an instance of HWPC Sensor with th
           -s "msr" -e "TSC" -e "APERF" -e "MPERF" \
           -c "core" -e "CPU_CLK_THREAD_UNHALTED:REF_P" -e "CPU_CLK_THREAD_UNHALTED:THREAD_P" -e "LLC_MISSES" -e "INSTRUCTIONS_RETIRED"
         ```
-    
-    === "Docker with CSV output"
-        
+
+    === "CLI with CSV output"
+
         ```sh
         docker run --rm \
           --net=host \
@@ -288,6 +289,27 @@ The following CLI command shows how to launch an instance of HWPC Sensor with th
           -s "msr" -e "TSC" -e "APERF" -e "MPERF" \
           -c "core" -e "CPU_CLK_THREAD_UNHALTED:REF_P" -e "CPU_CLK_THREAD_UNHALTED:THREAD_P" -e "LLC_MISSES" -e "INSTRUCTIONS_RETIRED"
         ```
+
+    === "CLI with Socket output"
+
+        ```sh
+        docker run --rm \
+          --net=host \
+          --privileged \
+          --pid=host \
+          -v /sys:/sys \
+          -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
+          -v /tmp/powerapi-sensor-reporting:/reporting \
+          -v $(pwd):/srv \
+          powerapi/hwpc-sensor \
+          -n "$(hostname -f)" \
+          -r "socket "-U "127.0.0.1" -P 9876 \
+          -s "rapl" -o -e "RAPL_ENERGY_PKG" \
+          -s "msr" -e "TSC" -e "APERF" -e "MPERF" \
+          -c "core" -e "CPU_CLK_THREAD_UNHALTED:REF_P" -e "CPU_CLK_THREAD_UNHALTED:THREAD_P" -e "LLC_MISSES" -e "INSTRUCTIONS_RETIRED"
+        ```
+
+      Please notice that you may need to adapt core values according to your processor architecture.
 
 !!! tip "CLI parameters' names"
     You can only use shortcuts.
