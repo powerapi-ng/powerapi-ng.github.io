@@ -22,7 +22,7 @@ The container name (`container_name`) is defined as the target of the `Report`.
 If a `Report` related to Kubernetes is not identified, it is ignored (i.e., the `Report` is not send t the `Dispatcher` and will be not considered by the `Formula`).
 If a `Report` is not related to Kubernetes, it is sent to the `Dispatcher` without modifications (i.e., no new metadata is added).
 
-If you want to use a `K8sPreProcessor` in your Software `PowerMeter`, you have to specify
+If you want to use a `K8sPreProcessor` in your Software PowerMeter, you have to specify
 `k8s` as the `type` of the `PreProcessor`.
 
 ### Parameters
