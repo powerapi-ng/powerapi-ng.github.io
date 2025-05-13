@@ -14,7 +14,7 @@ a certain kind. All reports types have a common basis:
 
 - `sensor`: it's a name field that is used to identify the reports produced by or computed thanks to a sensor.  
 
-Therefore, a report shall match the following description: 
+Therefore, a report shall match the following description:
 
 ```json
 {  
@@ -24,8 +24,6 @@ Therefore, a report shall match the following description:
   $report_specific_fields
 }
 ```
-
-A valid JSON-Schema to can be found [here](https://raw.githubusercontent.com/powerapi-ng/powerapi-ng.github.io/refs/heads/master/docs/reference/reports/basis-reports.schema.json).
 
 In the following sections we specify the `$report_specific_fields` for each type of report.
 
@@ -89,9 +87,9 @@ Below you can find an example of `HWPC Report`:
     "rapl" : {
       "0" : {
         "1" : {
-			      "RAPL_ENERGY_PKG" : 5709496320,
-			      "time_enabled" : 1006717449,
-			      "time_running" : 1006717449
+          "RAPL_ENERGY_PKG" : 5709496320,
+          "time_enabled" : 1006717449,
+          "time_running" : 1006717449
           }
       }
     },
@@ -99,17 +97,17 @@ Below you can find an example of `HWPC Report`:
       "0" : {
         "0" : {
           "MPERF" : 29646849,
-	        "APERF" : 12319312,
-	        "TSC" : 2122153094,
-	        "time_enabled" : 1006580601,
-	        "time_running" : 1006580601
+          "APERF" : 12319312,
+          "TSC" : 2122153094,
+          "time_enabled" : 1006580601,
+          "time_running" : 1006580601
         },
         "1" : {
           "MPERF" : 20587012,
           "APERF" : 19838920,
           "TSC" : 2122185970,
-	        "time_enabled" : 1006560540,
-	        "time_running" : 1006560540
+          "time_enabled" : 1006560540,
+          "time_running" : 1006560540
         }
       }
     }
