@@ -6,12 +6,12 @@ There are two kinds of processors:
 - `PreProcessors`: They are located between the `Puller` and the `Dispatcher`. They are supposed to pre-process the `HWPC Reports` before computing estimations.
 - `PostProcessors`: They are located between, the `Formula` and the `Pusher`. They process `Power Reports` before storing them on the output storage option.
 
-Figure below depicts where are they introduced in the architecture of a Software `PowerMeters`.
+Figure below depicts where are they introduced in the architecture of a Software PowerMeter.
 
 ![Processors Overview](../../assets/images/reference/processors/processors.jpg){ width="1000px"}
 
 
-`Processors` are optional, which means that you can continue to use Software `PowerMeters` as usual if you don't need them.  
+`Processors` are optional, which means that you can continue to use Software PowerMeters as usual if you don't need them.  
 
 ## K8sPreProcessor
 
@@ -20,7 +20,7 @@ In particular, pod name (`pod_name`), pod name space (`namespace`), and pod labe
 This information is added to metadata of the concerned `Report` under `k8s` key.
 The container name (`container_name`) is defined as the target of the `Report`.
 If a `Report` related to Kubernetes is not identified, it is ignored (i.e., the `Report` is not send t the `Dispatcher` and will be not considered by the `Formula`).
-If a `Report` is not related to Kubernetes, it is sent to the `Dispatcher` without modifications (i.e., no new metadata is added). 
+If a `Report` is not related to Kubernetes, it is sent to the `Dispatcher` without modifications (i.e., no new metadata is added).
 
 If you want to use a `K8sPreProcessor` in your Software `PowerMeter`, you have to specify
 `k8s` as the `type` of the `PreProcessor`.
