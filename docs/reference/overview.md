@@ -9,12 +9,12 @@ A software PowerMeter is an application built using PowerAPI components, designe
 
 The diagram below illustrates the overall architecture of a PowerMeter within the PowerAPI framework.
 
-![PowerAPI Architecture Overview](../assets/images/reference/overview/global-architecture.jpg){ width="1000px"}
+![PowerAPI Architecture Overview](/assets/images/reference/overview/global-architecture.jpg){ width="1000px"}
 
 A PowerMeter consists of two essential components:   
 
-- a [Sensor](#Sensor), which collects system usage metrics and generates usage reports.  
-- a [Formula](#Formula), which applies a computational model to the usage reports, producing power consumption data (in watts).
+- a [Sensor](#sensor), which collects system usage metrics and generates usage reports.  
+- a [Formula](#formula), which applies a computational model to the usage reports, producing power consumption data (in watts).
 
 Additionally, [Preprocessors](./overview.md#Preprocessors) can be utilized to modify usage reports before they are processed by the Formula.
 
@@ -24,13 +24,13 @@ The Sensor is a standalone software tool that gathers basic data related to the 
 
 It collects this data by querying the hardware on the same machine where the monitored software runs. The Sensor needs to operate in parallel to the monitored software for the entire duration of its execution.
 
-The raw data collected is then stored as usage Reports in various formats, either locally or remotely. These formats include CSV, MongoDB, FileDB, and UNIX sockets, among others.
+The raw data collected is then stored as usage Reports in various formats, either locally or remotely. These formats include CSV, MongoDB, and UNIX sockets.
 
 ### Existing Sensors
 
 | Sensor | Documentation | Repository | Description | Supported |
-| :---------------: |----------------------|--------------------------|----------------|---------------|
-| HWPC            | [HWPC Documentation](./sensors/hwpc-sensor.md) | [Github](https://github.com/powerapi-ng/hwpc-sensor) | Hardware Performance Counters monitoring agent for containers |  :material-check: Supported |
+| :---------------: |----------------------|--------------------------|----------------|:---------------:|
+| HWPC            | [HWPC Documentation](./sensors/hwpc-sensor.md) | [Github](https://github.com/powerapi-ng/hwpc-sensor) | Hardware Performance Counters monitoring agent for processes |  :material-check: |
 
 
 ## Formula
@@ -46,8 +46,8 @@ There are two modes in which a Formula can operate:
 ### Existing Formulas
 
 | Formula | Documentation | Repository | Description | Supported |
-| :---------------: |----------------------|--------------------------|----------------|---------------|
-| SmartWatts            | [SmartWatts Documentation](./formulas/smatwatts.md) | [Github](https://github.com/powerapi-ng/smartwatts-formula) | HSmartWatts is a formula for a self-adaptive software-defined power meter based on the PowerAPI framework.  |  :material-check: Supported |
+| :---------------: |----------------------|--------------------------|----------------|:---------------:|
+| SmartWatts            | [SmartWatts Documentation](/reference/formulas/smartwatts) | [Github](https://github.com/powerapi-ng/smartwatts-formula) | SmartWatts is a formula for a self-adaptive software-defined power meter based on the PowerAPI framework.  |  :material-check: |
 
 ## Processors
 
@@ -55,17 +55,14 @@ Processors allow for the customized filtering and modification of Reports. While
 
 The diagram below shows where Processors are integrated into the architecture of a Software PowerMeter.
 
-![Processor integration in the processing pipeline](../assets/images/reference/processors/processors.jpg)
+![Processor integration in the processing pipeline](/assets/images/reference/processors/processors.jpg)
 
 ### Preprocessors
 
-Preprocessors are positioned between the [Sensor](./overview.md#Sensor) and the [Formula](./overview.md#Formula).  
-Their role is to pre-process usage reports before the power consumption estimations are computed.
+Preprocessors are positioned between the [Sensor](#sensor) and the [Formula](#formula). Their role is to modify usage reports before the power consumption estimations are computed.
 
 #### Existing Preprocessors
 
 | Preprocessor | Documentation | Repository | Description | Supported |
 | :---------------: |----------------------|--------------------------|----------------|---------------|
 | k8sPreprocessor            | [k8sPreprocessor Documentation](./processors/processors.md#k8spreprocessor) | [Github](https://github.com/powerapi-ng/powerapi/tree/master/src/powerapi/processor/pre/k8s) | Add K8S Specific metadata to corresponding Reports |  :material-check: Supported |
-| libvirt | [libvirtPreprocessor Documentation](.processors/processors.md#libvirt) | [Github](https://github.com/powerapi-ng/powerapi/tree/master/src/powerapi/processor/pre/libvirt) | Replace `libvirt ID` in Reports with `Open Stack UUID` | :material-check: Supported |
-
