@@ -239,6 +239,7 @@ The following CLI command shows how to use this configuration file (named `confi
       --net=host \
       --privileged \
       --pid=host \
+      --ulimit nofile=262144:262144 \
       -v /sys:/sys \
       -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
       -v /tmp/powerapi-sensor-reporting:/reporting \
@@ -260,6 +261,7 @@ The following CLI command shows how to launch an instance of HWPC Sensor with th
           --net=host \
           --privileged \
           --pid=host \
+          --ulimit nofile=262144:262144 \
           -v /sys:/sys \
           -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
           -v /tmp/powerapi-sensor-reporting:/reporting \
@@ -279,6 +281,7 @@ The following CLI command shows how to launch an instance of HWPC Sensor with th
           --net=host \
           --privileged \
           --pid=host \
+          --ulimit nofile=262144:262144 \
           -v /sys:/sys \
           -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
           -v /tmp/powerapi-sensor-reporting:/reporting \
@@ -298,6 +301,7 @@ The following CLI command shows how to launch an instance of HWPC Sensor with th
           --net=host \
           --privileged \
           --pid=host \
+          --ulimit nofile=262144:262144 \
           -v /sys:/sys \
           -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
           -v /tmp/powerapi-sensor-reporting:/reporting \
