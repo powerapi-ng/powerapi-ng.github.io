@@ -87,6 +87,7 @@ The following tabs gives a complete overview of available parameters, along with
     |Intel Sandy Bridge and newer, AMD Zen 2, 3, 4, 5  | `msr`  | `TSC`, `APERF`, `MPERF`|
     |Intel Skylake, Whiskey Lake, Coffee Lake| `core` | `CPU_CLK_THREAD_UNHALTED:REF_P`, `CPU_CLK_THREAD_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
     |Intel Sandy Bridge, Comet Lake | `core` | `CPU_CLK_UNHALTED:REF_P`, `CPU_CLK_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
+    |Intel Ice Lake | `core` | `CPU_CLK_UNHALTED:XCLK`, `CPU_CLK_UNHALTED:THREAD_P`, `LLC_MISSES`,`INSTRUCTIONS_RETIRED`|
     |AMD Zen 2 | `core`| `CYCLES_NOT_IN_HALT`, `RETIRED_INSTRUCTIONS` , `RETIRED_UOPS`|
     |AMD Zen 3, 4, 5 | `core`| `CYCLES_NOT_IN_HALT`, `RETIRED_INSTRUCTIONS` , `RETIRED_OPS`|
 
