@@ -90,9 +90,24 @@ This table resumes the parameters specific to SmartWatts configuration :
 
 We can choose SmartWatts <inputs among the following list, depending on where your Sensor outputs its Reports:  
 
+- [JSON](#json-input)
 - [MongoDB](#mongodb-input)
 - [CSV](#csv-input)
 - [Socket](#socket-input)
+
+#### JSON Input
+
+Table below depicts the different parameters for JSON input:  
+??? info "JSON Input parameters"
+
+    | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             Description                             |
+    | ------------- | -----  | :-------------: | ------------- | :----------:                                              | ------------------------------------    |
+    | `filepath`          | string | `f`           | - | Yes                                                       | The JSON file path |
+    | `compression`          | string | `c`            | `auto` | No                                                       | The compression types are: `gzip`, `lzma`, `auto` or `none`. If `auto` is indicated as compression, the suffix (extension) of `filepath` is used to infer the compression method for the file. Supported compression extensions are `.gz`, `.gzip`, `.xz` and `.lzma`. The usage of `none` indicates that the file is not compressed                           |
+    | `name`   | string | `n`          | `"puller_json"` | No                                                       | The related puller name |
+    | `model`   | string | `m`          | `"HWPCReport"` | No                                                       | The Report type stored by the sensor output |
+
+
 
 #### MongoDB Input
 
@@ -104,8 +119,8 @@ Table below depicts the different parameters for MongoDB input:
     | `uri`          | string | `u`           | - | Yes                                                       | The IP address of your MongoDB instance |
     | `database`          | string | `d`            | - | Yes                                                       | The name of your database               |
     | `collection`   | string | `c`          | - | Yes                                                       | The name of the collection inside `db`  |
-    | `name`   | string | `n`          | puller_mongodb | No                                                       | The related puller name |
-    | `model`   | string | `m`          | HWPC Report | No                                                       | The Report type stored by the sensor output |
+    | `name`   | string | `n`          | `"puller_mongodb"` | No                                                       | The related puller name |
+    | `model`   | string | `m`          | `"HWPCReport"` | No                                                       | The Report type stored by the sensor output |
 
 #### CSV Input
 
@@ -115,8 +130,8 @@ Table below depicts the different parameters for CSV input:
     | Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
     | ------------- | -----   | :-------------: | ------------- | :----------:| ------------------------------------                                          |
     | `files` | string         | `f`           |  ""           | No | The list of input CSV files with the format "file1,file2,file3..."        |
-    | `name`   | string | `n`          | puller_csv | No                                                       | The related puller name |
-    | `model`   | string | `m`          | HWPC Report | No                                                       | The Report type stored by the sensor output |
+    | `name`   | string | `n`          | `"puller_csv"`` | No                                                       | The related puller name |
+    | `model`   | string | `m`          | `"HWPCReport"` | No                                                       | The Report type stored by the sensor output |
 
 #### Socket input
 
@@ -127,8 +142,8 @@ Table below depicts the different parameters for CSV input:
     | ------------- | -----   | :-------------: | ------------- | :----------:| ------------------------------------                                          |
     | `port` | int         | `P`           |  -           | Yes | The port of communication       |
     | `uri` | string         | `U`           |  -            | Yes | The IP address of the machine running the socket          |
-    | `name`   | string | `n`          | puller_socket | No                                                       | The related puller name |
-    | `model`   | string | `m`          | HWPC Report | No                                                       | The Report type stored by the sensor output |
+    | `name`   | string | `n`          | `"puller_socket"` | No                                                       | The related puller name |
+    | `model`   | string | `m`          | `"HWPCReport"` | No                                                       | The Report type stored by the sensor output |
 
 
 ### SmartWatts Outputs
@@ -136,10 +151,23 @@ Table below depicts the different parameters for CSV input:
 SmartWatts needs to its power consumption estimations or Power Reports.
 We can choose an output among the following list:  
 
+- [JSON](#json-output)
 - [MongoDB](#mongodb-output)
 - [CSV](#csv-output)
 - [InfluxDB](#influxdb-output)
 - [Prometheus](#prometheus-output)
+
+#### JSON output
+
+Table below depicts the different parameters for JSON output:  
+??? info "JSON output parameters"
+
+    | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             Description                             |
+    | -------------- | -----  | :-------------: | ------------- | :----------:                                              | ------------------------------------    |
+    | `filepath`          | string | `f`           | - | Yes                                                       | The JSON file path |
+    | `compression`          | string | `c`            | `auto` | No                                                       | The compression types are: `gzip`, `lzma`, `auto` or `none`. If `auto` is indicated as compression, the suffix (extension) of `filepath` is used to infer the compression method for the file. Supported compression extensions are `.gz`, `.gzip`, `.xz` and `.lzma`. The usage of `none` indicates that the file is not compressed           |
+    | `name` | string | `n`          | pusher_json | No                                                       | The related pusher name |
+    | `model`   | string | `m`          | `"PowerReport"` | No | The Report type to be stored by the output |
 
 #### MongoDB output
 
@@ -151,8 +179,8 @@ Table below depicts the different parameters for MongoDB output:
     | `uri`          | string | `u`           | - | Yes                                                       | The IP address of your MongoDB instance |
     | `database`          | string | `d`            | - | Yes                                                       | The name of your database               |
     | `collection`   | string | `c`          | - | Yes                                                       | The name of the collection inside `db`  |
-    | `name`   | string | `n`          | pusher_mongodb | No                                                       | The related pusher name |
-    | `model`   | string | `m`          | Power Report | No                                                       | The Report type to be stored by the output |
+    | `name`   | string | `n`          | `"pusher_mongodb"` | No                                                       | The related pusher name |
+    | `model`   | string | `m`          | `"PowerReport"` | No                                                       | The Report type to be stored by the output |
 
 #### CSV output
 
@@ -162,8 +190,8 @@ Table below depicts the different parameters for CSV output:
     | Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
     | ------------- | -----   | :-------------: | ------------- | :----------:| ------------------------------------                                          |
     | `directory` | string         | `d`           | "." (Current directory)           | No |The directory where output CSV files will be written          |
-    | `name`   | string | `n`          | pusher_csv | No                                                       | The related pusher name |
-    | `model`   | string | `m`          | Power Report | No                                                       | The Report type to be stored by the output |
+    | `name`   | string | `n`          | `"pusher_csv"` | No                                                       | The related pusher name |
+    | `model`   | string | `m`          | `"PowerReport"` | No                                                       | The Report type to be stored by the output |
 
 
 
@@ -193,13 +221,13 @@ Table below depicts the different parameters for Prometheus output:
 
     | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                      | Description                             |
     | ------------- | -----  | :-------------: | ------------- | :----------:                                    | ------------------------------------    |
-    |`uri`          | string | `u`           | `127.0.0.1` | No                                               | The IP address of your Prometheus instance |
-    |`port`         | int | `p`              | - | Yes                                              | The port of communication                  |
+    |`addr`          | string | `u`           | `localhost` | No                                               | The address of your Prometheus instance |
+    |`port`         | int | `p`              | `8000` | No                                              | The port of communication                  |
     |`tags`         | string | `t`           | - | No                                              | List of metadata keys of the report separated by `,` that will be kept. `sensor` and `target` are always kept as report metadata                    |
-    |`metric-name`  | string | `M`           | - | Yes                                              | The exposed metric name                    |
-    |`metric-description`  | string | `d`    | `"energy consumption"` | No                             | The exposed metric description                    |
-    |`name`         | string | `n`           | `"pusher_prom"` | No | The related pusher name                 |
-    |`model`        | string | `m`           | `"Power Report"` | No | The Report type exposed by the output       |
+    |`metric-name`  | string | `M`           | `"power_estimation_watts"` | Yes                                              | The exposed metric name                    |
+    |`metric-description`  | string | `d`    | `"Estimated power consumption of the target"` | No                             | The exposed metric description                    |
+    |`name`         | string | `n`           | `"pusher_prometheus"` | No | The related pusher name                 |
+    |`model`        | string | `m`           | `"PowerReport"` | No | The Report type exposed by the output       |
 
 
 ### Running the Formula
