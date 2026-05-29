@@ -117,7 +117,7 @@ Table below depicts the different parameters for MongoDB input:
     | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             Description                             |
     | ------------- | -----  | :-------------: | ------------- | :----------:                                              | ------------------------------------    |
     | `uri`          | string | `u`           | - | Yes                                                       | The IP address of your MongoDB instance |
-    | `database`          | string | `d`            | - | Yes                                                       | The name of your database               |
+    | `db`          | string | `d`            | - | Yes                                                       | The name of your database               |
     | `collection`   | string | `c`          | - | Yes                                                       | The name of the collection inside `db`  |
     | `name`   | string | `n`          | `"puller_mongodb"` | No                                                       | The related puller name |
     | `model`   | string | `m`          | `"HWPCReport"` | No                                                       | The Report type stored by the sensor output |
@@ -129,7 +129,7 @@ Table below depicts the different parameters for CSV input:
 
     | Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
     | ------------- | -----   | :-------------: | ------------- | :----------:| ------------------------------------                                          |
-    | `files` | string         | `f`           |  ""           | No | The list of input CSV files with the format "file1,file2,file3..."        |
+    | `files` | string         | `f`           |  -           | Yes | The list of input CSV files with the format "file1,file2,file3..."        |
     | `name`   | string | `n`          | `"puller_csv"`` | No                                                       | The related puller name |
     | `model`   | string | `m`          | `"HWPCReport"` | No                                                       | The Report type stored by the sensor output |
 
@@ -140,8 +140,8 @@ Table below depicts the different parameters for CSV input:
 
     | Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
     | ------------- | -----   | :-------------: | ------------- | :----------:| ------------------------------------                                          |
-    | `port` | int         | `P`           |  -           | Yes | The port of communication       |
-    | `uri` | string         | `U`           |  -            | Yes | The IP address of the machine running the socket          |
+    | `port` | int         | `p`           |  `9080`           | No | The port used by the host running the socket       |
+    | `host` | string         | `h`           |  `"127.0.0.1"`            | No | The IP address of host running the socket          |
     | `name`   | string | `n`          | `"puller_socket"` | No                                                       | The related puller name |
     | `model`   | string | `m`          | `"HWPCReport"` | No                                                       | The Report type stored by the sensor output |
 
@@ -189,7 +189,7 @@ Table below depicts the different parameters for CSV output:
 
     | Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
     | ------------- | -----   | :-------------: | ------------- | :----------:| ------------------------------------                                          |
-    | `directory` | string         | `d`           | "." (Current directory)           | No |The directory where output CSV files will be written          |
+    | `directory` | string         | `d`           | -           | Yes |The directory where output CSV files will be written          |
     | `name`   | string | `n`          | `"pusher_csv"` | No                                                       | The related pusher name |
     | `model`   | string | `m`          | `"PowerReport"` | No                                                       | The Report type to be stored by the output |
 
@@ -206,13 +206,12 @@ Table below depicts the different parameters for InfluxDB output:
     | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory | Description                             |
     | ------------- | -----  | :-------------: | ------------- | :----------: | ------------------------------------    |
     |`uri`          | string | `u`           | -           | Yes | The IP address of your Influxdb instance. It can contain the port number|
-    |`db`           | string | `d`           | -           | Yes | The name of your bucket (database)      |
+    |`bucket`           | string | `b`           | -           | Yes | The name of your bucket (database)      |
     |`port`         | int    | `p`           | -           |  Yes | The port of communication. It is not mandatory if it is indicated in the `uri`               |
     |`token`        | string | `k`           | -           | Yes | The token for accessing the database. The token owner must have write/read permissions on the bucket               |
     |`org`          | string | `g`           | -           | Yes | The name of the organization associated to the bucket               |
-    |`tags`         | string | `t`           | -           | No | List of metadata keys of the report separated by `,` that will be kept. `sensor` and `target` are always kept as report metadata                           |
     |`name`         | string | `n`           | `"pusher_influxdb2"` | No                                    | The related pusher name                 |
-    |`model`        | string | `m`           | `"Power Report"`  | No | The Report type to be stored by the output  |
+    |`model`        | string | `m`           | `"PowerReport"`  | No | The Report type to be stored by the output  |
 
 #### Prometheus output
 
@@ -224,7 +223,7 @@ Table below depicts the different parameters for Prometheus output:
     |`addr`          | string | `u`           | `localhost` | No                                               | The address of your Prometheus instance |
     |`port`         | int | `p`              | `8000` | No                                              | The port of communication                  |
     |`tags`         | string | `t`           | - | No                                              | List of metadata keys of the report separated by `,` that will be kept. `sensor` and `target` are always kept as report metadata                    |
-    |`metric-name`  | string | `M`           | `"power_estimation_watts"` | Yes                                              | The exposed metric name                    |
+    |`metric-name`  | string | `M`           | `"power_estimation_watts"` | No                                              | The exposed metric name                    |
     |`metric-description`  | string | `d`    | `"Estimated power consumption of the target"` | No                             | The exposed metric description                    |
     |`name`         | string | `n`           | `"pusher_prometheus"` | No | The related pusher name                 |
     |`model`        | string | `m`           | `"PowerReport"` | No | The Report type exposed by the output       |
@@ -247,21 +246,21 @@ In order to run the Formula, you can execute one of the following command lines,
 
 ??? example "Examples using docker"
 
-    === "Docker with MongoDB/InfluxDB2"
+    === "Docker with MongoDB/Prometheus"
 
         ```sh hl_lines="4 5"
         docker run -t \
           --net=host \
           powerapi/smartwatts-formula --verbose \
           --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
-          --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
+          --output prometheus --model PowerReport --addr localhost --port 8010 \
           --cpu-base-freq 1900 \
           --cpu-error-threshold 2.0 \
           --disable-dram-formula \
           --sensor-reports-frequency 1000
         ```
 
-    === "Docker with CSV/InfluxDB2"
+    === "Docker with CSV/JSON"
 
         ```sh hl_lines="4 5"
         docker run -t \
@@ -269,7 +268,7 @@ In order to run the Formula, you can execute one of the following command lines,
           --volume /tmp/powerapi-sensor-reporting:/data \
           powerapi/smartwatts-formula --verbose \
           --input csv --model HWPCReport --files "/data/rapl.csv,/data/msr.csv,/data/core.csv" \
-          --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
+          --output json --model PowerReport --filepath "/data/myjson.gz" --compression auto \
           --cpu-base-freq 1900 \
           --cpu-error-threshold 2.0 \
           --disable-dram-formula \
@@ -284,7 +283,7 @@ In order to run the Formula, you can execute one of the following command lines,
           --volume $(pwd)/power_reports.d:/home/powerapi/power_reports.d
           powerapi/smartwatts-formula --verbose \
           --input csv --model HWPCReport --files "/data/rapl.csv,/data/msr.csv,/data/core.csv" \
-          --output csv --directory power_reports.d \
+          --output csv --directory /home/powerapi/power_reports.d \
           --cpu-base-freq 1900 \
           --cpu-error-threshold 2.0 \
           --disable-dram-formula \
@@ -294,26 +293,26 @@ In order to run the Formula, you can execute one of the following command lines,
 
 ??? example "Examples using Pip"
 
-    === "Pip with MongoDB/InfluxDB2"
+    === "Pip with MongoDB/Prometheus"
 
         ```sh hl_lines="3 4"
         python -m smartwatts \
         --verbose \
         --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
-        --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
+        --output prometheus --model PowerReport --addr localhost --port 8010 \
         --cpu-base-freq 1900 \
         --cpu-error-threshold 2.0 \
         --disable-dram-formula \
         --sensor-reports-frequency 1000
         ```
 
-    === "Pip with CSV/InfluxDB2"
+    === "Pip with CSV/JSON"
 
         ```sh hl_lines="3 4"
         python -m smartwatts \
         --verbose \
         --input csv --model HWPCReport --name puller_csv --files "rapl.csv,msr.csv,core.csv" \
-        --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
+        --output json --model PowerReport --filepath "power_reports.d/myjson.gz" --compression auto \
         --cpu-base-freq 1900 \
         --cpu-error-threshold 2.0 \
         --disable-dram-formula \
@@ -332,9 +331,6 @@ In order to run the Formula, you can execute one of the following command lines,
         --sensor-reports-frequency 1000
         ```
 
-???+ info "Estimations' Storage"
-    If your `Power Reports` are stored on InfluxDB2, you can watch them in a grafana by using the [following tutorial](/reference/grafana/grafana.md).
-
 
 #### Running the Formula via Environment Variables
 
@@ -351,7 +347,7 @@ Below you find an example for running the Formula with Docker and Pip:
 
 ??? example "Examples using docker"
 
-    === "Docker with MongoDB/InfluxDB2"
+    === "Docker with MongoDB/Prometheus"
 
         ```sh hl_lines="9-20"
         docker run -t \
@@ -368,16 +364,13 @@ Below you find an example for running the Formula with Docker and Pip:
         -e POWERAPI_INPUT_PULLER_DB=test \
         -e POWERAPI_INPUT_PULLER_COLLECTION=prep \
         -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb2 \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1 \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086 \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_DB=power_consumption \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_ORG=org_test \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_TOKEN=mytoken \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=prometheus \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_ADDR=localhost \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_PORT=8010 \
         powerapi/smartwatts-formula
         ```
 
-    === "Docker with CSV/InfluxDB2"
+    === "Docker with CSV/JSON"
 
         ```sh hl_lines="9-19"
         docker run -t \
@@ -391,14 +384,11 @@ Below you find an example for running the Formula with Docker and Pip:
         -e POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
         -e POWERAPI_INPUT_PULLER_TYPE=csv \
         -e POWERAPI_INPUT_PULLER_DIRECTORY=hwpc_reports.d \
-        -e POWERAPI_INPUT_PULLER_files="hwpc_report_1.json, hwpc_report_2.json" \
+        -e POWERAPI_INPUT_PULLER_files="rapl.csv,msr.csv,core.csv" \
         -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb2 \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1 \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086 \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_DB=power_consumption \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_ORG=org_test \
-        -e POWERAPI_OUTPUT_PUSHER_POWER_TOKEN=mytoken \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=json \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_FILEPATH=power_reports.d/myjson.gz \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_COMPRESSION=auto \
         powerapi/smartwatts-formula
         ```
 
@@ -416,7 +406,7 @@ Below you find an example for running the Formula with Docker and Pip:
         -e POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
         -e POWERAPI_INPUT_PULLER_TYPE=csv \
         -e POWERAPI_INPUT_PULLER_DIRECTORY=hwpc_reports.d \
-        -e POWERAPI_INPUT_PULLER_files="hwpc_report_1.json, hwpc_report_2.json" \
+        -e POWERAPI_INPUT_PULLER_files="rapl.csv,msr.csv,core.csv" \
         -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport \
         -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=csv \
         -e POWERAPI_OUTPUT_PUSHER_POWER_DIRECTORY=power_reports.d \
@@ -426,7 +416,7 @@ Below you find an example for running the Formula with Docker and Pip:
 
 ??? example "Examples using pip"
 
-    === "Pip with MongoDB/InfluxDB2"
+    === "Pip with MongoDB/Prometheus"
 
         ```sh hl_lines="7-18"
         export POWERAPI_VERBOSE=true
@@ -441,16 +431,13 @@ Below you find an example for running the Formula with Docker and Pip:
         export POWERAPI_INPUT_PULLER_DB=test
         export POWERAPI_INPUT_PULLER_COLLECTION=prep
         export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport
-        export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb2
-        export POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1
-        export POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086
-        export POWERAPI_OUTPUT_PUSHER_POWER_DB=power_consumption
-        export POWERAPI_OUTPUT_PUSHER_POWER_ORG=org_test
-        export POWERAPI_OUTPUT_PUSHER_POWER_TOKEN=mytoken
+        export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=prometheus
+        export POWERAPI_OUTPUT_PUSHER_POWER_ADDR=localhost
+        export POWERAPI_OUTPUT_PUSHER_POWER_PORT=8010
         python -m smartwatts
         ```
 
-    === "Pip with CSV/InfluxDB2"
+    === "Pip with CSV/JSON"
 
         ```sh hl_lines="7-17"
         export POWERAPI_VERBOSE=true
@@ -462,14 +449,11 @@ Below you find an example for running the Formula with Docker and Pip:
         export POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
         export POWERAPI_INPUT_PULLER_TYPE=csv \
         export POWERAPI_INPUT_PULLER_DIRECTORY=hwpc_reports.d \
-        export POWERAPI_INPUT_PULLER_files="hwpc_report_1.json, hwpc_report_2.json" \
+        export POWERAPI_INPUT_PULLER_files="rapl.csv,msr.csv,core.csv" \
         export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport
-        export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb2
-        export POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1
-        export POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086
-        export POWERAPI_OUTPUT_PUSHER_POWER_DB=power_consumption
-        export POWERAPI_OUTPUT_PUSHER_POWER_ORG=org_test
-        export POWERAPI_OUTPUT_PUSHER_POWER_TOKEN=mytoken
+        export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=json
+        export POWERAPI_OUTPUT_PUSHER_POWER_FILEPATH=power_reports.d/myjson.gz
+        export POWERAPI_OUTPUT_PUSHER_POWER_COMPRESSION=auto
         python -m smartwatts
         ```
 
@@ -485,7 +469,7 @@ Below you find an example for running the Formula with Docker and Pip:
         export POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
         export POWERAPI_INPUT_PULLER_TYPE=csv \
         export POWERAPI_INPUT_PULLER_DIRECTORY=hwpc_reports.d \
-        export POWERAPI_INPUT_PULLER_files="hwpc_report_1.json, hwpc_report_2.json" \
+        export POWERAPI_INPUT_PULLER_files="rapl.csv,msr.csv,core.csv" \
         export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport
         export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=csv
         export POWERAPI_OUTPUT_PUSHER_POWER_DIRECTORY=power_reports.d
@@ -498,7 +482,7 @@ Below you find example Configuration Files to use different input/output and how
 
 ??? example "Examples configurations files"
 
-    === "Configuration file using MongoDB/InfluxDB2"
+    === "Configuration file using MongoDB/Prometheus"
         ```json hl_lines="5-21" title="config_file.json"
         {
           "verbose": true,
@@ -514,12 +498,9 @@ Below you find example Configuration Files to use different input/output and how
           },
           "output": {
             "pusher_power": {
-              "type": "influxdb2",
-              "uri": "127.0.0.1",
-              "port": 8086,
-              "db": "power_consumption",
-              "org": "org_test",
-              "token": "mytoken"
+              "type": "prometheus",
+              "addr": "localhost",
+              "port": 8010
             }
           },
           "cpu-base-freq": 1900,
@@ -529,7 +510,7 @@ Below you find example Configuration Files to use different input/output and how
         }
         ```
 
-    === "Configuration file using CSV/InfluxDB2"
+    === "Configuration file using CSV/JSON"
         ```json hl_lines="5-20" title="config_file.json"
         {
           "verbose": true,
@@ -539,17 +520,15 @@ Below you find example Configuration Files to use different input/output and how
               "model": "HWPCReport",
               "type": "csv",
               "directory": "hwpc_reports.d",
-              "files": "hwpc_report_1.json, hwpc_report_2.json",
+              "files": "rapl.csv,msr.csv,core.csv",
             }
           },
           "output": {
             "pusher_power": {
-              "type": "influxdb2",
-              "uri": "127.0.0.1",
-              "port": 8086,
-              "db": "power_consumption",
-              "org": "org_test",
-              "token": "mytoken"
+              "type": "json",
+              "model": "PowerReport",
+              "filepath": "power_reports.d/myjson.gz",
+              "compression": "auto"
             }
           },
           "cpu-base-freq": 1900,
@@ -568,7 +547,7 @@ Below you find example Configuration Files to use different input/output and how
               "model": "HWPCReport",
               "type": "csv",
               "directory": "hwpc_reports.d",
-              "files": "hwpc_report_1.json, hwpc_report_2.json",
+              "files": "rapl.csv,msr.csv,core.csv",
             }
           },
           "output": {
