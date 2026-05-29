@@ -63,7 +63,7 @@ As notice, a `PreProcessor` is defined inside the `pre-processor` group. In this
      --net=host \
      powerapi/smartwatts-formula --verbose \
      --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
-     --output influxdb --model PowerReport --uri 127.0.0.1 --port 8086 --db test_result \
+     --output prometheus --model PowerReport --addr localhost --port 8010 \
      {==--pre-processor k8s --name p1 --api-mode local --puller puller==} \
      --cpu-base-freq 1900 \
      --cpu-error-threshold 2.0 \
@@ -77,7 +77,7 @@ As notice, a `PreProcessor` is defined inside the `pre-processor` group. In this
     python -m smartwatts \
     --verbose \
     --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
-    --output influxdb --model PowerReport --uri 127.0.0.1 --port 8086 --db test_result \
+    --output prometheus --model PowerReport --addr localhost --port 8010 \
     {==--pre-processor k8s --name p1 --api-mode local --puller puller==} \
     --cpu-base-freq 1900 \
     --cpu-error-threshold 2.0 \
@@ -104,10 +104,9 @@ As notice, a `PreProcessor` is defined inside the `pre-processor` group. In this
     -e POWERAPI_INPUT_PULLER_DB=test \
     -e POWERAPI_INPUT_PULLER_COLLECTION=prep \
     -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport \
-    -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb \
-    -e POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1 \
-    -e POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086 \
-    -e POWERAPI_OUTPUT_PUSHER_POWER_DB=test_result \
+    -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=prometheus \
+    -e POWERAPI_OUTPUT_PUSHER_POWER_ADDR=localhost \
+    -e POWERAPI_OUTPUT_PUSHER_POWER_PORT=8010 \
     {==-e POWERAPI_PRE_PROCESSOR_P1_TYPE=k8s \
     -e POWERAPI_PRE_PROCESSOR_P1_API_MODE=local \
     -e POWERAPI_PRE_PROCESSOR_P1_PULLER=puller==} \
@@ -129,10 +128,9 @@ As notice, a `PreProcessor` is defined inside the `pre-processor` group. In this
     export POWERAPI_INPUT_PULLER_DB=test
     export POWERAPI_INPUT_PULLER_COLLECTION=prep
     export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport
-    export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb
-    export POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1
-    export POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086
-    export POWERAPI_OUTPUT_PUSHER_POWER_DB=test_result
+    export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=prometheus
+    export POWERAPI_OUTPUT_PUSHER_POWER_ADDR=localhost
+    export POWERAPI_OUTPUT_PUSHER_POWER_PORT=8016
     {==export POWERAPI_PRE_PROCESSOR_P1_TYPE=k8s
     export POWERAPI_PRE_PROCESSOR_P1_API_MODE=local
     export POWERAPI_PRE_PROCESSOR_P1_PULLER=puller==}
@@ -160,10 +158,9 @@ Below an example is provided by using MongoDB as input and InfluxDB as output.
   "output": {
     "pusher_power": {
       "model": "PowerReport",
-      "type": "mongodb",
-      "uri": "mongodb://127.0.0.1",
-      "db": "test_results",
-      "collection": "power_consumption"
+      "type": "prometheus",
+      "addr": "localhost",
+      "port": 8010
     }
   },
   "pre-processor":{
