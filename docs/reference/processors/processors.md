@@ -32,7 +32,7 @@ If you want to use a `K8sPreProcessor` in your Software PowerMeter, you have to 
 | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        | Description |
 | ------------- | -----  | ------------- | ------------- | ----------                                              | ------------------------------------    |
 |`api-mode`| string | `a` | `cluster` | No | The configuration method used to run K8s. Possible values are `local`, `manual` and `cluster`|
-|`puller`| string | `p` | - | No | The puller's name associated with the `PreProcessor`|
+|`puller`| string | `p` | - | Yes | The puller's name associated with the `PreProcessor`|
 |`api-host`| string | `h` | - | No | The host associated with K8s. To be used with `api-mode` = `manual`  together with `api-key`|
 |`api-key`| string | `k` | - | No | The API Key associated with K8s. To be used with `api-mode` = `manual`  together with `api-host` |
 |`name`| string | `n` | - | No | The name of the `PreProcessors`|
@@ -196,7 +196,7 @@ If you want to use a `OpenStack Prepocessor` in your Software PowerMeter, you ha
 
 | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        | Description |
 | ------------- | -----  | ------------- | ------------- | ----------                                              | ------------------------------------    |
-|`puller`| string | `p` | N/A| Yes | The puller's name associated with the `PreProcessor`|
+|`puller`| string | `p` | - | Yes | The puller's name associated with the `PreProcessor`|
 |`polling-interval`| float | `i` | `10.0` | No | OpenStack API polling interval (in seconds)|
 |`name`| string | `n` | `preprocessor_openstack` | Yes | The name of the `PreProcessors`|
 
