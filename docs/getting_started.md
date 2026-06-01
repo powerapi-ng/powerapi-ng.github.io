@@ -9,7 +9,7 @@ A few things are required before we start:
     * For [Intel Xeon Processor](https://en.wikipedia.org/wiki/List_of_Intel_Xeon_processors).  
     * For [AMD Processor](https://en.wikipedia.org/wiki/Table_of_AMD_processors).  
 - You can also use the `lscpu` command to get information about your processor.
-- Docker & Docker-Compose ready (refer to [this official documentation](https://docs.docker.com/engine/install/) and the [post-install steps](https://docs.docker.com/engine/install/linux-postinstall/) if needed!).
+- Docker (refer to [this official documentation](https://docs.docker.com/engine/install/) and the [post-install steps](https://docs.docker.com/engine/install/linux-postinstall/) if needed!).
 - Root access.
 
 ## Which components to get a complete stack  
