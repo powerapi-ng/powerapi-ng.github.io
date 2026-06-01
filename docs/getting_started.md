@@ -28,7 +28,7 @@ To learn more see the [overview section](./reference/overview.md).
 
 ## Executing a Software PowerMeter
 
-The following command allow you to setup and run a software PowerMeter by using HWPC-Sensor and SmartWatts Formula via Docker.
+The following command allows you to setup and run a software PowerMeter by using HWPC-Sensor and SmartWatts Formula via Docker.
 
 ```sh
 curl -sSL https://raw.githubusercontent.com/Inkedstinct/powerapi-ng.github.io/refs/heads/7_doc/nld_proofread/docs/script/getting_started/curl_version/start.sh | bash
