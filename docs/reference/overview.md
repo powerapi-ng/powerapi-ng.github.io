@@ -65,5 +65,5 @@ Preprocessors are positioned between the [Sensor](#sensor) and the [Formula](#fo
 
 | Preprocessor | Documentation | Repository | Description | Supported |
 | :---------------: |----------------------|--------------------------|----------------|---------------|
-| k8s Preprocessor            | [k8s Preprocessor Documentation](./processors/processors.md#k8spreprocessor) | [Github](https://github.com/powerapi-ng/powerapi/tree/master/src/powerapi/processor/pre/k8s) | Add K8S Specific metadata to corresponding Reports |  :material-check: Supported |
-| OpenStack Preprocessor            | [OpenStack Preprocessor Documentation](./processors/processors.md#openstackpreprocessor) | [Github](https://github.com/powerapi-ng/powerapi/tree/master/src/powerapi/processor/pre/openstack) | Add OpenStack Specific metadata to corresponding Reports |  :material-check: Supported |
+| k8s Preprocessor            | [k8s Preprocessor Documentation](./processors/processors.md#k8s-preprocessor) | [Github](https://github.com/powerapi-ng/powerapi/tree/master/src/powerapi/processor/pre/k8s) | Add K8S Specific metadata to corresponding Reports |  :material-check: Supported |
+| OpenStack Preprocessor            | [OpenStack Preprocessor Documentation](./processors/processors.md#openstack-preprocessor) | [Github](https://github.com/powerapi-ng/powerapi/tree/master/src/powerapi/processor/pre/openstack) | Add OpenStack Specific metadata to corresponding Reports |  :material-check: Supported |
