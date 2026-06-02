@@ -29,7 +29,6 @@ most common architectures:
     In addition of a supported architecture, there is some pre-requisites:
 
     - Using a Linux distribution exposing the [`perf`](https://perf.wiki.kernel.org/index.php/Main_Page) api  
-    - Using cgroup version 1 when using version `1.2` or older. See [this section](../cgroup/cgroup_v1_activation.md) about its configuration
     - Using an AMD Zen 1 processor requires version `1.4` or older.
     - Deploying on a physical server as the HWPC Sensor must have access to the real CPU register
 
