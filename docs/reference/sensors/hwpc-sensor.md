@@ -73,9 +73,10 @@ The following tabs gives a complete overview of available parameters, along with
 
     | Parameter                | Type   | CLI shortcut  | Default Value                                      | Description                             |
     | -------------            | -----  | :-------------: | :-------------:                                      | ------------------------------------    |
-    |`events`     | `string`   | `e`           | -                                             | List of events to be monitored. As CLI parameter, each event is indicated with `e`. The structure of events is given [below](hwpc-sensor.md#events)                    |
+    |`events`     | `string`   | `e`           | -                                             | List of events to be monitored. As CLI parameter, each event is indicated with `e`. The structure of events is given [below](hwpc-sensor.md#group-events)                    |
     |`monitoring_type`     | `string` ( **one of** `MONITOR_ONE_CPU_PER_SOCKET` **or** `MONITOR_ALL_CPU_PER_SOCKET` )    | `o` (flag)          |  `MONITOR_ALL_CPU_PER_SOCKET`                                             | The monitoring type. If `o` is specified as CLI parameter, `MONITOR_ONE_CPU_PER_SOCKET` is used as type  |
 
+<span id="group-events"></span>
 ??? info "Group Events"
 
     Table below depicts the different group events for compatible Intel and AMD architectures.
