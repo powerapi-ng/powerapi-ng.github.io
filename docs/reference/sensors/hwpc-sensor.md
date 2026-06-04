@@ -45,7 +45,7 @@ Here is the command to deploy the latest image version available.
 === "Docker"
 
     ```sh
-    docker pull powerapi/hwpc-sensor:latest
+    docker pull ghcr.io/powerapi-ng/hwpc-sensor
     ```
 
 ## Usage
