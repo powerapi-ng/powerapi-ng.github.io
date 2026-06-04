@@ -27,7 +27,7 @@ Alternatively, this installation can be done thanks to Pypi.
 === "Docker"
 
     ```sh
-    docker pull powerapi/smartwatts-formula
+    docker pull ghcr.io/powerapi-ng/smartwatts-formula
     ```
 === "Pypi"
 
