@@ -1,57 +1,26 @@
 # Getting started
 
-If you want to monitor the energy consumption of your process we have some
-ready-to-use tools
+In this tutorial, we will guide you through the first steps to get started with PowerAPI.
+The objective is to get a quick view of the capabilities of PowerAPI.
+A few things are required before we start:
 
-???+ info "Source and Destination"
-    In order to use any Formula, you need to run a Source and a Destination. The former is used by a Sensor to store metrics. The later allows the Formula to make available the estimations. For starting, you can use [MongoDB](https://hub.docker.com/_/mongo) as Source and [InfluxDB:2.X](https://hub.docker.com/_/influxdb) as Destination by installing them as Docker containers.
-    For more details about Sources and Destinations please check this [section](reference/database/sources_destinations.md).
+- A compatible processor (you can see the compatible CPU architecture [here](reference/sensors/hwpc-sensor.md#)). You can take a look on the following links to find your CPU architecture:  
+    * For [Intel Processor](https://en.wikipedia.org/wiki/List_of_Intel_processors).  
+    * For [Intel Xeon Processor](https://en.wikipedia.org/wiki/List_of_Intel_Xeon_processors).  
+    * For [AMD Processor](https://en.wikipedia.org/wiki/Table_of_AMD_processors).  
+- You can also use the `lscpu` command to get information about your processor.
+- Docker (refer to [this official documentation](https://docs.docker.com/engine/install/) and the [post-install steps](https://docs.docker.com/engine/install/linux-postinstall/) if needed!).
+- Root access.
 
-
-<!---
-## **RAPL Formula**
-
-!!! note ""
-    for monitoring the energy consumption of your device
-
-RAPL Formula is made for tracking the energy consumption of your machine.
-To install RAPL Formula on a baremetal server or a PC run [the following
-script](script/rapl_install.sh) in a Terminal.
-
-The script explains what it will do and then pauses before it does it.
-
-Please notice that you need a **Linux distribution** in order to use the HWPC Sensor installed by the script as
-well as a **comptible Intel** (Sandy Bridge and newer) or **AMD Processor** (Zen). **Power/ARM/RISCV are not supported** architectures. HWPC Sensor will **not work on a Virtual Machine**. However, you can install the Formula by hand in a Virtual Machine if need it.
--->
-
-## **SmartWatts Formula**
-
-!!! note ""
-    for monitoring the power consumption of your process
-
-Smartwatts is made for tracking the power consumption of processes on a
-machine.
-To install Smartwatts on a baremetal server or a PC run [the following
-script](script/smartwatts_install.sh) in a Terminal. Please notice that you will need [pip](https://pip.pypa.io/en/stable/installation/) or [docker](https://docs.docker.com/engine/install/) in order to use the Formula.
-
-The script explains what it will do and then pauses before it does it.
-
-Please notice that you need a **Linux distribution** in order to use the HWPC Sensor installed by the script as
-well as a **comptible Intel** (Sandy Bridge and newer) or **AMD Processor** (Zen). You also need [docker](https://docs.docker.com/engine/install/).  **Power/ARM/RISCV are not supported** architectures. HWPC Sensor will **not work on a Virtual Machine**. However, you can install the Formula by hand in a Virtual Machine if need it.
+## Which components to get a complete stack  
 
 
+The complete stack of PowerAPI is composed of:
 
-#### CGroups
-If you need to monitor a process or a group of process via SmartWatts by using HWPC Sensor **version 1.2 or older**, you can follow this [tutorial](reference/cgroup/cgroup.md). Please notice that **cgroup V1** is required **only** for HWPC Sensor **version 1.2 or older**. If you need to enable this `cgroup` version please follow this [tutorial](reference/cgroup/cgroup_v1_activation.md).    
+- A Sensor and a Formula that enable us to define a Software Power Meter. The Sensor retrieves power consumption related metrics and the Formula compute an estimation of the power consumption. Currently, PowerAPI provides [HWPC-Sensor](reference/sensors/hwpc-sensor.md) and [SmartWatts Formula](reference/formulas/smartwatts.md)
 
-<!---
-## **Jouleit**
+- The Sensor and the Formula need an *output*. The supported *output* are listed [here](reference/sensors/hwpc-sensor.md/#output). The Formula will also use the Sensor *output* as its *input*.
 
-!!! note ""
-    for mesuring the energy consumption of a program
+- Finally, they need a configuration as described in the [HWPC-Sensor](reference/sensors/hwpc-sensor.md#global-parameters) and [SmartWatts](reference/formulas/smartwatts.md#global-parameters) documentation. The configuration parameters can be defined via a configuration file or via the CLI.
 
-Jouleit is made for tracking the energy consumption of a program.
-Jouleit need `gawk` to run.
-You can get the script from the [github repository](https://github.com/powerapi-ng/jouleit)
-Start jouleit by using `./jouleit.sh cmd`.
--->
+To learn more see the [overview section](./reference/overview.md).

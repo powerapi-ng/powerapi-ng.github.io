@@ -39,7 +39,7 @@ You can use [the following script](../script/smartwatts_install.sh) to install S
 
 ## Usage
 
-For running the SmartWatts Formula you need: a Source and a Destination, a Sensor that provides `HWPCReports` and a configuration.
+For running the SmartWatts Formula you need: a Source and a Destination, a Sensor that provides `HWPC Reports` and a configuration.
 
 ### Source and Destination
 For running SmartWatts we are using MongoDB as Source and InfluxDB as Destination as dockers containers.
@@ -57,7 +57,7 @@ docker run -d --name influx_dest -p 8086:8086 influxdb:1.8
 
 
 ### Sensor
-[HWPC Sensor](../sensors/hwpc-sensor.md) is used in order to get `HWPCReports`. Start by installing the HWPC Sensor (see
+[HWPC Sensor](../sensors/hwpc-sensor.md) is used in order to get `HWPC Reports`. Start by installing the HWPC Sensor (see
 [here](../sensors/hwpc-sensor.md#installation)) and start it (see
 [here](../sensors/hwpc-sensor.md#usage)).
 
@@ -91,7 +91,7 @@ Below an example is provided by using MongoDB as Source and InfluxDB as Destinat
   "stream": true,
   "input": {
     "puller": {
-      "model": "HWPCReport",
+      "model": "HWPC Report",
       "type": "mongodb",
       "uri": "mongodb://127.0.0.1",
       "db": "test",
@@ -148,8 +148,8 @@ the installation you used:
      docker run -t \
      --net=host \
      powerapi/smartwatts-formula --verbose \
-     --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
-     --output influxdb --model PowerReport --uri 127.0.0.1 --port 8086 --db test_result \
+     --input mongodb --model HWPC Report --uri mongodb://127.0.0.1 --db test --collection prep \
+     --output influxdb --model Power Report --uri 127.0.0.1 --port 8086 --db test_result \
      --cpu-base-freq 1900 \
      --cpu-error-threshold 2.0 \
      --disable-dram-formula \
@@ -161,8 +161,8 @@ the installation you used:
     ```sh
     python -m smartwatts \
     --verbose \
-    --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
-    --output influxdb --model PowerReport --uri 127.0.0.1 --port 8086 --db test_result \
+    --input mongodb --model HWPC Report --uri mongodb://127.0.0.1 --db test --collection prep \
+    --output influxdb --model Power Report --uri 127.0.0.1 --port 8086 --db test_result \
     --cpu-base-freq 1900 \
     --cpu-error-threshold 2.0 \
     --disable-dram-formula \
@@ -172,7 +172,7 @@ the installation you used:
 
 
 ???+ info "Estimations' Storage"
-    Your `PowerReports` will be stored on InfluxDB. You can watch them in a grafana by using the [following tutorial](../grafana/grafana.md).
+    Your `Power Reports` will be stored on InfluxDB. You can watch them in a grafana by using the [following tutorial](../grafana/grafana.md).
 
 ???+ tip "Using shortcuts for parameters' names"
     You use `-` instead of `--`.

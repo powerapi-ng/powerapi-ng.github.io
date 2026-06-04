@@ -1,17 +1,16 @@
 # SmartWatts Formula
 
-SmartWatts is a software-defined power meter based on the PowerAPI toolkit.
-SmartWatts is a configurable software that can estimate the power consumption of
-software in real-time.
-SmartWatts needs to receive several metrics provided by
-[HWPC Sensor](../sensors/hwpc-sensor.md#events) :
+SmartWatts is a configurable Formula that can estimate the power consumption of software in real-time.
+SmartWatts needs to receive several usage metrics available in Sensor's Reports:
 
 - The Running Average Power Limit (`RAPL`)
 - `msr` events (`TSC`, `APERF`, `MPERF`)
-- `core` events which depend on the Processor Architucture
+- `core` events which depend on the Processor Architecture
 
-These metrics are then used as inputs for a power model that estimates the power
-consumption of each software.
+In particular, SmartWatts is compatible with [HWPC Reports](/reference/reports/reports#hwpc-reports), which are produced by HWPC-Sensor (i.e., this sensor makes these usage metrics available in HWPC Reports).
+
+The raw usage metrics are then used as inputs for a power model that estimates the power consumption of each process. These estimations are recorded in [Power Reports](/reference/reports/reports#reports.md#power-reports)
+
 The model is calibrated each time a `cpu-error-threshold` is
 reached by learning a new power model with previous reports.
 
@@ -20,10 +19,14 @@ Software-Defined Power Meter for Containers](https://hal.inria.fr/hal-02470128)
 
 ## Installation
 
-You can use the following command to install SmartWatts:
+The default installation is done through a Docker container.  
+The different images can be found on the [Docker Hub](https://hub.docker.com/r/powerapi/smartwatts-formula/tags).  
+
+Alternatively, this installation can be done thanks to Pypi.
 
 === "Docker"
-    ```
+
+    ```sh
     docker pull ghcr.io/powerapi-ng/smartwatts-formula
     ```
 === "Pypi"
@@ -34,90 +37,301 @@ You can use the following command to install SmartWatts:
 
 ## Usage
 
-For running the SmartWatts Formula you need: a Source and a Destination, a Sensor that provides `HWPCReports` and a configuration.
+???+ info "SmartWatts pre-requisites"
+    As SmartWatts is a formula, it needs to consume compatible usage Reports from a [Sensor](/reference/sensors/hwpc-sensor). Make sure you have Reports made available in a supported storage option.
 
-### Source and Destination
-For running SmartWatts we are using MongoDB as Source and InfluxDB 2.X as Destination as dockers containers.
+For running the SmartWatts Formula you need:
 
-To start a MongoDB instance via the command line
-
-```sh
-docker run -d --name mongo_source -p 27017:27017 mongo
-```
-And a InfluxDB 2.X instance
-
-```sh
-docker run -p 8086:8086 -v "/tmp/powerapi-influx/data:/var/lib/influxdb2" -v "/tmp/powerapi-influx/config:/etc/influxdb2" influxdb:2
-```
-???+ tip "Set up influxdb 2.X for the first time"
-    If it is the first time that you are using `influxdb 2.X`, there are several methods (UI, CLI, API) to make a set up. Please check [here](https://docs.influxdata.com/influxdb/v2/get-started/setup/) for more information.  
-
-
-### Sensor
-[HWPC Sensor](../sensors/hwpc-sensor.md) is used in order to get `HWPCReports`. Start by installing the HWPC Sensor (see
-[here](../sensors/hwpc-sensor.md#installation)) and start it (see
-[here](../sensors/hwpc-sensor.md#usage)).
-
+- a valid configuration
+- an input storage containing compatible `HWPC Reports`
+- an output storage
 
 ### Parameters
 
-Besides the [basic parameters](../formulas/configuration_files.md), the following ones are specific to SmartWatts:
+???+ warning "Hardware dependent values"
+    Some parameters values depend on your hardware. In particular, `cpu-base-freq`. You can obtain this value from `CPU MHz` field by using `lscpu` command.
 
-| Parameter                | Type   | CLI shortcut  | Default Value                                      | Description                             |
-| -------------            | -----  | ------------- | -------------                                      | ------------------------------------    |
-|`disable-cpu-formula`     | `bool` (flag)    | -           | `false`                                             | Disable CPU Formula                    |
-|`disable-dram-formula`    | `bool` (flag) | -           | `false`                                                | Disable RAM Formula |
-|`cpu-rapl-ref-event`    | `string` | -           | `"RAPL_ENERGY_PKG"`  | RAPL event used as reference for the CPU power models |
-|`dram-rapl-ref-event`    | `string` | -           | `"RAPL_ENERGY_DRAM"`  | RAPL event used as reference for the DRAM power models |
-|`cpu-tdp`         | `int` | -           | `125`  | CPU TDP (in Watt)|
-|`cpu-base-clock`         | `int` | -           | `100`  | CPU base clock (in MHz) |
-|`cpu-base-freq`     | `int` | -           | `2100`  | CPU base frequency (in MHz) |
-|`cpu-error-threshold`    | `float` | -           | `2.0`  | Error threshold for the CPU power models (in Watts) |
-|`dram-error-threshold`    | `float` | -           | `2.0`  | Error threshold for the DRAM power models (in Watts) |
-|`learn-min-samples-required`    | `int` | -           | `10`  | Minimum amount of samples required before trying to learn a power model |
-|`learn-history-window-size`    | `int` | -           | `60`  | Size of the history window used to keep samples to learn from |
-|`sensor-reports-frequency`    | `int` | -           | `1000`  | The frequency with which measurements are made (in milliseconds) |
+#### Global parameters
 
-### Running the Formula via CLI parameters
+This table resumes the parameters needed for any Formula (and thus, for SmartWatts configuration) :  
+??? info "Global parameters"
+
+    | Parameter    | Type                  | CLI shortcut  | Default Value                        | Description                          |
+    | ------------ | -----                 | :-------------: | -------------                        | ------------------------------------ |
+    | `verbose`                            | `bool`                | `v`           |`False`                              | Verbose or quiet mode                |
+    | `stream`                             | `bool`   | `s`           |`False`                               | Real time or post-mortem mode         |
+    | `sensor-report-sampling-interval`    | `int`         | -           | `1000`                                 | The time in milliseconds between two reports (`stream` = `True`) |
+    | `input`     | `string`      | - | -     | SmartWatts input, shall match an existing Sensor outputs and contain HPWCReports. See [here](#smartwatts-inputs) |
+    | `output`     | `string` | - | -            | SmartWatts output to store Power Report. See [here](#smartwatts-outputs) |
+    | `pre-processor`     | `string` | - | -            | Pre-Processor to modify reports generated by a sensor. More information about Processors and their related parameters can be found [here](/reference/processors/processors.md) |
+    | `post-processor`     | `string` | - | -            | Post-Processor to modify reports generated by a formula. More information about Processors and their related parameters can be found [here](/reference/processors/processors.md) |
+
+#### Specific parameters
+
+This table resumes the parameters specific to SmartWatts configuration :  
+??? info "SmartWatts specific parameters"
+
+    | Parameter                | Type   | CLI shortcut  | Default Value                                      | Description                             |
+    | -------------            | -----  | :-------------: | -------------                                      | ------------------------------------    |
+    |`disable-cpu-formula`     | `bool`     | -           | `False`                                             | Disable CPU Formula                    |
+    |`disable-dram-formula`    | `bool`  | -           | `False`                                                | Disable RAM Formula |
+    |`cpu-rapl-ref-event`    | `string` | -           | `"RAPL_ENERGY_PKG"`  | RAPL event used as reference for the CPU power models |
+    |`dram-rapl-ref-event`    | `string` | -           | `"RAPL_ENERGY_DRAM"`  | RAPL event used as reference for the DRAM power models |
+    |`cpu-tdp`         | `int` | -           | `125`  | CPU TDP (in Watt)|
+    |`cpu-base-clock`         | `int` | -           | `100`  | CPU base clock (in MHz) |
+    |`cpu-base-freq`     | `int` | -           | `2100`  | CPU base frequency (in MHz), depend of your hardware. You can obtain this value from `CPU MHz` field by using `lscpu` command. |
+    |`cpu-error-threshold`    | `float` | -           | `2.0`  | Error threshold for the CPU power models (in Watts) |
+    |`dram-error-threshold`    | `float` | -           | `2.0`  | Error threshold for the DRAM power models (in Watts) |
+    |`learn-min-samples-required`    | `int` | -           | `10`  | Minimum amount of samples required before trying to learn a power model |
+    |`learn-history-window-size`    | `int` | -           | `60`  | Size of the history window used to keep samples to learn from |
+    |`sensor-reports-frequency`    | `int` | -           | `1000`  | The frequency with which measurements are made (in milliseconds) |
+
+### SmartWatts Inputs
+
+We can choose SmartWatts inputs among the following list, depending on where your Sensor outputs its Reports:  
+
+- [JSON](#json-input)
+- [MongoDB](#mongodb-input)
+- [CSV](#csv-input)
+- [Socket](#socket-input)
+
+#### JSON Input
+
+Table below depicts the different parameters for JSON input:  
+??? info "JSON Input parameters"
+
+    | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             Description                             |
+    | ------------- | -----  | :-------------: | ------------- | :----------:                                              | ------------------------------------    |
+    | `filepath`          | string | `f`           | - | Yes                                                       | The JSON file path |
+    | `compression`          | string | `c`            | `auto` | No                                                       | The compression types are: `gzip`, `lzma`, `auto` or `none`. If `auto` is indicated as compression, the suffix (extension) of `filepath` is used to infer the compression method for the file. Supported compression extensions are `.gz`, `.gzip`, `.xz` and `.lzma`. The usage of `none` indicates that the file is not compressed                           |
+    | `name`   | string | `n`          | `puller_json` | No                                                       | The related puller name |
+    | `model`   | string | `m`          | `HWPCReport` | No                                                       | The Report type stored by the sensor output |
+
+
+#### MongoDB Input
+
+Table below depicts the different parameters for MongoDB input:  
+??? info "MongoDB Input parameters"
+
+    | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             Description                             |
+    | ------------- | -----  | :-------------: | ------------- | :----------:                                              | ------------------------------------    |
+    | `uri`          | string | `u`           | - | Yes                                                       | The IP address of your MongoDB instance |
+    | `db`          | string | `d`            | - | Yes                                                       | The name of your database               |
+    | `collection`   | string | `c`          | - | Yes                                                       | The name of the collection inside `db`  |
+    | `name`   | string | `n`          | `puller_mongodb` | No                                                       | The related puller name |
+    | `model`   | string | `m`          | `HWPCReport` | No                                                       | The Report type stored by the sensor output |
+
+#### CSV Input
+
+Table below depicts the different parameters for CSV input:  
+??? info "CSV Input parameters"
+
+    | Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
+    | ------------- | -----   | :-------------: | ------------- | :----------:| ------------------------------------                                          |
+    | `files` | string         | `f`           |  -           | Yes | The list of input CSV files with the format "file1,file2,file3..."        |
+    | `name`   | string | `n`          | `puller_csv` | No                                                       | The related puller name |
+    | `model`   | string | `m`          | `HWPCReport` | No                                                       | The Report type stored by the sensor output |
+
+#### Socket input
+
+Table below depicts the different parameters for CSV input:  
+??? info "Socket input parameters"
+
+    | Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
+    | ------------- | -----   | :-------------: | ------------- | :----------:| ------------------------------------                                          |
+    | `port` | int         | `p`           |  `9080`           | No | The port used by the host running the socket       |
+    | `host` | string         | `h`           |  `"127.0.0.1"`            | No | The IP address of host running the socket          |
+    | `name`   | string | `n`          | `puller_socket` | No                                                       | The related puller name |
+    | `model`   | string | `m`          | `HWPCReport` | No                                                       | The Report type stored by the sensor output |
+
+
+### SmartWatts Outputs
+
+SmartWatts needs to store its power consumption estimations or Power Reports.
+We can choose an output among the following list:  
+
+- [JSON](#json-output)
+- [MongoDB](#mongodb-output)
+- [CSV](#csv-output)
+- [InfluxDB](#influxdb-output)
+- [Prometheus](#prometheus-output)
+
+#### JSON output
+
+Table below depicts the different parameters for JSON output:  
+??? info "JSON output parameters"
+
+    | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             Description                             |
+    | -------------- | -----  | :-------------: | ------------- | :----------:                                              | ------------------------------------    |
+    | `filepath`          | string | `f`           | - | Yes                                                       | The JSON file path |
+    | `compression`          | string | `c`            | `auto` | No                                                       | The compression types are: `gzip`, `lzma`, `auto` or `none`. If `auto` is indicated as compression, the suffix (extension) of `filepath` is used to infer the compression method for the file. Supported compression extensions are `.gz`, `.gzip`, `.xz` and `.lzma`. The usage of `none` indicates that the file is not compressed           |
+    | `name` | string | `n`          | `pusher_json` | No                                                       | The related pusher name |
+    | `model`   | string | `m`          | `PowerReport` | No | The Report type to be stored by the output |
+
+#### MongoDB output
+
+Table below depicts the different parameters for MongoDB output:  
+??? info "MongoDB output parameters"
+
+    | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                        |                                             Description                             |
+    | -------------- | -----  | :-------------: | ------------- | :----------:                                              | ------------------------------------    |
+    | `uri`          | string | `u`           | - | Yes                                                       | The IP address of your MongoDB instance |
+    | `database`          | string | `d`            | - | Yes                                                       | The name of your database               |
+    | `collection`   | string | `c`          | - | Yes                                                       | The name of the collection inside `db`  |
+    | `name`   | string | `n`          | `pusher_mongodb` | No                                                       | The related pusher name |
+    | `model`   | string | `m`          | `PowerReport` | No                                                       | The Report type to be stored by the output |
+
+#### CSV output
+
+Table below depicts the different parameters for CSV output:  
+??? info "CSV output parameters"
+
+    | Parameter     | Type    | CLI shortcut  | Default Value | Mandatory | Description                                                                   |
+    | ------------- | -----   | :-------------: | ------------- | :----------:| ------------------------------------                                          |
+    | `directory` | string         | `d`           | -           | Yes |The directory where output CSV files will be written          |
+    | `name`   | string | `n`          | `pusher_csv` | No                                                       | The related pusher name |
+    | `model`   | string | `m`          | `PowerReport` | No                                                       | The Report type to be stored by the output |
+
+
+
+#### InfluxDB output
+
+???+ tip "Set up influxdb 2.X for the first time"
+    If it is the first time that you are using `influxdb 2.X`, there are several methods (UI, CLI, API) to make a set up. Please check [here](https://docs.influxdata.com/influxdb/v2/get-started/setup/) for more information.  
+
+Table below depicts the different parameters for InfluxDB output:  
+??? info "InfluxDB output parameters"
+
+    | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory | Description                             |
+    | ------------- | -----  | :-------------: | ------------- | :----------: | ------------------------------------    |
+    |`uri`          | string | `u`           | -           | Yes | The IP address of your Influxdb instance. It can contain the port number|
+    |`bucket`           | string | `b`           | -           | Yes | The name of your bucket (database)      |
+    |`port`         | int    | `p`           | -           |  Yes | The port of communication. It is not mandatory if it is indicated in the `uri`               |
+    |`token`        | string | `k`           | -           | Yes | The token for accessing the database. The token owner must have write/read permissions on the bucket               |
+    |`org`          | string | `g`           | -           | Yes | The name of the organization associated to the bucket               |
+    |`name`         | string | `n`           | `pusher_influxdb2` | No                                    | The related pusher name                 |
+    |`model`        | string | `m`           | `PowerReport`  | No | The Report type to be stored by the output  |
+
+#### Prometheus output
+
+Table below depicts the different parameters for Prometheus output:  
+??? info "Prometheus output parameters"
+
+    | Parameter     | Type   | CLI shortcut  | Default Value | Mandatory                                      | Description                             |
+    | ------------- | -----  | :-------------: | ------------- | :----------:                                    | ------------------------------------    |
+    |`addr`          | string | `u`           | `localhost` | No                                               | The address of your Prometheus instance |
+    |`port`         | int | `p`              | `8000` | No                                              | The port of communication                  |
+    |`tags`         | string | `t`           | - | No                                              | List of metadata keys of the report separated by `,` that will be kept. `sensor` and `target` are always kept as report metadata                    |
+    |`metric-name`  | string | `M`           | `power_estimation_watts` | No                                              | The exposed metric name                    |
+    |`metric-description`  | string | `d`    | `Estimated power consumption of the target` | No                             | The exposed metric description                    |
+    |`name`         | string | `n`           | `pusher_prometheus` | No | The related pusher name                 |
+    |`model`        | string | `m`           | `PowerReport` | No | The Report type exposed by the output       |
+
+
+### Running the Formula
+
+You will find below different examples in order to run a Formula, depending on your use case:  
+
+- [Command-Line Interface](#running-the-formula-via-cli-parameters)  
+- [Environment variables](#running-the-formula-via-environment-variables)  
+- [Configuration File](#running-the-formula-via-configuration-file)  
+
+!!! tip "Getting Started"
+    You can also find a complete stack deployment example in the [Getting Started Section](/getting_started)!
+
+#### Running the Formula via CLI parameters
 
 In order to run the Formula, you can execute one of the following command lines, depending on the installation you use:
 
-=== "Docker"
+??? example "Examples using docker"
 
-     ```sh
-     docker run -t \
-     --net=host \
-     powerapi/smartwatts-formula --verbose \
-     --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
-     --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken \
-     --cpu-base-freq 1900 \
-     --cpu-error-threshold 2.0 \
-     --disable-dram-formula \
-     --sensor-reports-frequency 1000
-     ```
+    === "Docker with MongoDB/Prometheus"
 
-=== "Pip"
+        ```sh hl_lines="4 5"
+        docker run -t \
+          --net=host \
+          powerapi/smartwatts-formula --verbose \
+          --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
+          --output prometheus --model PowerReport --addr localhost --port 8010 \
+          --cpu-base-freq 1900 \
+          --cpu-error-threshold 2.0 \
+          --disable-dram-formula \
+          --sensor-reports-frequency 1000
+        ```
 
-    ```sh
-    python -m smartwatts \
-    --verbose \
-    --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
-    --output influxdb2 --model PowerReport --uri 127.0.0.1 --port 8086 --db power_consumption --org org_test --token mytoken\
-    --cpu-base-freq 1900 \
-    --cpu-error-threshold 2.0 \
-    --disable-dram-formula \
-    --sensor-reports-frequency 1000
-    ```
+    === "Docker with CSV/JSON"
 
-In this configuration we are using MongoDB as source and InfluxDB 2.X as Destination. Some parameters values depend of your hardware. In particular, `cpu-base-freq`. You can obtain this value from `CPU MHz` field by using `lscpu` command.
+        ```sh hl_lines="4 5"
+        docker run -t \
+          --net=host \
+          --volume /tmp/powerapi-sensor-reporting:/data \
+          powerapi/smartwatts-formula --verbose \
+          --input csv --model HWPCReport --files "/data/rapl.csv,/data/msr.csv,/data/core.csv" \
+          --output json --model PowerReport --filepath "/data/myjson.gz" --compression auto \
+          --cpu-base-freq 1900 \
+          --cpu-error-threshold 2.0 \
+          --disable-dram-formula \
+          --sensor-reports-frequency 1000
+        ```
 
-???+ info "Estimations' Storage"
-    Your `PowerReports` will be stored on InfluxDB2. You can watch them in a grafana by using the [following tutorial](../grafana/grafana.md).
+    === "Docker with CSV/CSV"
 
-???+ tip "Using shortcuts for parameters' names"
-    You use `-` instead of `--`.
+        ```sh hl_lines="4 5"
+        docker run -t \
+          --volume /tmp/powerapi-sensor-reporting:/data \
+          --volume $(pwd)/power_reports.d:/home/powerapi/power_reports.d
+          powerapi/smartwatts-formula --verbose \
+          --input csv --model HWPCReport --files "/data/rapl.csv,/data/msr.csv,/data/core.csv" \
+          --output csv --directory /home/powerapi/power_reports.d \
+          --cpu-base-freq 1900 \
+          --cpu-error-threshold 2.0 \
+          --disable-dram-formula \
+          --sensor-reports-frequency 1000
+        ```
+        `power_reports.d` should be accessible by the user defined in the dockerfile. You can change permissions with `chmod`
 
-### Running the Formula with Environment Variables
+??? example "Examples using Pip"
+
+    === "Pip with MongoDB/Prometheus"
+
+        ```sh hl_lines="3 4"
+        python -m smartwatts \
+        --verbose \
+        --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
+        --output prometheus --model PowerReport --addr localhost --port 8010 \
+        --cpu-base-freq 1900 \
+        --cpu-error-threshold 2.0 \
+        --disable-dram-formula \
+        --sensor-reports-frequency 1000
+        ```
+
+    === "Pip with CSV/JSON"
+
+        ```sh hl_lines="3 4"
+        python -m smartwatts \
+        --verbose \
+        --input csv --model HWPCReport --name puller_csv --files "rapl.csv,msr.csv,core.csv" \
+        --output json --model PowerReport --filepath "power_reports.d/myjson.gz" --compression auto \
+        --cpu-base-freq 1900 \
+        --cpu-error-threshold 2.0 \
+        --disable-dram-formula \
+        --sensor-reports-frequency 1000
+        ```
+
+    === "Pip with CSV/CSV"
+        ```sh hl_lines="3 4"
+        python -m smartwatts \
+        --verbose \
+        --input csv --model HWPCReport --name puller_csv --files "rapl.csv,msr.csv,core.csv" \
+        --output csv --directory power_reports.d \
+        --cpu-base-freq 1900 \
+        --cpu-error-threshold 2.0 \
+        --disable-dram-formula \
+        --sensor-reports-frequency 1000
+        ```
+
+
+#### Running the Formula via Environment Variables
 
 Parameters are defined by using the prefixes `POWERAPI_`, `POWERAPI_INPUT_` and `POWERAPI_OUTPUT_` in the names of Environment Variables. The following conventions are used:
 
@@ -125,103 +339,235 @@ Parameters are defined by using the prefixes `POWERAPI_`, `POWERAPI_INPUT_` and 
 - `POWERAPI_INPUT_<COMPONENT_NAME>_<PARAMETER_NAME>`
 - `POWERAPI_OUTPUT_<COMPONENT_NAME>_<PARAMETER_NAME>`
 
-where `PARAMETER_NAME` refers to names of parameters in upper case (e.g., `VERBOSE`, `CPU_BASE_FREQ`, `COLLECTION`) and `COMPONENT_NAME` to the name given to the different Sources and Destinations in upper case (e.g., `PULLER` and `PUSHER_POWER`).
+where `PARAMETER_NAME` refers to names of parameters in upper case (e.g., `VERBOSE`, `CPU_BASE_FREQ`, `COLLECTION`) and `COMPONENT_NAME` to the name given to the different input and output in upper case (e.g., `PULLER` and `PUSHER_POWER`).
 
 Below you find an example for running the Formula with Docker and Pip:
 
-=== "Docker"
 
-    ```sh
-    docker run -t \
-    --net=host \
-    -e POWERAPI_VERBOSE=true \
-    -e POWERAPI_STREAM=true \
-    -e POWERAPI_CPU_BASE_FREQ=1900 \
-    -e POWERAPI_CPU_ERROR_THRESHOLD=2.0 \
-    -e POWERAPI_DISABLE_DRAM_FORMULA=true \
-    -e POWERAPI_SENSOR_REPORTS_FREQUENCY=1000 \
-    -e POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
-    -e POWERAPI_INPUT_PULLER_TYPE=mongodb \
-    -e POWERAPI_INPUT_PULLER_URI=mongodb://127.0.0.1 \
-    -e POWERAPI_INPUT_PULLER_DB=test \
-    -e POWERAPI_INPUT_PULLER_COLLECTION=prep \
-    -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport \
-    -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb2 \
-    -e POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1 \
-    -e POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086 \
-    -e POWERAPI_OUTPUT_PUSHER_POWER_DB=power_consumption \
-    -e POWERAPI_OUTPUT_PUSHER_POWER_ORG=org_test \
-    -e POWERAPI_OUTPUT_PUSHER_POWER_TOKEN=mytoken \
-    powerapi/smartwatts-formula
-    ```
+??? example "Examples using docker"
 
-=== "Pip"
+    === "Docker with MongoDB/Prometheus"
 
-    ```sh
-    export POWERAPI_VERBOSE=true
-    export POWERAPI_STREAM=false
-    export POWERAPI_CPU_BASE_FREQ=1900
-    export POWERAPI_CPU_ERROR_THRESHOLD=2.0
-    export POWERAPI_DISABLE_DRAM_FORMULA=true
-    export POWERAPI_SENSOR_REPORTS_FREQUENCY=1000
-    export POWERAPI_INPUT_PULLER_MODEL=HWPCReport
-    export POWERAPI_INPUT_PULLER_TYPE=mongodb
-    export POWERAPI_INPUT_PULLER_URI=mongodb://127.0.0.1
-    export POWERAPI_INPUT_PULLER_DB=test
-    export POWERAPI_INPUT_PULLER_COLLECTION=prep
-    export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport
-    export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=influxdb2
-    export POWERAPI_OUTPUT_PUSHER_POWER_URI=127.0.0.1
-    export POWERAPI_OUTPUT_PUSHER_POWER_PORT=8086
-    export POWERAPI_OUTPUT_PUSHER_POWER_DB=power_consumption
-    export POWERAPI_OUTPUT_PUSHER_POWER_ORG=org_test
-    export POWERAPI_OUTPUT_PUSHER_POWER_TOKEN=mytoken
-    python -m smartwatts
-    ```
+        ```sh hl_lines="9-20"
+        docker run -t \
+        --net=host \
+        -e POWERAPI_VERBOSE=true \
+        -e POWERAPI_STREAM=true \
+        -e POWERAPI_CPU_BASE_FREQ=1900 \
+        -e POWERAPI_CPU_ERROR_THRESHOLD=2.0 \
+        -e POWERAPI_DISABLE_DRAM_FORMULA=true \
+        -e POWERAPI_SENSOR_REPORTS_FREQUENCY=1000 \
+        -e POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
+        -e POWERAPI_INPUT_PULLER_TYPE=mongodb \
+        -e POWERAPI_INPUT_PULLER_URI=mongodb://127.0.0.1 \
+        -e POWERAPI_INPUT_PULLER_DB=test \
+        -e POWERAPI_INPUT_PULLER_COLLECTION=prep \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=prometheus \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_ADDR=localhost \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_PORT=8010 \
+        powerapi/smartwatts-formula
+        ```
 
-### Running the Formula with a Configuration File
+    === "Docker with CSV/JSON"
 
-Below an example is provided by using MongoDB as Source and InfluxDB as Destination.
+        ```sh hl_lines="9-19"
+        docker run -t \
+        --net=host \
+        -e POWERAPI_VERBOSE=true \
+        -e POWERAPI_STREAM=true \
+        -e POWERAPI_CPU_BASE_FREQ=1900 \
+        -e POWERAPI_CPU_ERROR_THRESHOLD=2.0 \
+        -e POWERAPI_DISABLE_DRAM_FORMULA=true \
+        -e POWERAPI_SENSOR_REPORTS_FREQUENCY=1000 \
+        -e POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
+        -e POWERAPI_INPUT_PULLER_TYPE=csv \
+        -e POWERAPI_INPUT_PULLER_DIRECTORY=hwpc_reports.d \
+        -e POWERAPI_INPUT_PULLER_files="rapl.csv,msr.csv,core.csv" \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=json \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_FILEPATH=power_reports.d/myjson.gz \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_COMPRESSION=auto \
+        powerapi/smartwatts-formula
+        ```
 
-```json
-{
-  "verbose": true,
-  "stream": true,
-  "input": {
-    "puller": {
-      "model": "HWPCReport",
-      "type": "mongodb",
-      "uri": "mongodb://127.0.0.1",
-      "db": "test",
-      "collection": "prep"
-    }
-  },
-  "output": {
-    "pusher_power": {
-      "type": "influxdb2",
-      "uri": "127.0.0.1",
-      "port": 8086,
-      "db": "power_consumption",
-      "org": "org_test",
-      "token": "mytoken"
-    }
-  },
-  "cpu-base-freq": 1900,
-  "cpu-error-threshold": 2.0,
-  "disable-dram-formula": true,
-  "sensor-reports-frequency": 1000
-}
-```
+    === "Docker with CSV/CSV"
 
-???+ info "Alternative Source or Destination"
-    If you want to use another Source or Destination, please check the documentation [here](../database/sources_destinations.md) and modify your configuration according to the Source or Destination that you want to use.
+        ```sh hl_lines="9-15"
+        docker run -t \
+        --net=host \
+        -e POWERAPI_VERBOSE=true \
+        -e POWERAPI_STREAM=true \
+        -e POWERAPI_CPU_BASE_FREQ=1900 \
+        -e POWERAPI_CPU_ERROR_THRESHOLD=2.0 \
+        -e POWERAPI_DISABLE_DRAM_FORMULA=true \
+        -e POWERAPI_SENSOR_REPORTS_FREQUENCY=1000 \
+        -e POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
+        -e POWERAPI_INPUT_PULLER_TYPE=csv \
+        -e POWERAPI_INPUT_PULLER_DIRECTORY=hwpc_reports.d \
+        -e POWERAPI_INPUT_PULLER_files="rapl.csv,msr.csv,core.csv" \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_TYPE=csv \
+        -e POWERAPI_OUTPUT_PUSHER_POWER_DIRECTORY=power_reports.d \
+        powerapi/smartwatts-formula
+        ```
+
+
+??? example "Examples using pip"
+
+    === "Pip with MongoDB/Prometheus"
+
+        ```sh hl_lines="7-18"
+        export POWERAPI_VERBOSE=true
+        export POWERAPI_STREAM=false
+        export POWERAPI_CPU_BASE_FREQ=1900
+        export POWERAPI_CPU_ERROR_THRESHOLD=2.0
+        export POWERAPI_DISABLE_DRAM_FORMULA=true
+        export POWERAPI_SENSOR_REPORTS_FREQUENCY=1000
+        export POWERAPI_INPUT_PULLER_MODEL=HWPCReport
+        export POWERAPI_INPUT_PULLER_TYPE=mongodb
+        export POWERAPI_INPUT_PULLER_URI=mongodb://127.0.0.1
+        export POWERAPI_INPUT_PULLER_DB=test
+        export POWERAPI_INPUT_PULLER_COLLECTION=prep
+        export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport
+        export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=prometheus
+        export POWERAPI_OUTPUT_PUSHER_POWER_ADDR=localhost
+        export POWERAPI_OUTPUT_PUSHER_POWER_PORT=8010
+        python -m smartwatts
+        ```
+
+    === "Pip with CSV/JSON"
+
+        ```sh hl_lines="7-17"
+        export POWERAPI_VERBOSE=true
+        export POWERAPI_STREAM=false
+        export POWERAPI_CPU_BASE_FREQ=1900
+        export POWERAPI_CPU_ERROR_THRESHOLD=2.0
+        export POWERAPI_DISABLE_DRAM_FORMULA=true
+        export POWERAPI_SENSOR_REPORTS_FREQUENCY=1000
+        export POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
+        export POWERAPI_INPUT_PULLER_TYPE=csv \
+        export POWERAPI_INPUT_PULLER_DIRECTORY=hwpc_reports.d \
+        export POWERAPI_INPUT_PULLER_files="rapl.csv,msr.csv,core.csv" \
+        export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport
+        export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=json
+        export POWERAPI_OUTPUT_PUSHER_POWER_FILEPATH=power_reports.d/myjson.gz
+        export POWERAPI_OUTPUT_PUSHER_POWER_COMPRESSION=auto
+        python -m smartwatts
+        ```
+
+    === "Pip with CSV/CSV"
+
+        ```sh hl_lines="7-13"
+        export POWERAPI_VERBOSE=true
+        export POWERAPI_STREAM=false
+        export POWERAPI_CPU_BASE_FREQ=1900
+        export POWERAPI_CPU_ERROR_THRESHOLD=2.0
+        export POWERAPI_DISABLE_DRAM_FORMULA=true
+        export POWERAPI_SENSOR_REPORTS_FREQUENCY=1000
+        export POWERAPI_INPUT_PULLER_MODEL=HWPCReport \
+        export POWERAPI_INPUT_PULLER_TYPE=csv \
+        export POWERAPI_INPUT_PULLER_DIRECTORY=hwpc_reports.d \
+        export POWERAPI_INPUT_PULLER_files="rapl.csv,msr.csv,core.csv" \
+        export POWERAPI_OUTPUT_PUSHER_POWER_MODEL=PowerReport
+        export POWERAPI_OUTPUT_PUSHER_POWER_TYPE=csv
+        export POWERAPI_OUTPUT_PUSHER_POWER_DIRECTORY=power_reports.d
+        python -m smartwatts
+        ```
+
+#### Running the Formula via Configuration File
+
+Below you find example Configuration Files to use different input/output and how to use it with Docker or Pip:  
+
+??? example "Examples configurations files"
+
+    === "Configuration file using MongoDB/Prometheus"
+        ```json hl_lines="5-21" title="config_file.json"
+        {
+          "verbose": true,
+          "stream": true,
+          "input": {
+            "puller": {
+              "model": "HWPCReport",
+              "type": "mongodb",
+              "uri": "mongodb://127.0.0.1",
+              "db": "test",
+              "collection": "prep"
+            }
+          },
+          "output": {
+            "pusher_power": {
+              "type": "prometheus",
+              "addr": "localhost",
+              "port": 8010
+            }
+          },
+          "cpu-base-freq": 1900,
+          "cpu-error-threshold": 2.0,
+          "disable-dram-formula": true,
+          "sensor-reports-frequency": 1000
+        }
+        ```
+
+    === "Configuration file using CSV/JSON"
+        ```json hl_lines="5-20" title="config_file.json"
+        {
+          "verbose": true,
+          "stream": true,
+          "input": {
+            "puller": {
+              "model": "HWPCReport",
+              "type": "csv",
+              "directory": "hwpc_reports.d",
+              "files": "rapl.csv,msr.csv,core.csv",
+            }
+          },
+          "output": {
+            "pusher_power": {
+              "type": "json",
+              "model": "PowerReport",
+              "filepath": "power_reports.d/myjson.gz",
+              "compression": "auto"
+            }
+          },
+          "cpu-base-freq": 1900,
+          "cpu-error-threshold": 2.0,
+          "disable-dram-formula": true,
+          "sensor-reports-frequency": 1000
+        }
+        ```
+    === "Configuration file using CSV/CSV"
+        ```json hl_lines="5-16" title="config_file.json"
+        {
+          "verbose": true,
+          "stream": true,
+          "input": {
+            "puller": {
+              "model": "HWPCReport",
+              "type": "csv",
+              "directory": "hwpc_reports.d",
+              "files": "rapl.csv,msr.csv,core.csv",
+            }
+          },
+          "output": {
+            "pusher_power": {
+              "type": "csv",
+              "directory": "power_reports.d",
+            }
+          },
+          "cpu-base-freq": 1900,
+          "cpu-error-threshold": 2.0,
+          "disable-dram-formula": true,
+          "sensor-reports-frequency": 1000
+        }
+        ```
 
 Once you have your configuration file, run SmartWatts using one of the following command lines, depending on
 the installation you use:
 
 === "Docker"
 
-    ```sh
+    ```sh hl_lines="4"
     docker run -t \
     --net=host \
     -v $(pwd)/config_file.json:/config_file.json \

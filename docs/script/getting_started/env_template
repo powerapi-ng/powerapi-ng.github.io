@@ -1,0 +1,22 @@
+# Sensor image
+SENSOR_IMAGE=powerapi/hwpc-sensor:${HWPC_SENSOR_VERSION:-latest}
+
+# Formula image
+FORMULA_IMAGE=powerapi/smartwatts-formula:${SMARTWATTS_VERSION:-latest}
+
+# Source selection
+# Available options: mongodb, socket
+POWERAPI_SOURCE=mongodb
+
+# Destination selection
+# Available options: influxdb2, prometheus, mongodb, csv
+POWERAPI_DESTINATION=csv
+
+# Third party images
+MONGO_IMAGE=mongo:latest
+MONGOEXPRESS_IMAGE=mongo-express:latest
+INFLUXDB_IMAGE=influxdb:latest
+CSV_IMAGE=busybox:stable-glibc
+
+# Docker compose profiles
+COMPOSE_PROFILES=${POWERAPI_SOURCE},${POWERAPI_DESTINATION}
