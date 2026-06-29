@@ -16,7 +16,7 @@ A PowerMeter consists of two essential components:
 - a [Sensor](#sensor), which collects system usage metrics and generates usage reports.  
 - a [Formula](#formula), which applies a computational model to the usage reports, producing power consumption data (in watts).
 
-Additionally, [Preprocessors](./overview.md#Preprocessors) can be utilized to modify usage reports before they are processed by the Formula.
+Additionally, [Preprocessors](./overview.md#preprocessors) can be utilized to modify usage reports before they are processed by the Formula.
 
 ## Sensor
 

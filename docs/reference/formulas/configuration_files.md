@@ -49,5 +49,3 @@ PowerAPI Formulas use `json` files. These files follow the next template:
   $formula_parameters
 }
 ```
-???+ info "input and output' `json` tags"
-    More information related to `json` tags for each Source/Destination can be found [here](../database/sources_destinations.md)
