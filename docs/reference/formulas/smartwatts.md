@@ -250,7 +250,7 @@ In order to run the Formula, you can execute one of the following command lines,
         ```sh hl_lines="4 5"
         docker run -t \
           --net=host \
-          powerapi/smartwatts-formula --verbose \
+          powerapi/smartwatts-formula \
           --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
           --output prometheus --model PowerReport --addr localhost --port 8010 \
           --cpu-base-freq 1900 \
@@ -265,7 +265,7 @@ In order to run the Formula, you can execute one of the following command lines,
         docker run -t \
           --net=host \
           --volume /tmp/powerapi-sensor-reporting:/data \
-          powerapi/smartwatts-formula --verbose \
+          powerapi/smartwatts-formula \
           --input csv --model HWPCReport --files "/data/rapl.csv,/data/msr.csv,/data/core.csv" \
           --output json --model PowerReport --filepath "/data/myjson.gz" --compression auto \
           --cpu-base-freq 1900 \
@@ -280,7 +280,7 @@ In order to run the Formula, you can execute one of the following command lines,
         docker run -t \
           --volume /tmp/powerapi-sensor-reporting:/data \
           --volume $(pwd)/power_reports.d:/home/powerapi/power_reports.d
-          powerapi/smartwatts-formula --verbose \
+          powerapi/smartwatts-formula \
           --input csv --model HWPCReport --files "/data/rapl.csv,/data/msr.csv,/data/core.csv" \
           --output csv --directory /home/powerapi/power_reports.d \
           --cpu-base-freq 1900 \
@@ -296,7 +296,6 @@ In order to run the Formula, you can execute one of the following command lines,
 
         ```sh hl_lines="3 4"
         python -m smartwatts \
-        --verbose \
         --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
         --output prometheus --model PowerReport --addr localhost --port 8010 \
         --cpu-base-freq 1900 \
@@ -309,7 +308,6 @@ In order to run the Formula, you can execute one of the following command lines,
 
         ```sh hl_lines="3 4"
         python -m smartwatts \
-        --verbose \
         --input csv --model HWPCReport --name puller_csv --files "rapl.csv,msr.csv,core.csv" \
         --output json --model PowerReport --filepath "power_reports.d/myjson.gz" --compression auto \
         --cpu-base-freq 1900 \
@@ -321,7 +319,6 @@ In order to run the Formula, you can execute one of the following command lines,
     === "Pip with CSV/CSV"
         ```sh hl_lines="3 4"
         python -m smartwatts \
-        --verbose \
         --input csv --model HWPCReport --name puller_csv --files "rapl.csv,msr.csv,core.csv" \
         --output csv --directory power_reports.d \
         --cpu-base-freq 1900 \
@@ -351,7 +348,6 @@ Below you find an example for running the Formula with Docker and Pip:
         ```sh hl_lines="9-20"
         docker run -t \
         --net=host \
-        -e POWERAPI_VERBOSE=true \
         -e POWERAPI_STREAM=true \
         -e POWERAPI_CPU_BASE_FREQ=1900 \
         -e POWERAPI_CPU_ERROR_THRESHOLD=2.0 \
@@ -374,7 +370,6 @@ Below you find an example for running the Formula with Docker and Pip:
         ```sh hl_lines="9-19"
         docker run -t \
         --net=host \
-        -e POWERAPI_VERBOSE=true \
         -e POWERAPI_STREAM=true \
         -e POWERAPI_CPU_BASE_FREQ=1900 \
         -e POWERAPI_CPU_ERROR_THRESHOLD=2.0 \
@@ -396,7 +391,6 @@ Below you find an example for running the Formula with Docker and Pip:
         ```sh hl_lines="9-15"
         docker run -t \
         --net=host \
-        -e POWERAPI_VERBOSE=true \
         -e POWERAPI_STREAM=true \
         -e POWERAPI_CPU_BASE_FREQ=1900 \
         -e POWERAPI_CPU_ERROR_THRESHOLD=2.0 \
@@ -418,7 +412,6 @@ Below you find an example for running the Formula with Docker and Pip:
     === "Pip with MongoDB/Prometheus"
 
         ```sh hl_lines="7-18"
-        export POWERAPI_VERBOSE=true
         export POWERAPI_STREAM=false
         export POWERAPI_CPU_BASE_FREQ=1900
         export POWERAPI_CPU_ERROR_THRESHOLD=2.0
@@ -439,7 +432,6 @@ Below you find an example for running the Formula with Docker and Pip:
     === "Pip with CSV/JSON"
 
         ```sh hl_lines="7-17"
-        export POWERAPI_VERBOSE=true
         export POWERAPI_STREAM=false
         export POWERAPI_CPU_BASE_FREQ=1900
         export POWERAPI_CPU_ERROR_THRESHOLD=2.0
@@ -459,7 +451,6 @@ Below you find an example for running the Formula with Docker and Pip:
     === "Pip with CSV/CSV"
 
         ```sh hl_lines="7-13"
-        export POWERAPI_VERBOSE=true
         export POWERAPI_STREAM=false
         export POWERAPI_CPU_BASE_FREQ=1900
         export POWERAPI_CPU_ERROR_THRESHOLD=2.0
@@ -484,7 +475,6 @@ Below you find example Configuration Files to use different input/output and how
     === "Configuration file using MongoDB/Prometheus"
         ```json hl_lines="5-21" title="config_file.json"
         {
-          "verbose": true,
           "stream": true,
           "input": {
             "puller": {
@@ -512,7 +502,6 @@ Below you find example Configuration Files to use different input/output and how
     === "Configuration file using CSV/JSON"
         ```json hl_lines="5-20" title="config_file.json"
         {
-          "verbose": true,
           "stream": true,
           "input": {
             "puller": {
@@ -539,7 +528,6 @@ Below you find example Configuration Files to use different input/output and how
     === "Configuration file using CSV/CSV"
         ```json hl_lines="5-16" title="config_file.json"
         {
-          "verbose": true,
           "stream": true,
           "input": {
             "puller": {
