@@ -89,6 +89,9 @@ features = [
 
 search = true
 
+[project.plugins.search]
+enabled = true
+
 #palette.primary =  "red"
 #palette.accent = "green"
 
