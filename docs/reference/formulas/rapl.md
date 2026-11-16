@@ -91,8 +91,6 @@ Below an example is provided by using MongoDB as Source and Destination.
 }
 ```
 
-???+ info "Alternative Source or Destination"
-    If you want to use another Source or Destination, please check the documentation [here](../database/sources_destinations.md) and modify the configuration file according to the Source and/or Destination that you want to use.
 
 Once you have your configuration file, run RAPL using one of the following command lines, depending on
 the installation you use:

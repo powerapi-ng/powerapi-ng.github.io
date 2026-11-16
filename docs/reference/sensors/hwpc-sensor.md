@@ -62,8 +62,8 @@ The following tabs gives a complete overview of available parameters, along with
     |`frequency`                 | `int` | `f`             | `1000`                                            | The time in milliseconds between two reports                   |
     |`name`                 | `string` | `n`             | -                                            | Name of the sensor                   |
     |`cgroup_basepath`                 | `string` | `p`             | `/sys/fs/cgroup` (`cgroup` V2)       |  The base path for `cgroups`. To use `cgroup` V1 `/sys/fs/cgroup/perf_event` needs to be used as value                   |
-    |`system`                 | `dict` | `s`             | -                                            | A system group with a monitoring type and a list of system events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
-    |`container`                 | `dict` | `c`          | -                                            | A group with a monitoring type and a list of  events (cf. [`system` Group Parameters](hwpc-sensor.md#system-and-container-groups-parameters))                   |
+    |`system`                 | `dict` | `s`             | -                                            | A system group with a monitoring type and a list of system events                    |
+    |`container`                 | `dict` | `c`          | -                                            | A group with a monitoring type and a list of  events                    |
     |`output`                 | `dict`| `r`             |  { "type": "csv", "directory": "." } | The [output information](hwpc-sensor.md#output), the Sensor only supports [MongoDB](hwpc-sensor.md#output "MongoDB Output") (`mongodb`), [CSV](hwpc-sensor.md#output) (`csv`) and [Socket](hwpc-sensor.md#output) (`socket`) as output.                    |
 
     Nested parameters (system, container, output) are described in dedicated sections below.
