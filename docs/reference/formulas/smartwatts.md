@@ -261,7 +261,7 @@ In order to run the Formula, you can execute one of the following command lines,
 
     === "Docker with CSV/JSON"
 
-        ```sh hl_lines="4 5"
+        ```sh hl_lines="5 6"
         docker run -t \
           --net=host \
           --volume /tmp/powerapi-sensor-reporting:/data \
@@ -276,7 +276,7 @@ In order to run the Formula, you can execute one of the following command lines,
 
     === "Docker with CSV/CSV"
 
-        ```sh hl_lines="4 5"
+        ```sh hl_lines="5 6"
         docker run -t \
           --volume /tmp/powerapi-sensor-reporting:/data \
           --volume $(pwd)/power_reports.d:/home/powerapi/power_reports.d
@@ -294,7 +294,7 @@ In order to run the Formula, you can execute one of the following command lines,
 
     === "Pip with MongoDB/Prometheus"
 
-        ```sh hl_lines="3 4"
+        ```sh hl_lines="2 3"
         python -m smartwatts \
         --input mongodb --model HWPCReport --uri mongodb://127.0.0.1 --db test --collection prep \
         --output prometheus --model PowerReport --addr localhost --port 8010 \
@@ -306,7 +306,7 @@ In order to run the Formula, you can execute one of the following command lines,
 
     === "Pip with CSV/JSON"
 
-        ```sh hl_lines="3 4"
+        ```sh hl_lines="2 3"
         python -m smartwatts \
         --input csv --model HWPCReport --name puller_csv --files "rapl.csv,msr.csv,core.csv" \
         --output json --model PowerReport --filepath "power_reports.d/myjson.gz" --compression auto \
@@ -317,7 +317,7 @@ In order to run the Formula, you can execute one of the following command lines,
         ```
 
     === "Pip with CSV/CSV"
-        ```sh hl_lines="3 4"
+        ```sh hl_lines="2 3"
         python -m smartwatts \
         --input csv --model HWPCReport --name puller_csv --files "rapl.csv,msr.csv,core.csv" \
         --output csv --directory power_reports.d \
@@ -345,7 +345,7 @@ Below you find an example for running the Formula with Docker and Pip:
 
     === "Docker with MongoDB/Prometheus"
 
-        ```sh hl_lines="9-20"
+        ```sh hl_lines="8-16"
         docker run -t \
         --net=host \
         -e POWERAPI_STREAM=true \
@@ -367,7 +367,7 @@ Below you find an example for running the Formula with Docker and Pip:
 
     === "Docker with CSV/JSON"
 
-        ```sh hl_lines="9-19"
+        ```sh hl_lines="8-15"
         docker run -t \
         --net=host \
         -e POWERAPI_STREAM=true \
@@ -388,7 +388,7 @@ Below you find an example for running the Formula with Docker and Pip:
 
     === "Docker with CSV/CSV"
 
-        ```sh hl_lines="9-15"
+        ```sh hl_lines="8-14"
         docker run -t \
         --net=host \
         -e POWERAPI_STREAM=true \
@@ -411,7 +411,7 @@ Below you find an example for running the Formula with Docker and Pip:
 
     === "Pip with MongoDB/Prometheus"
 
-        ```sh hl_lines="7-18"
+        ```sh hl_lines="6-14"
         export POWERAPI_STREAM=false
         export POWERAPI_CPU_BASE_FREQ=1900
         export POWERAPI_CPU_ERROR_THRESHOLD=2.0
@@ -431,7 +431,7 @@ Below you find an example for running the Formula with Docker and Pip:
 
     === "Pip with CSV/JSON"
 
-        ```sh hl_lines="7-17"
+        ```sh hl_lines="6-13"
         export POWERAPI_STREAM=false
         export POWERAPI_CPU_BASE_FREQ=1900
         export POWERAPI_CPU_ERROR_THRESHOLD=2.0
@@ -450,7 +450,7 @@ Below you find an example for running the Formula with Docker and Pip:
 
     === "Pip with CSV/CSV"
 
-        ```sh hl_lines="7-13"
+        ```sh hl_lines="6-12"
         export POWERAPI_STREAM=false
         export POWERAPI_CPU_BASE_FREQ=1900
         export POWERAPI_CPU_ERROR_THRESHOLD=2.0
@@ -473,7 +473,7 @@ Below you find example Configuration Files to use different input/output and how
 ??? example "Examples configurations files"
 
     === "Configuration file using MongoDB/Prometheus"
-        ```json hl_lines="5-21" title="config_file.json"
+        ```json hl_lines="3-18" title="config_file.json"
         {
           "stream": true,
           "input": {
@@ -500,7 +500,7 @@ Below you find example Configuration Files to use different input/output and how
         ```
 
     === "Configuration file using CSV/JSON"
-        ```json hl_lines="5-20" title="config_file.json"
+        ```json hl_lines="3-18" title="config_file.json"
         {
           "stream": true,
           "input": {
@@ -526,7 +526,7 @@ Below you find example Configuration Files to use different input/output and how
         }
         ```
     === "Configuration file using CSV/CSV"
-        ```json hl_lines="5-16" title="config_file.json"
+        ```json hl_lines="3-16" title="config_file.json"
         {
           "stream": true,
           "input": {
