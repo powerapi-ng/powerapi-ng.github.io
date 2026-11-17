@@ -130,10 +130,9 @@ The following snippets describe the configuration file of an HWPC Sensor instanc
 
     === "MongoDB Output"
 
-        ```json hl_lines="5-10" title="config_file.json"
+        ```json hl_lines="4-9" title="config_file.json"
         {
           "name": "sensor",
-          "verbose": true,
           "frequency": 500,
           "output": {
             "type": "mongodb",
@@ -165,10 +164,9 @@ The following snippets describe the configuration file of an HWPC Sensor instanc
 
     === "CSV Output"
 
-        ```json hl_lines="5-8" title="config_file.json"
+        ```json hl_lines="4-7" title="config_file.json"
         {
           "name": "sensor",
-          "verbose": true,
           "frequency": 500,
           "output": {
             "type": "csv",
@@ -197,10 +195,9 @@ The following snippets describe the configuration file of an HWPC Sensor instanc
         ```
     === "Socket Output"
 
-        ```json hl_lines="5-9" title="config_file.json"
+        ```json hl_lines="4-8" title="config_file.json"
         {
           "name": "sensor",
-          "verbose": true,
           "frequency": 500,
           "output": {
             "type": "socket",
